@@ -27,7 +27,7 @@ onMounted(() => {
   Dari pantai hingga candi, semua destinasi terbaik kami rangkum untuk Anda jelajahi!
 </p>
 
-         <RouterLink
+<RouterLink
   to="/destination"
   class="btn btn-warning mt-4 px-4 py-2 shadow grow-on-hover"
   data-aos="zoom-in"

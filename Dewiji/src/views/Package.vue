@@ -1,3 +1,3 @@
 <template>
-    <h1>Pendidikan</h1>
+    <h1>Paket Liburan</h1>
 </template>

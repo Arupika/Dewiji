@@ -31,38 +31,38 @@ import alphard from '@/assets/alphard.png'
 const daftarMobil = [
   {
     nama: 'Toyota Avanza',
-    deskripsi: 'Mobil keluarga nyaman untuk perjalanan wisata.',
-    harga: 350000,
+    deskripsi: 'Mobil keluarga nyaman dalam perjalanan wisata.',
+    harga: 250000,
     gambar: avanza
   },
   {
     nama: 'Daihatsu Xenia',
-    deskripsi: 'Irit dan cocok untuk wisata kota dan luar kota.',
-    harga: 330000,
+    deskripsi: 'Irit dan sederhana untuk wisata di kota dan luar kota.',
+    harga: 350000,
     gambar: xenia
   },
   {
     nama: 'Innova Reborn',
-    deskripsi: 'Mobil premium dengan kenyamanan ekstra.',
-    harga: 500000,
+    deskripsi: 'Mobil premium dan Mewah dengan kenyamanan ekstra.',
+    harga: 400000,
     gambar: innova
   },
   {
     nama: 'Honda Brio',
-    deskripsi: 'Mobil kompak, irit bahan bakar, cocok untuk perjalanan kota.',
-    harga: 300000,
+    deskripsi: 'Mobil irit bahan bakar, cocok untuk perjalanan di dalam kota.',
+    harga: 200000,
     gambar: brio
   },
   {
     nama: 'Daihatsu Ayla',
-    deskripsi: 'City car mungil dan ekonomis untuk aktivitas harian.',
-    harga: 280000,
+    deskripsi: 'City car irit dan ekonomis untuk aktivitas harian di kota.',
+    harga: 250000,
     gambar: ayla
   },
   {
     nama: 'Toyota Alphard',
-    deskripsi: 'MPV mewah dengan fitur lengkap dan kenyamanan tinggi.',
-    harga: 1200000,
+    deskripsi: 'MPV mewah dengan fitur yang lengkap dan kenyamanan tinggi.',
+    harga: 1500000,
     gambar: alphard
   }
 ]
