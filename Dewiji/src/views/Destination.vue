@@ -6,10 +6,10 @@
       <div class="col-md-6">
         <div class="card h-100 shadow-sm">
           <div class="card-body">
-            <h5 class="card-title">Universitas AMKM</h5>
+            <h5 class="card-title">Universitas AMK</h5>
             <p class="card-text">
-              <strong>Gelar:</strong> S.T. [Jurusan]<br>
-              <strong>Tahun:</strong> 2016 – 2019
+              <strong>Gelar :</strong> S.T. [Jurusan]<br>
+              <strong>Tahun :</strong> 2016 – 2020
             </p>
           </div>
         </div>
@@ -20,8 +20,8 @@
           <div class="card-body">
             <h5 class="card-title">SMA BIS</h5>
             <p class="card-text">
-              <strong>Program:</strong> IPA<br>
-              <strong>Tahun:</strong> 2013 – 2015
+              <strong>Program :</strong> IPA<br>
+              <strong>Tahun :</strong> 2013 – 2016
             </p>
           </div>
         </div>

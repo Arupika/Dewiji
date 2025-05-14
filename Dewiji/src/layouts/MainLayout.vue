@@ -39,7 +39,7 @@ const items = [
 <!-- Footer -->
 <footer class="gradient-footer text-center text-white py-3">
   <div>Copyright © 2025 Dewiji.</div>
-  <div>All rights reserved | Created with ❤️ by Dewiji Team</div>
+  <div>All rights reserved || Created with ❤️ by Dewiji Team</div>
 </footer>
 
 </template>
