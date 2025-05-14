@@ -25,7 +25,7 @@ export default {
       destinations: [
         {
           id: 1,
-          nama: "Gunung Merapi",
+          nama: "Gunung Merapii",
           deskripsi: "Pantai terkenal dengan ombak yang bagus untuk berselancar...",
           gambar: "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80",
           harga: 500000,
