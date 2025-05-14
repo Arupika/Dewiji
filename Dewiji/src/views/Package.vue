@@ -30,7 +30,7 @@ import alphard from '@/assets/alphard.png'
 
 const daftarMobil = [
 {
-    nama: 'Toyota Avanza',
+    nama: 'Toyota Avanzaa',
     deskripsi: 'Mobil keluarga nyaman dalam perjalanan wisata.',
     harga: 250000,
     gambar: avanza
