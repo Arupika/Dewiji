@@ -26,7 +26,8 @@ html, body, #app {
     letter-spacing: .8px;
     position: relative;
   }
-  .navbar-purple .nav-link::after{              /* efek garis bawah animasi */
+  .navbar-purple .nav-link::after{          
+    /* efek garis bawah animasi */
     content:'';
     position:absolute; left:0; bottom:4px;
     width:0; height:2px;
@@ -40,7 +41,23 @@ html, body, #app {
   .navbar-purple .router-link-active{
     color: var(--purple-accent) !important;
   }
-  
+  .destinasi-scroll-wrapper {
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  }
+  .destinasi-card {
+  scroll-snap-align: start;
+  }
+  .text-truncate {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Untuk browser berbasis WebKit seperti Chrome, Safari */
+  line-clamp: 3; /* Properti standar untuk browser lainnya */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  }
+
+
   /* --- Footer --- */
   .footer-purple {
   background: var(--purple-dark);
