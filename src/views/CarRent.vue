@@ -1,6 +1,6 @@
 <template>
   <div class="container py-5">
-    <h1 class="mb-4 text-center fw-bold">Paket Liburan</h1>
+    <h1 class="mb-4 text-center fw-bold">Rental Mobil Yogyakarta</h1>
 
     <div class="row g-4">
       <div class="col-md-4" v-for="(mobil, index) in daftarMobil" :key="index">
@@ -29,11 +29,12 @@
           <div class="modal-body">
             <p><strong>Deskripsi:</strong> {{ selectedMobil.deskripsi }}</p>
             <p><strong>Harga:</strong> Rp {{ selectedMobil.harga.toLocaleString() }}/hari</p>
-            <p><strong>Paket Liburan:</strong> Pilih durasi penyewaan mobil, waktu, dan tambahan lainnya.</p>
+            <p><strong>Rincian Penyewaan:</strong> Pilih durasi penyewaan mobil dan tanggal penjemputan.</p>
+
             <!-- Form Pemesanan -->
             <form @submit.prevent="submitOrder">
               <div class="mb-3">
-                <label for="duration" class="form-label">Durasi (hari)</label>
+                <label for="duration" class="form-label">Durasi Penyewaan (hari)</label>
                 <input type="number" class="form-control" id="duration" v-model="duration" required min="1" />
               </div>
               <div class="mb-3">
@@ -46,7 +47,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -62,7 +62,7 @@ import alphard from '@/assets/alphard.png'
 
 const daftarMobil = [
   {
-    nama: 'Toyota Avanzaa',
+    nama: 'Toyota Avanza',
     deskripsi: 'Mobil keluarga nyaman dalam perjalanan wisata.',
     harga: 250000,
     gambar: avanza
@@ -75,7 +75,7 @@ const daftarMobil = [
   },
   {
     nama: 'Innova Reborn',
-    deskripsi: 'Mobil premium dan Mewah dengan kenyamanan ekstra.',
+    deskripsi: 'Mobil premium dan mewah dengan kenyamanan ekstra.',
     harga: 400000,
     gambar: innova
   },
@@ -93,32 +93,27 @@ const daftarMobil = [
   },
   {
     nama: 'Toyota Alphard',
-    deskripsi: 'MPV mewah dengan fitur yang lengkap dan kenyamanan tinggi.',
+    deskripsi: 'MPV mewah dengan fitur lengkap dan kenyamanan tinggi.',
     harga: 1500000,
     gambar: alphard
   }
 ]
 
-// State untuk memilih mobil dan menampilkan detail
 const selectedMobil = ref(null)
 const duration = ref(1)
 const pickupDate = ref('')
 
-// Fungsi untuk menampilkan detail mobil yang dipilih
 const showDetails = (mobil) => {
   selectedMobil.value = mobil
 }
 
-// Fungsi untuk menutup modal
 const closeModal = () => {
   selectedMobil.value = null
   duration.value = 1
   pickupDate.value = ''
 }
 
-// Fungsi untuk submit pemesanan
 const submitOrder = () => {
-  // Menampilkan notifikasi menggunakan SweetAlert2
   SweetAlert2.fire({
     title: 'Pemesanan Berhasil!',
     text: `Anda telah memesan ${selectedMobil.value.nama} selama ${duration.value} hari, tanggal penjemputan: ${pickupDate.value}`,
@@ -129,7 +124,6 @@ const submitOrder = () => {
     }
   })
   
-  // Menutup modal setelah pemesanan berhasil
   closeModal()
 }
 </script>
@@ -151,5 +145,4 @@ const submitOrder = () => {
   color: white;
   border-radius: 10px;
 }
-
 </style>
