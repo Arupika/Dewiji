@@ -53,6 +53,7 @@
 <script setup>
 import { ref } from 'vue'
 import SweetAlert2 from 'sweetalert2'
+// Mengimpor gambar mobil
 import avanza from '@/assets/avanza.png'
 import xenia from '@/assets/xenia.png'
 import innova from '@/assets/innova.png'
@@ -60,6 +61,7 @@ import brio from '@/assets/brio.png'
 import ayla from '@/assets/calya.png'
 import alphard from '@/assets/alphard.png'
 
+// Data mobil yang tersedia untuk disewa
 const daftarMobil = [
   {
     nama: 'Toyota Avanza',
@@ -75,7 +77,7 @@ const daftarMobil = [
   },
   {
     nama: 'Innova Reborn',
-    deskripsi: 'Mobil premium dan mewah dengan kenyamanan ekstra.',
+    deskripsi: 'Mobil premium dan Mewah dengan kenyamanan ekstra.',
     harga: 400000,
     gambar: innova
   },
@@ -93,26 +95,30 @@ const daftarMobil = [
   },
   {
     nama: 'Toyota Alphard',
-    deskripsi: 'MPV mewah dengan fitur lengkap dan kenyamanan tinggi.',
+    deskripsi: 'MPV mewah dengan fitur yang lengkap dan kenyamanan tinggi.',
     harga: 1500000,
     gambar: alphard
   }
 ]
 
+// Variabel yang digunakan untuk mengelola modal pemesanan
 const selectedMobil = ref(null)
 const duration = ref(1)
 const pickupDate = ref('')
 
+// Menampilkan modal untuk detail pemesanan mobil
 const showDetails = (mobil) => {
   selectedMobil.value = mobil
 }
 
+// Menutup modal dan mengatur ulang form pemesanan
 const closeModal = () => {
   selectedMobil.value = null
   duration.value = 1
   pickupDate.value = ''
 }
 
+// Menangani pengiriman formulir pemesanan
 const submitOrder = () => {
   SweetAlert2.fire({
     title: 'Pemesanan Berhasil!',
@@ -126,10 +132,10 @@ const submitOrder = () => {
 
   closeModal()
 }
-
 </script>
 
 <style scoped>
+/* Menata modal agar posisinya tetap di atas */
 .modal {
   display: block;
   position: fixed;
@@ -141,6 +147,7 @@ const submitOrder = () => {
   z-index: 999;
 }
 
+/* Styling untuk SweetAlert2 setelah sukses */
 .popup-success {
   background-color: #28a745; /* Warna hijau sukses */
   color: white;

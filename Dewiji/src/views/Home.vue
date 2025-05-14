@@ -66,30 +66,29 @@ onMounted(() => {
       </p>
 
       <a
-      href="#destinasi"
-      class="btn btn-warning mt-4 px-4 py-2 shadow grow-on-hover"
-      data-aos="zoom-in"
-      data-aos-delay="200">
-      Lihat Destinasi
-    </a>
-
+        href="#destinasi"
+        class="btn btn-warning mt-4 px-4 py-2 shadow grow-on-hover"
+        data-aos="zoom-in"
+        data-aos-delay="200">
+        Lihat Destinasi
+      </a>
     </div>
   </header>
 
   <!-- Destinasi Terkenal Section -->
   <section id="destinasi" class="py-5 bg-light">
-  <div class="container">
-    <h2 class="text-center fw-bold mb-4" data-aos="fade-up">Destinasi Terkenal di Yogyakarta</h2>
+    <div class="container">
+      <h2 class="text-center fw-bold mb-4" data-aos="fade-up">Destinasi Terkenal di Yogyakarta</h2>
 
-    <div class="destinasi-scroll-wrapper" ref="scrollContainer">
-      <div class="destinasi-card" v-for="(item, i) in destinasi" :key="i">
-        <img :src="item.gambar" class="img-fluid rounded" :alt="item.nama" />
-        <h5 class="mt-3 fw-bold">{{ item.nama }}</h5>
-        <p class="text-muted">{{ item.deskripsi }}</p>
+      <div class="destinasi-scroll-wrapper" ref="scrollContainer">
+        <div class="destinasi-card" v-for="(item, i) in destinasi" :key="i">
+          <img :src="item.gambar" class="img-fluid rounded" :alt="item.nama" />
+          <h5 class="mt-3 fw-bold">{{ item.nama }}</h5>
+          <p class="text-muted">{{ item.deskripsi }}</p>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 </template>
 
 <style scoped>
@@ -110,6 +109,7 @@ onMounted(() => {
 .container {
   z-index: 2;
 }
+
 .destinasi-scroll-wrapper {
   display: flex;
   overflow-x: auto;
@@ -136,5 +136,4 @@ onMounted(() => {
   padding: 1rem;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
-
 </style>
