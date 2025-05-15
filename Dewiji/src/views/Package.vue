@@ -1,4 +1,4 @@
-  <template>
+<template>
     <div class="container py-5">
       <!-- Header -->
       <div class="row justify-content-center mb-5">
@@ -79,12 +79,10 @@
         <div class="col-md-3 mb-4">
           <h5 class="fw-bold border-start border-4 ps-2">Navigasi</h5>
           <ul class="list-unstyled">
+            <li><a href="#" class="text-light text-decoration-none">Destinasi</a></li>
             <li><a href="#" class="text-light text-decoration-none">Rental Mobil</a></li>
-            <li><a href="#" class="text-light text-decoration-none">Paket Wisata Jogja 1 Hari</a></li>
-            <li><a href="#" class="text-light text-decoration-none">Paket Wisata Jogja 2 Hari</a></li>
-            <li><a href="#" class="text-light text-decoration-none">Paket Bus Wisata Jogja</a></li>
-            <li><a href="#" class="text-light text-decoration-none">Testimoni</a></li>
-            <li><a href="#" class="text-light text-decoration-none">Galeri</a></li>
+            <li><a href="#" class="text-light text-decoration-none">Paket Liburan</a></li>
+            <li><a href="#" class="text-light text-decoration-none">Kritik & Saran</a></li>
           </ul>
         </div>
 
@@ -182,7 +180,74 @@
             },
             termasuk: ["Mobil + Supir + BBM", "Durasi 12 Jam"],
             tidakTermasuk: ["Tiket masuk", "Biaya makan", "Pengeluaran pribadi"]
-          }
+          },
+          //2#
+          {
+          destinasi: ["Bhumi Merapi", "Svargabumi", "Candi Borobudur", "Jeep Lava Tour Merapi"],
+          gambar: [ "https://assets.promediateknologi.id/crop/0x0:0x0/750x500/webp/photo/2023/07/28/Agrowisata-Bhumi-Merapi-702682784.jpg"],
+            harga: {
+              "Avanza & Xenia": { lama: "Rp 550.000", diskon: "Rp 500.000" },
+              "Innova Reborn": { lama: "Rp 800.000", diskon: "Rp 750.000" },
+              "Hiace 15 seat": { lama: "Rp 1.250.000", diskon: "Rp 1.200.000" }
+            },
+            termasuk: ["Mobil + Supir + BBM", "Durasi 12 Jam"],
+            tidakTermasuk: ["Parkir, Tiket masuk objek wisata", "Biaya makan supir & sewa jeep", "Pengeluaran pribadi"]
+          },
+          {
+            destinasi: ["Tebing Breksi", "Bhumi Merapi", "Candi Prambanan", "Jeep Lava Tour Merapi"],
+            gambar: [ "https://www.yogyes.com/id/yogyakarta-tourism-object/other/tebing-breksi/1.jpg"],
+            harga: {
+              "Avanza & Xenia": { lama: "Rp 550.000", diskon: "Rp 500.000" },
+              "Innova Reborn": { lama: "Rp 800.000", diskon: "Rp 750.000" },
+              "Hiace 15 seat": { lama: "Rp 1.250.000", diskon: "Rp 1.200.000" }
+            },
+            termasuk: ["Mobil + Supir + BBM", "Durasi 12 Jam"],
+            tidakTermasuk: ["Parkir, Tiket masuk objek wisata", "Biaya makan supir & sewa jeep", "Pengeluaran pribadi"]
+          },
+          {
+              destinasi: ["Obelix Hills", "Sri Gethuk Waterfall", "Hutan Pinus Pengger", "Goa Pindul"],
+              gambar: ["https://www.yogyes.com/id/yogyakarta-tourism-object/other/obelix-hills/1.jpg"],
+            harga: {
+              "Avanza & Xenia": { lama: "Rp 550.000", diskon: "Rp 500.000" },
+              "Innova Reborn": { lama: "Rp 800.000", diskon: "Rp 750.000" },
+              "Hiace 15 seat": { lama: "Rp 1.250.000", diskon: "Rp 1.200.000" }
+              },
+              termasuk: ["Mobil + Supir + BBM", "Durasi 12 Jam"],
+              tidakTermasuk: ["Parkir, Tiket masuk objek wisata", "Biaya rafting", "Pengeluaran pribadi"]
+          },
+          {
+              destinasi: ["Gereja Ayam", "Punthuk Setumbu", "Candi Borobudur", "Jeep Lava Tour Merapi"],
+              gambar: ["https://asset-2.tstatic.net/travel/foto/bank/images/bukit-rhema-atau-gereja-ayam.jpg"],
+              harga: {
+              "Avanza & Xenia": { lama: "Rp 580.000", diskon: "Rp 530.000" },
+              "Innova Reborn": { lama: "Rp 830.000", diskon: "Rp 780.000" },
+              "Hiace 15 seat": { lama: "Rp 1.280.000", diskon: "Rp 1.230.000" }
+            },
+            termasuk: ["Mobil + Supir + BBM", "Durasi 12 Jam"],
+            tidakTermasuk: ["Tiket masuk", "Sewa jeep", "Biaya makan", "Pengeluaran pribadi"]
+          },
+          {
+            destinasi: ["Watu Tapak", "Candi Ijo", "Tebing Breksi", "Obelix Hills"],
+            gambar: ["https://cdn.idntimes.com/content-images/community/2024/01/img-4966-f5c2c8b7273debf19ff82eaf2fe8f775-02acc01c109eebed72eae1de13a29346.jpeg"],
+            harga: {
+            "Avanza & Xenia": { lama: "Rp 560.000", diskon: "Rp 510.000" },
+            "Innova Reborn": { lama: "Rp 810.000", diskon: "Rp 760.000" },
+            "Hiace 15 seat": { lama: "Rp 1.260.000", diskon: "Rp 1.210.000" }
+            },
+            termasuk: ["Mobil + Supir + BBM", "Durasi 12 Jam"],
+            tidakTermasuk: ["Tiket masuk", "Biaya makan", "Pengeluaran pribadi"]
+          },
+          {
+            destinasi: ["HeHa Ocean View", "Cave Tubing Kalisuci", "Pantai Timang", "Goa Pindul"],
+            gambar: ["https://cdn.rri.co.id/berita/Jakarta/o/1728296083732-1000514118/7o0fb3a7boyiwbc.jpeg"],
+            harga: {
+            "Avanza & Xenia": { lama: "Rp 600.000", diskon: "Rp 550.000" },
+            "Innova Reborn": { lama: "Rp 850.000", diskon: "Rp 800.000" },
+            "Hiace 15 seat": { lama: "Rp 1.300.000", diskon: "Rp 1.250.000" }
+            },
+            termasuk: ["Mobil + Supir + BBM", "Durasi 12 Jam"],
+            tidakTermasuk: ["Tiket masuk", "Biaya tubing & gondola", "Pengeluaran pribadi"]
+        }
         ]
       };
     }
@@ -313,6 +378,3 @@ footer .btn-outline-light:hover {
   }
 }
 </style>
-
-
-
