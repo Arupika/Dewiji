@@ -4,13 +4,14 @@ import Home       from '@/views/Home.vue'
 import Destination  from '@/views/Destination.vue'
 import CarRent    from '@/views/CarRent.vue'
 import Package  from '@/views/Package.vue'
+import Comment from '@/views/Comment.vue'
 
 const routes = [
   { path: '/',          name: 'Home',    component: Home },
   { path: '/destination', name: 'Destinasi', component: Destination },
   { path: '/carrent',name: 'Rental Mobil', component: CarRent },
   { path: '/package', name: 'Paket Liburan', component: Package },
-  
+  { path: '/comment', name: 'Kritik & Saran', component: Comment },
 ]
 
 export default createRouter({

@@ -4,7 +4,8 @@ const items = [
   { to: '/',          name: 'Home' },
   { to: '/destination', name: 'Destinasi' },
   { to: '/carrent',name: 'Rental Mobil' },
-  { to: '/package', name: 'Paket Liburan' }
+  { to: '/package', name: 'Paket Liburan' },
+  { to: '/comment', name: 'Kritik & Saran' }
 ]
 </script>
 
