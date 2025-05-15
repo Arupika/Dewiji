@@ -14,7 +14,7 @@
             </ul>
             <hr />
             <div>
-              <strong>Harga:</strong>
+              <strong>Harga :</strong>
               <ul>
                 <li v-for="(harga, tipe) in trip.harga" :key="tipe">
                   {{ tipe }}: <del>{{ harga.lama }}</del> <strong>{{ harga.diskon }}</strong>
