@@ -35,6 +35,47 @@
       </div>
     </div>
   </div>
+
+  <!-- Footer Section -->
+  <footer class="bg-dark text-light pt-5">
+    <div class="container">
+      <div class="row">
+        <!-- Tentang Kami -->
+        <div class="col-md-3 mb-4">
+          <h5 class="fw-bold border-start border-4 ps-2">Tentang Kami</h5>
+          <p><strong>Yogyakarta Explore</strong> menyediakan sewa mobil berkualitas, aman, dan nyaman dengan harga yang cukup terjangkau serta menyediakan paket-paket wisata di Jogja dan sekitarnya.</p>
+        </div>
+        <!-- Kontak Kami -->
+        <div class="col-md-3 mb-4">
+          <h5 class="fw-bold border-start border-4 ps-2">Kontak Kami</h5>
+          <p>Jl. Nyi Ageng Nis 2B,<br>Rejowinangun, Kotagede,<br>Yogyakarta 55171</p>
+          <p>📞 081212344321</p>
+          <p>✉️ yogyakartaexploretour@gmail.com</p>
+        </div>
+        <!-- Navigasi -->
+        <div class="col-md-3 mb-4">
+          <h5 class="fw-bold border-start border-4 ps-2">Navigasi</h5>
+          <ul class="list-unstyled">
+            <li><a href="#" class="text-light text-decoration-none">Rental Mobil</a></li>
+            <li><a href="#" class="text-light text-decoration-none">Paket Wisata Jogja 1 Hari</a></li>
+            <li><a href="#" class="text-light text-decoration-none">Paket Wisata Jogja 2 Hari</a></li>
+            <li><a href="#" class="text-light text-decoration-none">Paket Bus Wisata Jogja</a></li>
+            <li><a href="#" class="text-light text-decoration-none">Testimoni</a></li>
+            <li><a href="#" class="text-light text-decoration-none">Galeri</a></li>
+          </ul>
+        </div>
+        <!-- Sosial Media -->
+        <div class="col-md-3 mb-4">
+          <h5 class="fw-bold border-start border-4 ps-2">Sosial Media</h5>
+          <div class="d-flex gap-2">
+            <a href="#" class="btn btn-outline-light btn-sm rounded-circle"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="btn btn-outline-light btn-sm rounded-circle"><i class="bi bi-tiktok"></i></a>
+            <a href="#" class="btn btn-outline-light btn-sm rounded-circle"><i class="bi bi-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
 </template>
 
 <script>
@@ -129,3 +170,6 @@ data() {
   justify-content: center;
 }
 </style>
+
+
+
