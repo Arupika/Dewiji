@@ -1,6 +1,13 @@
 <template>
   <div class="container py-5">
-    <h1 class="mb-4 text-center fw-bold">Paket Liburan</h1>
+    <div class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+          <h1 class="mb-4 fw-bold">Pilih Paket Liburan</h1>
+            <p> Cari referensi wisata di Jogja? Kamu bisa langsung pilih paket yang sudah kami sediakan. Tentunya kamu masih bisa custom paket wisata!</p>
+          </div>
+        </div>
+      </div>
     <div class="row g-4">
       <div class="col-md-4" v-for="(trip, index) in trips" :key="index">
         <div class="card h-100 shadow-sm">
@@ -29,7 +36,7 @@
             </div>
           </div>
           <div class="card-footer text-center">
-            <button class="btn btn-outline-success w-100">📱 BOOK NOW</button>
+            <button class="btn btn-outline-success w-100">📱 Booking Sekarang</button>
           </div>
         </div>
       </div>
@@ -43,14 +50,14 @@
         <!-- Tentang Kami -->
         <div class="col-md-3 mb-4">
           <h5 class="fw-bold border-start border-4 ps-2">Tentang Kami</h5>
-          <p><strong>Yogyakarta Explore</strong> menyediakan sewa mobil berkualitas, aman, dan nyaman dengan harga yang cukup terjangkau serta menyediakan paket-paket wisata di Jogja dan sekitarnya.</p>
+          <p><strong>Dewiji Explore</strong> menyediakan sewa mobil berkualitas, aman, dan nyaman dengan harga yang cukup terjangkau serta menyediakan paket-paket wisata di Jogja dan sekitarnya.</p>
         </div>
         <!-- Kontak Kami -->
         <div class="col-md-3 mb-4">
           <h5 class="fw-bold border-start border-4 ps-2">Kontak Kami</h5>
-          <p>Jl. Nyi Ageng Nis 2B,<br>Rejowinangun, Kotagede,<br>Yogyakarta 55171</p>
+          <p>Jl. Ngiringsi<br>Seleman, Yogyakarta<br>Yogyakarta 12345</p>
           <p>📞 081212344321</p>
-          <p>✉️ yogyakartaexploretour@gmail.com</p>
+          <p>✉️ yogyakartaDewiji@gmail.com</p>
         </div>
         <!-- Navigasi -->
         <div class="col-md-3 mb-4">
@@ -168,6 +175,44 @@ data() {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.card {
+  border-radius: 1rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-body ul {
+  padding-left: 1.25rem;
+  list-style: none;
+}
+
+.card-body ul li::before {
+  content: "•";
+  color: #00b894;
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
+.card-footer button {
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.card-footer button:hover {
+  background-color: #00b894;
+  color: white;
+  transform: scale(1.02);
+  box-shadow: 0 5px 10px rgba(0, 184, 148, 0.4);
 }
 </style>
 
