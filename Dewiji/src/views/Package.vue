@@ -98,12 +98,11 @@
           <div class="col-lg-3 col-md-6">
             <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Navigasi</h5>
             <ul class="list-unstyled small">
+              <li class="mb-2"><a href="#" class="text-light text-decoration-none hover-success">Home</a></li>
+              <li class="mb-2"><a href="#" class="text-light text-decoration-none hover-success">destinasi</a></li>
               <li class="mb-2"><a href="#" class="text-light text-decoration-none hover-success">Rental Mobil</a></li>
-              <li class="mb-2"><a href="#" class="text-light text-decoration-none hover-success">Paket Wisata Jogja 1 Hari</a></li>
-              <li class="mb-2"><a href="#" class="text-light text-decoration-none hover-success">Paket Wisata Jogja 2 Hari</a></li>
-              <li class="mb-2"><a href="#" class="text-light text-decoration-none hover-success">Paket Bus Wisata Jogja</a></li>
-              <li class="mb-2"><a href="#" class="text-light text-decoration-none hover-success">Testimoni</a></li>
-              <li class="mb-2"><a href="#" class="text-light text-decoration-none hover-success">Galeri</a></li>
+              <li class="mb-2"><a href="#" class="text-light text-decoration-none hover-success">Paket Liburan</a></li>
+              <li class="mb-2"><a href="#" class="text-light text-decoration-none hover-success">Kritik & Saran</a></li>
           </ul>
         </div>
         
@@ -280,6 +279,42 @@
             "Avanza/Xenia": { lama: "Rp 620.000", diskon: "Rp 570.000" },
             "Innova Reborn": { lama: "Rp 870.000", diskon: "Rp 820.000" },
             "Hiace 15 seat": { lama: "Rp 1.320.000", diskon: "Rp 1.270.000" }
+          },
+            termasuk: ["Mobil + Supir + BBM", "Durasi 12 Jam"],
+            tidakTermasuk: ["Tiket masuk", "Biaya makan", "Pengeluaran pribadi"]
+          },
+          // Trip 13
+          {
+            destinasi: ["Candi Ijo", "Candi Plaosan", "Museum Affandi"],
+            gambar: ["https://atourin.obs.ap-southeast-3.myhuaweicloud.com/images/destination/sleman/candi-ijo-profile1697015604.jpeg?x-image-process=image/resize,p_100,limit_1/imageslim"],
+            harga: {
+            "Avanza/Xenia": { lama: "Rp 570.000", diskon: "Rp 520.000" },
+            "Innova Reborn": { lama: "Rp 820.000", diskon: "Rp 770.000" },
+            "Hiace 15 seat": { lama: "Rp 1.270.000", diskon: "Rp 1.220.000" }
+          },
+            termasuk: ["Mobil + Supir + BBM", "Durasi 12 Jam"],
+            tidakTermasuk: ["Tiket masuk", "Biaya makan", "Pengeluaran pribadi"]
+          },
+          // Trip 14
+          {
+            destinasi: ["Air Terjun Kedung Pedut", "Ekowisata Kalibiru", "Taman Sungai Mudal"],
+            gambar: ["https://bob.kemenparekraf.go.id/wp-content/uploads/2024/05/Kabupaten-Kulonprogo-85.-Air-Terjun-Kedung-Pedut.png"],
+            harga: {
+            "Avanza/Xenia": { lama: "Rp 640.000", diskon: "Rp 590.000" },
+            "Innova Reborn": { lama: "Rp 890.000", diskon: "Rp 840.000" },
+            "Hiace 15 seat": { lama: "Rp 1.360.000", diskon: "Rp 1.310.000" }
+          },
+            termasuk: ["Mobil + Supir + BBM", "Durasi 12 Jam"],
+            tidakTermasuk: ["Tiket masuk", "Biaya makan", "Pengeluaran pribadi"]
+          },
+          // Trip 15
+          {
+            destinasi: ["Studio Alam Gamplong", "Desa Batik Giriloyo", "Desa Wisata Kasongan"],
+            gambar: ["https://www.bakpiamutiarajogja.com/wp-content/uploads/2023/05/Studio-Alam-Gamplong-Jogja.jpeg"],
+            harga: {
+            "Avanza/Xenia": { lama: "Rp 600.000", diskon: "Rp 550.000" },
+            "Innova Reborn": { lama: "Rp 850.000", diskon: "Rp 800.000" },
+            "Hiace 15 seat": { lama: "Rp 1.300.000", diskon: "Rp 1.250.000" }
           },
             termasuk: ["Mobil + Supir + BBM", "Durasi 12 Jam"],
             tidakTermasuk: ["Tiket masuk", "Biaya makan", "Pengeluaran pribadi"]

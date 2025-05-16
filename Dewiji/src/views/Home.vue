@@ -37,6 +37,36 @@ const destinasi = [
   }
 ]
 
+const artikelList = [
+  {
+    judul: "Manfaat Sewa Bus 35 Seat Di Yogyakarta",
+    tanggal: "17 December 2024",
+    views: 63,
+    kategori: "Rental Mobil",
+    deskripsi: "Saat merencanakan perjalanan bersama rombongan, baik untuk acara perusahaan, wisata keliling, pernikahan, atau reuni keluarga...",
+    link: "#",
+    gambar: "https://alkawakibitrans.com/wp-content/uploads/2024/03/sewa-bus-jogja-medium-bus-min.jpg" // bus image
+  },
+  {
+    judul: "Borobudur Sunrise: Must-Visit Destinations In Yogyakarta",
+    tanggal: "17 October 2024",
+    views: 83,
+    kategori: "Wisata Jogja, Wisata Magelang",
+    deskripsi: "Sunrise at Borobudur Temple is a must-see sight when you are in Yogyakarta. This temple is the largest Buddhist temple in the world...",
+    link: "#",
+    gambar: "https://media.tacdn.com/media/attractions-splice-spp-674x446/09/92/28/83.jpg" // borobudur sunrise
+  },
+  {
+    judul: "Tour Kota Jogja Satu Hari Dengan Bus Mewah",
+    tanggal: "2 October 2024",
+    views: 90,
+    kategori: "Travel Tips",
+    deskripsi: "Jika kamu ingin menjelajahi tempat-tempat terbaik di Jogja dalam satu hari, tanpa repot berkendara atau menggunakan transportasi umum...",
+    link: "#",
+    gambar: "https://xplorejogja.com/wp-content/uploads/2023/08/Gambar-Foto-Bus-Trans-Jogja-1.jpg" // jogja city with tugu
+  }
+]
+
 onMounted(() => {
   setInterval(() => {
     const el = scrollContainer.value
@@ -89,6 +119,31 @@ onMounted(() => {
       </div>
     </div>
   </section>
+
+  <!-- Artikel Blog Section -->
+  <section class="py-5">
+    <div class="container">
+      <h2 class="text-center fw-bold mb-4" data-aos="fade-up">Artikel Blog</h2>
+      <p class="text-center mb-5 text-muted">Baca juga informasi menarik, tips dan trik seputar traveling berikut ini!</p>
+
+      <div class="row g-4">
+        <div class="col-md-4" v-for="(artikel, idx) in artikelList" :key="idx" data-aos="fade-up" :data-aos-delay="idx * 100">
+          <div class="card h-100 shadow-sm">
+            <img :src="artikel.gambar" class="card-img-top" :alt="artikel.judul" />
+            <div class="card-body">
+              <h5 class="card-title text-primary fw-bold">{{ artikel.judul }}</h5>
+              <small class="text-muted">
+                <i class="bi bi-calendar-event"></i> {{ artikel.tanggal }} &nbsp;|&nbsp;
+                <i class="bi bi-eye"></i> {{ artikel.views }}x &nbsp;|&nbsp;
+                <span class="badge bg-secondary">{{ artikel.kategori }}</span>
+              </small>
+              <p class="card-text mt-2">{{ artikel.deskripsi }} <a :href="artikel.link">selengkapnya</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </template>
 
 <style scoped>
@@ -135,5 +190,24 @@ onMounted(() => {
   border-radius: 1rem;
   padding: 1rem;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.card-title {
+  font-size: 1.25rem;
+}
+
+.card-text a {
+  text-decoration: none;
+  font-weight: 600;
+  color: #f0ad4e; /* matching btn-warning */
+}
+
+.card-text a:hover {
+  text-decoration: underline;
+}
+
+section.py-5 {
+  padding-top: 3rem !important;
+  padding-bottom: 3rem !important;
 }
 </style>
