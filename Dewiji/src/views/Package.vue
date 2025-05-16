@@ -211,13 +211,84 @@
             },
             termasuk: ["Mobil + Supir + BBM", "Durasi 12 Jam"],
             tidakTermasuk: ["Tiket masuk", "Biaya makan", "Pengeluaran pribadi"]
+          },
+          // Trip 7
+          {
+            destinasi: ["Keraton Yogyakarta", "Taman Sari", "Malioboro"],
+            gambar: ["https://assets-a1.kompasiana.com/items/album/2023/09/15/keraton-yogyakarta-650405b908a8b526932b67e2.jpg"],
+            harga: {
+            "Avanza/Xenia": { lama: "Rp 520.000", diskon: "Rp 480.000" },
+            "Innova Reborn": { lama: "Rp 770.000", diskon: "Rp 720.000" },
+            "Hiace 15 seat": { lama: "Rp 1.200.000", diskon: "Rp 1.150.000" }
+          },
+            termasuk: ["Mobil + Supir + BBM", "Durasi 12 Jam"],
+            tidakTermasuk: ["Tiket masuk", "Biaya makan", "Pengeluaran pribadi"]
+          },
+          // Trip 8
+          {
+            destinasi: ["Taman Pintar", "Gembira Loka Zoo", "Kids Fun Park"],
+            gambar: ["https://www.1001malam.com/travel/wp-content/uploads/2016/08/Taman-Pintar-Sumbre-afiaanwas-blogspotcom.jpg"],
+            harga: {
+            "Avanza/Xenia": { lama: "Rp 580.000", diskon: "Rp 530.000" },
+            "Innova Reborn": { lama: "Rp 830.000", diskon: "Rp 780.000" },
+            "Hiace 15 seat": { lama: "Rp 1.280.000", diskon: "Rp 1.230.000" }
+          },
+            termasuk: ["Mobil + Supir + BBM", "Durasi 12 Jam"],
+            tidakTermasuk: ["Tiket masuk", "Biaya makan", "Pengeluaran pribadi"]
+          },
+          // Trip 9
+          {
+            destinasi: ["Goa Jomblang", "Goa Grubug", "Air Terjun Sri Gethuk"],
+            gambar: ["https://www.goa-jomblang.com/wp-content/uploads/2015/12/slider3.jpg"],
+            harga: {
+            "Avanza/Xenia": { lama: "Rp 650.000", diskon: "Rp 600.000" },
+            "Innova Reborn": { lama: "Rp 900.000", diskon: "Rp 850.000" },
+            "Hiace 15 seat": { lama: "Rp 1.360.000", diskon: "Rp 1.310.000" }
+          },
+            termasuk: ["Mobil + Supir + BBM", "Durasi 12 Jam"],
+            tidakTermasuk: ["Tiket masuk", "Biaya makan", "Pengeluaran pribadi"]
+          },
+          // Trip 10
+          {
+            destinasi: ["Pantai Drini", "Pantai Krakal", "Pantai Slili"],
+            gambar: ["https://desabanjarejo.gunungkidulkab.go.id/assets/files/artikel/sedang_1709553342Pantai-Drini-Yogyakarta.jpg"],
+            harga: {
+            "Avanza/Xenia": { lama: "Rp 600.000", diskon: "Rp 550.000" },
+            "Innova Reborn": { lama: "Rp 850.000", diskon: "Rp 800.000" },
+            "Hiace 15 seat": { lama: "Rp 1.300.000", diskon: "Rp 1.250.000" }
+          },
+            termasuk: ["Mobil + Supir + BBM", "Durasi 12 Jam"],
+            tidakTermasuk: ["Tiket masuk", "Biaya makan", "Pengeluaran pribadi"]
+          },
+          // Trip 11
+          {
+            destinasi: ["Masjid Gedhe Kauman", "Museum Sonobudoyo", "Kotagede Heritage"],
+            gambar: ["https://campatour.com/wp-content/uploads/2019/11/Masjid-Gedhe-Kauman.jpg"],
+            harga: {
+            "Avanza/Xenia": { lama: "Rp 530.000", diskon: "Rp 480.000" },
+            "Innova Reborn": { lama: "Rp 780.000", diskon: "Rp 730.000" },
+            "Hiace 15 seat": { lama: "Rp 1.220.000", diskon: "Rp 1.170.000" }
+          },
+            termasuk: ["Mobil + Supir + BBM", "Durasi 12 Jam"],
+            tidakTermasuk: ["Tiket masuk", "Biaya makan", "Pengeluaran pribadi"]
+          },
+          // Trip 12
+          {
+            destinasi: ["Kalibiru Zipline", "Puncak Suroloyo", "Ekowisata Tinalah"],
+            gambar: ["https://balistarisland.com/wp-content/uploads/2024/03/kalibiru-800x600.webp"],
+            harga: {
+            "Avanza/Xenia": { lama: "Rp 620.000", diskon: "Rp 570.000" },
+            "Innova Reborn": { lama: "Rp 870.000", diskon: "Rp 820.000" },
+            "Hiace 15 seat": { lama: "Rp 1.320.000", diskon: "Rp 1.270.000" }
+          },
+            termasuk: ["Mobil + Supir + BBM", "Durasi 12 Jam"],
+            tidakTermasuk: ["Tiket masuk", "Biaya makan", "Pengeluaran pribadi"]
           }
         ]
       };
     }
   };
   </script>
-
   <style scoped>
 .hover-success:hover  {
     color: #198754 !important;
