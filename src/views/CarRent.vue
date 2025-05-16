@@ -52,7 +52,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import SweetAlert2 from 'sweetalert2'
+import Swal from 'sweetalert2'
 import avanza from '@/assets/avanza.png'
 import xenia from '@/assets/xenia.png'
 import innova from '@/assets/innova.png'
@@ -114,16 +114,13 @@ const closeModal = () => {
 }
 
 const submitOrder = () => {
-  SweetAlert2.fire({
+  Swal.fire({
     title: 'Pemesanan Berhasil!',
     text: `Anda telah memesan ${selectedMobil.value.nama} selama ${duration.value} hari, tanggal penjemputan: ${pickupDate.value}`,
     icon: 'success',
-    confirmButtonText: 'Tutup',
-    customClass: {
-      popup: 'popup-success'
-    }
+    confirmButtonText: 'Tutup'
   })
-  
+
   closeModal()
 }
 </script>
@@ -141,7 +138,7 @@ const submitOrder = () => {
 }
 
 .popup-success {
-  background-color: #28a745; /* Warna hijau sukses */
+  background-color: #28a745;
   color: white;
   border-radius: 10px;
 }
