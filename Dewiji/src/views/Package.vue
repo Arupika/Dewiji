@@ -128,11 +128,6 @@
               </div>
               
               <div class="mb-3">
-                <label class="form-label fw-bold">Jumlah Orang</label>
-                <input type="number" class="form-control" v-model="bookingData.jumlahOrang" min="1" required />
-              </div>
-              
-              <div class="mb-3">
                 <label class="form-label fw-bold">Nama Lengkap</label>
                 <input type="text" class="form-control" v-model="bookingData.nama" required />
               </div>
@@ -469,7 +464,6 @@ export default {
             <p><strong>Paket:</strong> ${this.selectedPackageIndex + 1}</p>
             <p><strong>Tipe Mobil:</strong> ${this.bookingData.tipeMobil} (${selectedPrice})</p>
             <p><strong>Tanggal:</strong> ${this.bookingData.tanggal}</p>
-            <p><strong>Jumlah Orang:</strong> ${this.bookingData.jumlahOrang}</p>
             <p><strong>Nama:</strong> ${this.bookingData.nama}</p>
             <p><strong>WhatsApp:</strong> ${this.bookingData.whatsapp}</p>
             ${this.bookingData.catatan ? `<p><strong>Catatan:</strong> ${this.bookingData.catatan}</p>` : ''}
@@ -495,13 +489,12 @@ export default {
       const price = this.selectedPackage.harga[this.bookingData.tipeMobil].diskon
       
       const message = `Halo Dewiji Explore, saya ingin memesan:
-      
-📌 *Paket ${packageNumber}* 
+
+📌 *Pemesanan Paket Liburan : Paket ${packageNumber}* 
 📍 Destinasi: ${destinasi}
 🚗 Tipe Mobil: ${this.bookingData.tipeMobil}
 💰 Harga: ${price}
 📅 Tanggal: ${this.bookingData.tanggal}
-👥 Jumlah Orang: ${this.bookingData.jumlahOrang}
 👤 Nama: ${this.bookingData.nama}
 📱 WhatsApp: ${this.bookingData.whatsapp}
 ${this.bookingData.catatan ? `✏️ Catatan: ${this.bookingData.catatan}` : ''}
@@ -512,7 +505,7 @@ Mohon info lebih lanjut untuk proses pemesanan. Terima kasih.`
       const encodedMessage = encodeURIComponent(message)
       
       // Open WhatsApp with pre-filled message
-      window.open(`https://wa.me/6281212344321?text=${encodedMessage}`, '_blank')
+      window.open(`https://wa.me/6281348680937?text=${encodedMessage}`, '_blank')
     }
   }
 }
