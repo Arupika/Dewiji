@@ -1,3 +1,137 @@
+<template>
+  <header class="hero-section text-white d-flex align-items-center justify-content-center">
+    <div class="overlay"></div>
+    <div class="container text-center position-relative">
+      <h1 class="display-4 fw-bold" data-aos="fade-down">
+        Selamat Datang di <span class="text-warning">Dewiji!</span>
+      </h1>
+      <p class="lead mt-3" data-aos="fade-up" data-aos-delay="100">
+        Temukan pesona wisata Yogyakarta yang kaya akan budaya, alam, dan sejarah.
+        Dari pantai hingga candi, semua destinasi terbaik kami rangkum untuk Anda jelajahi!
+      </p>
+
+      <a
+        href="#destinasi"
+        class="btn btn-warning mt-4 px-4 py-2 shadow grow-on-hover"
+        data-aos="zoom-in"
+        data-aos-delay="200"
+      >
+        Lihat Destinasi
+      </a>
+    </div>
+  </header>
+
+  <section id="destinasi" class="py-5 bg-light">
+    <div class="container-fluid text-center"> <h2 class="fw-bold mb-4" data-aos="fade-up">Destinasi Terkenal di Yogyakarta</h2>
+
+      <div class="destinasi-scroll-wrapper" ref="scrollContainer">
+        <div class="destinasi-card" v-for="(item, i) in destinasi" :key="i">
+          <img :src="item.gambar" class="img-fluid rounded mx-auto d-block" :alt="item.nama" /> <h5 class="mt-3 fw-bold">{{ item.nama }}</h5>
+          <p class="text-muted">{{ item.deskripsi }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-5">
+    <div class="container">
+      <h2 class="text-center fw-bold mb-4" data-aos="fade-up">Artikel Blog</h2>
+      <p class="text-center mb-5 text-muted">Baca juga informasi menarik, tips dan trik seputar traveling berikut ini!</p>
+
+      <div class="row g-4">
+        <div
+          class="col-md-4"
+          v-for="(artikel, idx) in artikelList"
+          :key="idx"
+          data-aos="fade-up"
+          :data-aos-delay="idx * 100"
+        >
+          <div class="card h-100 shadow-sm">
+            <img :src="artikel.gambar" class="card-img-top" :alt="artikel.judul" />
+            <div class="card-body">
+              <h5 class="card-title text-primary fw-bold">{{ artikel.judul }}</h5>
+              <small class="text-muted">
+                <i class="bi bi-calendar-event"></i> {{ artikel.tanggal }} &nbsp;|&nbsp;
+                <i class="bi bi-eye"></i> {{ artikel.views }}x &nbsp;|&nbsp;
+                <span class="badge bg-secondary">{{ artikel.kategori }}</span>
+              </small>
+              <p class="card-text mt-2">{{ artikel.deskripsi }} <a :href="artikel.link">selengkapnya</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-dark text-light pt-5 pb-4">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-3 col-md-6">
+          <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Tentang Kami</h5>
+          <p class="small">
+            <strong>Dewiji Explore</strong> menyediakan sewa mobil berkualitas, aman, dan nyaman dengan harga yang
+            cukup terjangkau serta menyediakan paket-paket wisata di Jogja dan sekitarnya.
+          </p>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Kontak Kami</h5>
+          <ul class="list-unstyled small">
+            <li class="mb-2">
+              <i class="bi bi-geo-alt-fill text-success me-2"></i>
+              Jl. Ngiringsi, Sleman, Yogyakarta 12345
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-telephone-fill text-success me-2"></i>
+              081212344321
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-envelope-fill text-success me-2"></i>
+              yogyakartaDewiji@gmail.com
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Navigasi</h5>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="#" class="text-light text-decoration-none hover-success">Home</a></li>
+            <li class="mb-2"><a href="#destinasi" class="text-light text-decoration-none hover-success">Destinasi</a></li>
+            <li class="mb-2"><a href="#" class="text-light text-decoration-none hover-success">Rental Mobil</a></li>
+            <li class="mb-2"><a href="#" class="text-light text-decoration-none hover-success">Paket Liburan</a></li>
+            <li class="mb-2"><a href="#" class="text-light text-decoration-none hover-success">Kritik & Saran</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Sosial Media</h5>
+          <p class="small">Ikuti kami di media sosial untuk mendapatkan penawaran terbaik!</p>
+          <div class="d-flex gap-3">
+            <a href="#" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+              <i class="bi bi-facebook"></i>
+            </a>
+            <a href="#" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+              <i class="bi bi-tiktok"></i>
+            </a>
+            <a href="#" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+              <i class="bi bi-instagram"></i>
+            </a>
+            <a href="#" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+              <i class="bi bi-whatsapp"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <hr class="my-4 bg-secondary" />
+
+      <div class="text-center small text-muted">
+        &copy; 2023 Dewiji Explore. All Rights Reserved.
+      </div>
+    </div>
+  </footer>
+</template>
+
 <script setup>
 import { onMounted, ref } from 'vue'
 
@@ -82,70 +216,6 @@ onMounted(() => {
 })
 </script>
 
-<template>
-  <!-- Hero Section -->
-  <header class="hero-section text-white d-flex align-items-center justify-content-center">
-    <div class="overlay"></div>
-    <div class="container text-center position-relative">
-      <h1 class="display-4 fw-bold" data-aos="fade-down">
-        Selamat Datang di <span class="text-warning">Dewiji!</span>
-      </h1>
-      <p class="lead mt-3" data-aos="fade-up" data-aos-delay="100">
-        Temukan pesona wisata Yogyakarta yang kaya akan budaya, alam, dan sejarah.  
-        Dari pantai hingga candi, semua destinasi terbaik kami rangkum untuk Anda jelajahi!
-      </p>
-
-      <a
-        href="#destinasi"
-        class="btn btn-warning mt-4 px-4 py-2 shadow grow-on-hover"
-        data-aos="zoom-in"
-        data-aos-delay="200">
-        Lihat Destinasi
-      </a>
-    </div>
-  </header>
-
-  <!-- Destinasi Terkenal Section -->
-  <section id="destinasi" class="py-5 bg-light">
-    <div class="container">
-      <h2 class="text-center fw-bold mb-4" data-aos="fade-up">Destinasi Terkenal di Yogyakarta</h2>
-
-      <div class="destinasi-scroll-wrapper" ref="scrollContainer">
-        <div class="destinasi-card" v-for="(item, i) in destinasi" :key="i">
-          <img :src="item.gambar" class="img-fluid rounded" :alt="item.nama" />
-          <h5 class="mt-3 fw-bold">{{ item.nama }}</h5>
-          <p class="text-muted">{{ item.deskripsi }}</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Artikel Blog Section -->
-  <section class="py-5">
-    <div class="container">
-      <h2 class="text-center fw-bold mb-4" data-aos="fade-up">Artikel Blog</h2>
-      <p class="text-center mb-5 text-muted">Baca juga informasi menarik, tips dan trik seputar traveling berikut ini!</p>
-
-      <div class="row g-4">
-        <div class="col-md-4" v-for="(artikel, idx) in artikelList" :key="idx" data-aos="fade-up" :data-aos-delay="idx * 100">
-          <div class="card h-100 shadow-sm">
-            <img :src="artikel.gambar" class="card-img-top" :alt="artikel.judul" />
-            <div class="card-body">
-              <h5 class="card-title text-primary fw-bold">{{ artikel.judul }}</h5>
-              <small class="text-muted">
-                <i class="bi bi-calendar-event"></i> {{ artikel.tanggal }} &nbsp;|&nbsp;
-                <i class="bi bi-eye"></i> {{ artikel.views }}x &nbsp;|&nbsp;
-                <span class="badge bg-secondary">{{ artikel.kategori }}</span>
-              </small>
-              <p class="card-text mt-2">{{ artikel.deskripsi }} <a :href="artikel.link">selengkapnya</a></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-</template>
-
 <style scoped>
 .hero-section {
   position: relative;
@@ -165,13 +235,19 @@ onMounted(() => {
   z-index: 2;
 }
 
+.container-fluid { /* Membuat bagian destinasi mengisi lebar layar */
+  padding-left: 0;
+  padding-right: 0;
+}
+
 .destinasi-scroll-wrapper {
   display: flex;
   overflow-x: auto;
   scroll-behavior: smooth;
   gap: 1rem;
-  padding-bottom: 1rem;
+  padding: 1rem; /* Tambahkan padding agar konten tidak terlalu mepet tepi layar */
   scrollbar-width: thin;
+  justify-content: center; /* Membuat item berada di tengah wrapper */
 }
 
 .destinasi-scroll-wrapper::-webkit-scrollbar {
@@ -189,7 +265,20 @@ onMounted(() => {
   background: white;
   border-radius: 1rem;
   padding: 1rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Efek hover */
+  text-align: center; /* Rata tengah teks di dalam card */
+}
+
+.destinasi-card:hover {
+  transform: scale(1.05); /* Sedikit membesar saat hover */
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2); /* Shadow lebih terlihat saat hover */
+}
+
+.destinasi-card img {
+  max-width: 100%; /* Pastikan gambar tidak melebihi lebar card */
+  height: auto;
+  margin-bottom: 1rem; /* Beri jarak antara gambar dan teks */
 }
 
 .card-title {

@@ -186,9 +186,72 @@
   </div>
 
   <!-- Footer Section -->
-  <footer class="bg-dark text-light pt-5 pb-4 mt-5">
-    <div class="container text-center">
-      <small>&copy; 2025 Rental Mobil Yogyakarta. All rights reserved.</small>
+  <footer class="bg-dark text-light pt-5 pb-4">
+    <div class="container">
+      <div class="row g-4">
+        <!-- Tentang Kami -->
+        <div class="col-lg-3 col-md-6">
+          <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Tentang Kami</h5>
+          <p class="small"><strong>Dewiji Explore</strong> menyediakan sewa mobil berkualitas, aman, dan nyaman dengan harga yang cukup terjangkau serta menyediakan paket-paket wisata di Jogja dan sekitarnya.</p>
+        </div>
+        
+        <!-- Kontak Kami -->
+        <div class="col-lg-3 col-md-6">
+          <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Kontak Kami</h5>
+          <ul class="list-unstyled small">
+            <li class="mb-2">
+              <i class="bi bi-geo-alt-fill text-success me-2"></i>
+              Jl. Ngiringsi, Sleman, Yogyakarta 12345
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-telephone-fill text-success me-2"></i>
+              081212344321
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-envelope-fill text-success me-2"></i>
+              yogyakartaDewiji@gmail.com
+            </li>
+          </ul>
+        </div>
+        
+        <!-- Navigasi -->
+        <div class="col-lg-3 col-md-6">
+          <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Navigasi</h5>
+          <ul class="list-unstyled small">
+              <li class="mb-2"><a href="#" class="text-light text-decoration-none hover-success">Home</a></li>
+              <li class="mb-2"><a href="#" class="text-light text-decoration-none hover-success">destinasi</a></li>
+              <li class="mb-2"><a href="#" class="text-light text-decoration-none hover-success">Rental Mobil</a></li>
+              <li class="mb-2"><a href="#" class="text-light text-decoration-none hover-success">Paket Liburan</a></li>
+              <li class="mb-2"><a href="#" class="text-light text-decoration-none hover-success">Kritik & Saran</a></li>
+          </ul>
+        </div>
+        
+        <!-- Sosial Media -->
+        <div class="col-lg-3 col-md-6">
+          <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Sosial Media</h5>
+          <p class="small">Ikuti kami di media sosial untuk mendapatkan penawaran terbaik!</p>
+          <div class="d-flex gap-3">
+            <a href="#" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+              <i class="bi bi-facebook"></i>
+            </a>
+            <a href="#" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+              <i class="bi bi-tiktok"></i>
+            </a>
+            <a href="#" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+              <i class="bi bi-instagram"></i>
+            </a>
+            <a href="#" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+              <i class="bi bi-whatsapp"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <hr class="my-4 bg-secondary">
+      
+      <div class="text-center small text-muted">
+        &copy; 2023 Dewiji Explore. All Rights Reserved.
+      </div>
     </div>
   </footer>
 </template>
@@ -373,40 +436,156 @@ export default {
 </script>
 
 <style scoped>
-.btn-close {
-  background: none;
-  border: none;
-  padding: 0.5rem;
-  line-height: 1;
+
+.display-5 {
+  font-size: 2.5rem; /* Slightly smaller display heading */
+  color: #343a40; /* Dark grey text */
 }
 
-.btn-close i {
+.lead {
+  font-size: 1.1rem;
   color: #6c757d;
-  transition: color 0.2s;
 }
 
-.btn-close:hover i {
-  color: #2a2727;
+/* Car Rental Cards */
+.row.g-4 {
+  margin-top: 1rem;
 }
 
-.modal-header {
-  padding: 1.5rem 1.5rem 0;
+.col-md-4 {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Added transition */
 }
 
-.modal-content {
-  border-radius: 1rem;
+.col-md-4:hover {
+  transform: translateY(-5px); /* Slight vertical lift on hover */
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); /* Subtle shadow on hover */
+}
+
+.card {
+  border: none;
+}
+
+.card-img-top {
+  border-radius: 0.5rem 0.5rem 0 0;
+  overflow: hidden; /* Ensure image doesn't overflow rounded corners */
+}
+
+.card-body {
+  padding: 1.5rem;
 }
 
 .card-title {
-  font-size: 1.25rem;
+  font-size: 1.1rem; /* Slightly smaller card title */
+  color: #212529; /* Darker text */
+  margin-bottom: 0.75rem;
+}
+
+.badge {
+  font-size: 0.8rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.25rem;
+  margin-right: 0.3rem;
+}
+
+.card-text {
+  color: #495057;
+  margin-bottom: 1rem;
+}
+
+.fw-bold.mb-2 {
+  color: #343a40;
+}
+
+.text-success.fw-bold {
+  color: #28a745 !important; /* Ensure success color overrides */
+}
+
+.list-unstyled i {
+  margin-right: 0.5rem;
+}
+
+.card-footer {
+  padding: 1rem 1.5rem;
+  background-color: transparent;
 }
 
 .card-footer .btn {
-  font-size: 1.1rem;
+  font-size: 1rem;
+  padding: 0.75rem 1.5rem;
+}
+
+/* Booking Modal */
+.modal-content {
+  border-radius: 1rem;
+  border: none;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  color: #343a40;
+}
+
+.btn-close {
+  opacity: 0.7;
+}
+
+.btn-close:hover {
+  opacity: 1;
 }
 
 .modal-body {
+  padding: 2rem;
   max-height: 70vh;
   overflow-y: auto;
+}
+
+.border-bottom {
+  border-bottom: 2px solid #007bff !important; /* Accent color for the detail section */
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+}
+
+.text-muted.small {
+  color: #6c757d !important;
+}
+
+.form-label.fw-bold {
+  color: #343a40;
+  margin-bottom: 0.5rem;
+}
+
+.form-select,
+.form-control {
+  margin-bottom: 1rem;
+  border-radius: 0.3rem;
+}
+
+.btn-success {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+
+/* Footer */
+.bg-dark {
+  background-color: #343a40 !important;
+}
+
+.text-light {
+  color: #f8f9fa !important;
+}
+
+.footer small {
+  font-size: 0.9rem;
 }
 </style>
