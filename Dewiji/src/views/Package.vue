@@ -425,7 +425,7 @@ export default {
           deskripsi: "Kunjungi kompleks Candi Ijo yang tenang dengan pemandangan alam yang indah, kagumi arsitektur unik Candi Plaosan yang merupakan perpaduan Hindu dan Buddha, serta apresiasi karya seni ekspresif pelukis ternama Affandi di museumnya."
         },
         {
-          destinasi: ["Air Terjun Kedung Pedut", "Ekowisata Kalibiru", "Taman Sungai Mudal"],
+          destinasi: ["Air Terjun Kedung Pedut", "Ekowisata Kalibiruu", "Taman Sungai Mudall"],
           gambar: ["https://bob.kemenparekraf.go.id/wp-content/uploads/2024/05/Kabupaten-Kulonprogo-85.-Air-Terjun-Kedung-Pedut.png"],
           harga: {
             "Avanza/Xenia": { lama: "Rp 640.000", diskon: "Rp 590.000" },
