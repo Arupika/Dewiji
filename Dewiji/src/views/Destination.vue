@@ -431,6 +431,45 @@ export default {
             "Parkir Motor": "Rp 5.000"
           },
           jamOperasional: "06:00 - 18:00 WIB"
+        },
+         {
+          id: 25,
+          nama: "Obelix Sea View",
+          deskripsi: "Obelix Sea View adalah destinasi wisata yang menawarkan pengalaman unik menikmati panorama Laut Selatan dari ketinggian. Terletak di Hutan Giricahyo, Kecamatan Purwosari, Kabupaten Gunungkidul, tempat ini berada di timur Pantai Parangtritis dan dapat dijangkau dengan perjalanan sekitar 31 km dari pusat Kota Yogyakarta melalui Jalan Jogja-Parangtritis.",
+          gambar: "https://obelixseaview.com/images/galeri/DJI_09882.jpg",
+          location: "Gunungkidul, DIY",
+          kategori: ["Pemandangan", "Alam"],
+          harga: {
+            "Weekday": "Rp 30.000",
+            "Weekend": "Rp 40.000"
+          },
+          jamOperasional: "08:00 - 21:00 WIB"
+        },
+         {
+          id: 26,
+          nama: "Taman Sari",
+          deskripsi: "Taman Sari, dikenal juga sebagai Istana Air, adalah kompleks bersejarah yang dulunya merupakan taman kerajaan Kesultanan Yogyakarta. Dibangun pada masa Sultan Hamengkubuwono I antara tahun 1758–1765, kompleks ini berfungsi sebagai tempat peristirahatan, meditasi, pertahanan, dan rekreasi bagi keluarga kerajaan. Terletak sekitar 750 meter dari Alun-Alun Kidul, Taman Sari kini menjadi destinasi wisata budaya yang memikat dengan perpaduan arsitektur Jawa dan Eropa. ",
+          gambar: "https://asset.kompas.com/crops/nOQ3a7G-PrgyRoSVCR2vvlWiLFQ=/0x0:1000x667/750x500/data/photo/2022/03/13/622e12c85befb.jpg",
+          location: "Yogyakarta, DIY",
+          kategori: ["Landmark", "Sejarah"],
+          harga: {
+            "Wisatawan Lokal": "Rp 7.500",
+            "Wisatawan Mancanegara": "Rp 15.000"
+          },
+          jamOperasional: "09:00 - 15:00 WIB"
+        },
+         {
+          id: 27,
+          nama: "Keraton Ratu Boko",
+          deskripsi: "Ratu Boko adalah situs purbakala yang berada di atas bukit, sekitar 3 km dari Candi Prambanan, tepatnya di Desa Bokoharjo, Sleman, Yogyakarta. Meski sering disebut sebagai candi, Ratu Boko bukanlah tempat ibadah, melainkan reruntuhan kompleks istana kuno yang diperkirakan dibangun pada abad ke-8 Masehi oleh Wangsa Syailendra atau Mataram Kuno. Terletak di ketinggian sekitar 196 meter di atas permukaan laut, kompleks ini menyuguhkan pemandangan alam spektakuler dan sunset terbaik di Yogyakarta.",
+          gambar: "https://idsejarah.net/wp-content/uploads/2016/07/ratu-boko.jpg",
+          location: "Sleman, DIY",
+          kategori: ["Budaya", "Sejarah"],
+          harga: {
+            "Wisatawan Lokal": "Rp 40.000",
+            "Wisatawan Mancanegara": "Rp 100.000"
+          },
+          jamOperasional: "09:00 - 17:00 WIB"
         }
       ].map(item => ({ ...item, showFull: false }))
     };
