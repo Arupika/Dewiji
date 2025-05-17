@@ -84,9 +84,17 @@
     >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content rounded-3">
-          <div class="modal-header border-0">
+          <div class="modal-header border-0 position-relative">
             <h5 class="modal-title fw-bold">{{ selectedMobil.nama }}</h5>
-            <button type="button" class="btn-close" @click="closeModal" aria-label="Close"></button>
+            <button 
+              type="button" 
+              class="btn-close position-absolute top-0 end-0 m-3" 
+              @click="closeModal" 
+              aria-label="Close"
+              style="font-size: 1.5rem; opacity: 1;"
+            >
+              <i class="bi bi-x-lg"></i>
+            </button>
           </div>
           <div class="modal-body">
             <div class="text-center mb-4">
@@ -145,7 +153,17 @@
                 </select>
               </div>
 
-              <!-- Input Nomor WhatsApp -->
+              <div class="mb-3">
+                <label class="form-label fw-bold">Nama Lengkap</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Nama Anda"
+                  v-model="customerName"
+                  required
+                />
+              </div>
+
               <div class="mb-3">
                 <label class="form-label fw-bold">Nomor WhatsApp</label>
                 <input
@@ -255,18 +273,19 @@ export default {
     const pickupDate = ref("");
     const paketSewa = ref("harian");
     const lokasiAmbil = ref("kantor");
+    const customerName = ref("");
     const customerPhone = ref("");
+    const adminPhone = "6281234567890"; // Ganti dengan nomor admin yang benar
 
     const showDetails = (mobil) => {
       selectedMobil.value = mobil;
-      // Set tanggal pengambilan default besok hari
       const tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
       pickupDate.value = tomorrow.toISOString().split("T")[0];
-      // Reset form lain
       duration.value = 1;
       paketSewa.value = "harian";
       lokasiAmbil.value = "kantor";
+      customerName.value = "";
       customerPhone.value = "";
     };
 
@@ -276,10 +295,10 @@ export default {
       pickupDate.value = "";
       paketSewa.value = "harian";
       lokasiAmbil.value = "kantor";
+      customerName.value = "";
       customerPhone.value = "";
     };
 
-    // Fungsi untuk mengubah nomor HP ke format 62...
     const formatPhoneNumber = (phone) => {
       let cleaned = phone.replace(/\D/g, "");
       if (cleaned.startsWith("0")) {
@@ -291,7 +310,6 @@ export default {
       return cleaned;
     };
 
-    // Fungsi untuk mengubah kode lokasi jadi text deskriptif
     const getLokasiText = (value) => {
       switch (value) {
         case "bandara":
@@ -299,17 +317,18 @@ export default {
         case "stasiun":
           return "Stasiun Tugu";
         case "hotel":
-          return "Kantor Dewiji Hotel (wilayah Jogja)";
+          return "Hotel (wilayah Jogja)";
         default:
           return "Kantor Dewiji (Jl. Ngiringsi, Sleman)";
       }
     };
 
     const submitOrder = () => {
-      if (!customerPhone.value) {
-        Swal.fire("Error", "Nomor WhatsApp harus diisi!", "error");
+      if (!customerName.value || !customerPhone.value) {
+        Swal.fire("Error", "Nama dan nomor WhatsApp harus diisi!", "error");
         return;
       }
+      
       const phone = formatPhoneNumber(customerPhone.value);
 
       const mobil = selectedMobil.value.nama;
@@ -319,17 +338,18 @@ export default {
       const lokasi = getLokasiText(lokasiAmbil.value);
 
       const pesan =
-        `Halo, saya ingin memesan mobil:\n` +
-        `Mobil: *${mobil}*\n` +
-        `Paket: *${paket}*\n` +
-        `Tanggal Pengambilan: *${tanggal}*\n` +
-        `Durasi: *${durasiText}*\n` +
-        `Lokasi Pengambilan: *${lokasi}*\n` +
-        `Nomor WA: +${phone}\n` +
+        `Halo, saya *${customerName.value}* ingin memesan mobil:\n` +
+        `• Mobil: *${mobil}*\n` +
+        `• Paket: *${paket}*\n` +
+        `• Tanggal Pengambilan: *${tanggal}*\n` +
+        `• Durasi: *${durasiText}*\n` +
+        `• Lokasi Pengambilan: *${lokasi}*\n` +
+        `• Nama Pemesan: *${customerName.value}*\n` +
+        `• Nomor WA: +${phone}\n\n` +
+        `Mohon info lebih lanjut untuk proses penyewaan. Terima kasih!`;
 
-        `Mohon info lebih lanjut untuk proses penyewaan Terima kasih!`;
       const encodedPesan = encodeURIComponent(pesan);
-      const waUrl = `https://wa.me/${phone}?text=${encodedPesan}`;
+      const waUrl = `https://wa.me/${adminPhone}?text=${encodedPesan}`;
 
       window.open(waUrl, "_blank");
       closeModal();
@@ -342,6 +362,7 @@ export default {
       pickupDate,
       paketSewa,
       lokasiAmbil,
+      customerName,
       customerPhone,
       showDetails,
       closeModal,
@@ -352,16 +373,28 @@ export default {
 </script>
 
 <style scoped>
-/* Tambahan opsional styling agar modal dan card lebih rapih */
-
-.modal-content {
-  border-radius: 1rem;
-}
-
 .btn-close {
   background: none;
   border: none;
-  font-size: 1.2rem;
+  padding: 0.5rem;
+  line-height: 1;
+}
+
+.btn-close i {
+  color: #6c757d;
+  transition: color 0.2s;
+}
+
+.btn-close:hover i {
+  color: #2a2727;
+}
+
+.modal-header {
+  padding: 1.5rem 1.5rem 0;
+}
+
+.modal-content {
+  border-radius: 1rem;
 }
 
 .card-title {
@@ -372,7 +405,6 @@ export default {
   font-size: 1.1rem;
 }
 
-/* Scroll modal body jika konten terlalu panjang */
 .modal-body {
   max-height: 70vh;
   overflow-y: auto;
