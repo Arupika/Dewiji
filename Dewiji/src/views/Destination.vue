@@ -1,4 +1,5 @@
 <template>
+  <link rel="preload" :href="destinations[0].gambar" as="image">
   <div class="container py-5">
     <!-- Hero Section -->
     <div class="container py-5">
@@ -15,7 +16,7 @@
       <div class="col-md-4" v-for="(destination, index) in destinations" :key="index">
         <div class="card h-100 shadow-sm">
           <div class="card-img-top">
-            <img :src="destination.gambar" class="w-100 rounded-top" style="height: 200px; object-fit: cover;" :alt="destination.nama" />
+            <img :src="destination.gambar" class="w-100 rounded-top" style="height: 200px; object-fit: cover;" :alt="destination.nama" loading="lazy" width="300" height="200"/>
           </div>
           <div class="card-body">
             <h5 class="card-title fw-bold">{{ destination.nama }}</h5>
@@ -136,7 +137,7 @@ export default {
           id: 1,
           nama: "Gunung Merapi",
           deskripsi: "Gunung Merapi merupakan salah satu destinasi wisata alam paling ikonik di Indonesia, terletak di perbatasan Daerah Istimewa Yogyakarta dan Jawa Tengah. Dikenal sebagai gunung berapi paling aktif di Indonesia, Merapi tidak hanya menawarkan pesona keindahan alam yang luar biasa, tetapi juga menyimpan kisah sejarah, budaya, dan kekuatan alam yang memukau.",
-          gambar: "https://media.suara.com/pictures/653x366/2025/03/19/91008-wisata-di-lereng-merapi.webp",
+          gambar: "https://cdn.rri.co.id/berita/Yogyakarta/o/1729504978290-mount-merapi-113620_1280/7gdeea17tmc4r0w.jpeg",
           location: "Sleman, DIY",
           kategori: ["Alam", "Petualangan"],
           harga: {
@@ -188,7 +189,7 @@ export default {
           id: 5,
           nama: "Jalan Malioboro",
           deskripsi: "Jalan Malioboro adalah ikon wisata paling terkenal di Yogyakarta. Terletak di jantung kota, Malioboro bukan sekadar jalan saja ia adalah denyut nadi kehidupan kota yang memadukan sejarah, belanja, seni, dan budaya Jawa dalam satu jalur yang hidup selama 24 jam.",
-          gambar: "https://perizinan.jogjakota.go.id/upload/kontent/bfbac156a5c5d001ef798a4f7f5e8a3b_gap-masyarakat-bawah-dan-atas-yogyakarta-paling-tinggi-kok-bisa-An6q9hn5OF.jpg",
+          gambar: "https://www.yogyes.com/id/yogyakarta-tourism-object/other/malioboro/1.jpg",
           location: "Yogyakarta, DIY",
           kategori: ["Belanja", "Kuliner"],
           jamOperasional: "24 Jam"
@@ -536,68 +537,55 @@ export default {
   color: #198754 !important;
   border-color: #198754 !important;
 }
-
 .card {
   border-radius: 1rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   overflow: hidden;
   border: none;
 }
-
 .card:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
 }
-
 .card-img-top {
   overflow: hidden;
 }
-
 .card-img-top img {
   transition: transform 0.5s ease;
   height: 200px;
   object-fit: cover;
   width: 100%;
 }
-
 .card:hover .card-img-top img {
   transform: scale(1.05);
 }
-
 .btn-success {
   transition: all 0.3s ease;
   padding: 0.5rem 1rem;
 }
-
 .btn-success:hover {
   background-color: #157347;
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(25, 135, 84, 0.3);
 }
-
 .border-success {
   border-color: #198754 !important;
 }
-
 .text-truncate {
   display: -webkit-box;
-  
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .display-5 {
     font-size: 2rem;
   }
-  
   .lead {
     font-size: 1rem;
   }
 }
-
 .card-body {
   min-height: 150px;
 }
