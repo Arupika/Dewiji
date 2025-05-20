@@ -1,21 +1,24 @@
+// router/index.js
 import { createRouter, createWebHistory } from 'vue-router'
 
-import Home       from '@/views/Home.vue'
-import Destination  from '@/views/Destination.vue'
-import CarRent    from '@/views/CarRent.vue'
-import Package  from '@/views/Package.vue'
-import Comment from '@/views/Comment.vue'
+import Home        from '@/views/Home.vue'
+import Destination from '@/views/Destination.vue'
+import CarRent     from '@/views/CarRent.vue'
+import Package     from '@/views/Package.vue'
+import Comment     from '@/views/Comment.vue'
 
 const routes = [
-  { path: '/',          name: 'Home',    component: Home },
-  { path: '/destination', name: 'Destinasi', component: Destination },
-  { path: '/carrent',name: 'Rental Mobil', component: CarRent },
-  { path: '/package', name: 'Paket Liburan', component: Package },
-  { path: '/comment', name: 'Kritik & Saran', component: Comment },
+  { path: '/',            name: 'Home',         component: Home },
+  { path: '/destination', name: 'Destination',  component: Destination },
+  { path: '/carrent',     name: 'CarRent',      component: CarRent },
+  { path: '/package',     name: 'Package',      component: Package },
+  { path: '/comment',     name: 'Comment',      component: Comment },
 ]
 
-export default createRouter({
+const router = createRouter({
   history: createWebHistory(),
   routes,
   scrollBehavior: () => ({ top: 0 })
 })
+
+export default router

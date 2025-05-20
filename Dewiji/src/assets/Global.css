@@ -56,12 +56,24 @@ html, body, #app {
   overflow: hidden;
   text-overflow: ellipsis;
   }
+  .hover-success:hover {
+  color: #198754 !important;
+  border-color: #198754 !important;
+}
+
+   h2, h3,h4{
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #f0ad4e; /* warna oranye (bs-warning) */
+}
 
 
   /* --- Footer --- */
   .footer-purple {
   background: var(--purple-dark);
   color: #fff;
+  
 }
 
 
