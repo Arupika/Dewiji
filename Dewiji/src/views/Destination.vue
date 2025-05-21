@@ -58,7 +58,7 @@
   </div>
 
   <!-- Footer Section -->
-  <footer class="bg-dark text-light pt-5 pb-4">
+  <<footer class="bg-dark text-light pt-5 pb-4">
     <div class="container">
       <div class="row g-4">
         <!-- Tentang Kami -->
@@ -87,43 +87,56 @@
         </div>
         
         <!-- Navigasi -->
-        <div class="col-lg-3 col-md-6">
-          <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Navigasi</h5>
-          <ul class="list-unstyled small">
-              <li class="mb-2"><a href="#" class="text-light text-decoration-none hover-success">Home</a></li>
-              <li class="mb-2"><a href="#" class="text-light text-decoration-none hover-success">destinasi</a></li>
-              <li class="mb-2"><a href="#" class="text-light text-decoration-none hover-success">Rental Mobil</a></li>
-              <li class="mb-2"><a href="#" class="text-light text-decoration-none hover-success">Paket Liburan</a></li>
-              <li class="mb-2"><a href="#" class="text-light text-decoration-none hover-success">Kritik & Saran</a></li>
-          </ul>
-        </div>
+<div class="col-lg-3 col-md-6">
+  <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Navigasi</h5>
+  <ul class="list-unstyled small">
+    <li class="mb-2">
+      <router-link to="/" class="text-light text-decoration-none hover-success">Home</router-link>
+    </li>
+    <li class="mb-2">
+      <router-link to="/Destination" class="text-light text-decoration-none hover-success">Destinasi</router-link>
+    </li>
+    <li class="mb-2">
+      <router-link to="/CarRent" class="text-light text-decoration-none hover-success">Rental Mobil</router-link>
+    </li>
+    <li class="mb-2">
+      <router-link to="/Package" class="text-light text-decoration-none hover-success">Paket Liburan</router-link>
+    </li>
+    <li class="mb-2">
+      <router-link to="/Comment" class="text-light text-decoration-none hover-success">Kritik & Saran</router-link>
+    </li>
+  </ul>
+</div>
+
         
-        <!-- Sosial Media -->
-        <div class="col-lg-3 col-md-6">
-          <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Sosial Media</h5>
-          <p class="small">Ikuti kami di media sosial untuk mendapatkan penawaran terbaik!</p>
-          <div class="d-flex gap-3">
-            <a href="#" class="btn btn-outline-light btn-sm rounded-circle hover-success">
-              <i class="bi bi-facebook"></i>
-            </a>
-            <a href="#" class="btn btn-outline-light btn-sm rounded-circle hover-success">
-              <i class="bi bi-tiktok"></i>
-            </a>
-            <a href="#" class="btn btn-outline-light btn-sm rounded-circle hover-success">
-              <i class="bi bi-instagram"></i>
-            </a>
-            <a href="#" class="btn btn-outline-light btn-sm rounded-circle hover-success">
-              <i class="bi bi-whatsapp"></i>
-            </a>
-          </div>
-        </div>
+       <!-- Sosial Media -->
+<div class="col-lg-3 col-md-6">
+  <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Sosial Media</h5>
+  <p class="small">Ikuti kami di media sosial untuk mendapatkan penawaran terbaik!</p>
+  <div class="d-flex gap-3">
+    <!-- GANTI BAGIAN INI -->
+    <a href="https://www.facebook.com/namapagekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+      <i class="bi bi-facebook"></i>
+    </a>
+    <!-- GANTI BAGIAN INI -->
+    <a href="https://www.tiktok.com/@usernamekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+      <i class="bi bi-tiktok"></i>
+    </a>
+    <!-- GANTI BAGIAN INI -->
+    <a href="https://www.instagram.com/usernamekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+      <i class="bi bi-instagram"></i>
+    </a>
+    <!-- GANTI BAGIAN INI -->
+    <a href="https://wa.me/6281234567890" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+      <i class="bi bi-whatsapp"></i>
+    </a>
+  </div>
+</div>
+
       </div>
       
       <hr class="my-4 bg-secondary">
       
-      <div class="text-center small text-muted">
-        &copy; 2023 Dewiji Explore. All Rights Reserved.
-      </div>
     </div>
   </footer>
 </template>
@@ -294,7 +307,7 @@ export default {
           id: 14,
           nama: "Air Terjun Sri Gethuk",
           deskripsi: "Air Terjun Sri Gethuk adalah salah satu air terjun paling indah di Yogyakarta yang terletak di Kabupaten Gunungkidul. Air terjun ini memiliki keunikan berupa susunan batu kapur yang membentuk undakan alami dengan air jernih yang mengalir deras.",
-          gambar: "https://reezkypradata.com/wp-content/uploads/2017/07/Sri-Gethuk-1024x640.jpg",
+          gambar: "https://labirutour.com/wp-content/uploads/2016/04/Keindahan-Alam-Air-Terjun-Sri-Gethuk-Yogyakarta-Bara-Purnomo.jpg",
           location: "Gunungkidul, DIY",
           kategori: ["Alam", "Air Terjun"],
           harga: {

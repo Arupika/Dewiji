@@ -75,5 +75,77 @@ html, body, #app {
   color: #fff;
   
 }
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  background: url('@/assets/merapi.png') center center / cover no-repeat;
+}
 
+.overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  z-index: 1;
+}
+
+.container {
+  z-index: 2;
+}
+
+.scroll-wrapper {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  scrollbar-width: thin;
+}
+
+.scroll-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.scroll-wrapper::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+.border-success{
+  border-color: #198754 !important;
+}
+.destinasi-element-card {
+  flex: 0 0 auto;
+  width: 400px;
+  background: white;
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.element-card {
+  flex: 0 0 auto;
+  width: 350px;
+  background: white;
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.card-title {
+  font-size: 1.25rem;
+}
+
+.card-text a {
+  text-decoration: none;
+  font-weight: 600;
+  color: #f0ad4e; /* matching btn-warning */
+}
+
+.card-text a:hover {
+  text-decoration: underline;
+}
+
+section.py-5 {
+  padding-top: 3rem !important;
+  padding-bottom: 3rem !important;
+}
 

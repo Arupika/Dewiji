@@ -215,43 +215,56 @@
         </div>
         
         <!-- Navigasi -->
-        <div class="col-lg-3 col-md-6">
-          <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Navigasi</h5>
-          <ul class="list-unstyled small">
-              <li class="mb-2"><a href="#" class="text-light text-decoration-none hover-success">Home</a></li>
-              <li class="mb-2"><a href="#" class="text-light text-decoration-none hover-success">destinasi</a></li>
-              <li class="mb-2"><a href="#" class="text-light text-decoration-none hover-success">Rental Mobil</a></li>
-              <li class="mb-2"><a href="#" class="text-light text-decoration-none hover-success">Paket Liburan</a></li>
-              <li class="mb-2"><a href="#" class="text-light text-decoration-none hover-success">Kritik & Saran</a></li>
-          </ul>
-        </div>
+<div class="col-lg-3 col-md-6">
+  <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Navigasi</h5>
+  <ul class="list-unstyled small">
+    <li class="mb-2">
+      <router-link to="/" class="text-light text-decoration-none hover-success">Home</router-link>
+    </li>
+    <li class="mb-2">
+      <router-link to="/Destination" class="text-light text-decoration-none hover-success">Destinasi</router-link>
+    </li>
+    <li class="mb-2">
+      <router-link to="/CarRent" class="text-light text-decoration-none hover-success">Rental Mobil</router-link>
+    </li>
+    <li class="mb-2">
+      <router-link to="/Package" class="text-light text-decoration-none hover-success">Paket Liburan</router-link>
+    </li>
+    <li class="mb-2">
+      <router-link to="/Comment" class="text-light text-decoration-none hover-success">Kritik & Saran</router-link>
+    </li>
+  </ul>
+</div>
+
         
-        <!-- Sosial Media -->
-        <div class="col-lg-3 col-md-6">
-          <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Sosial Media</h5>
-          <p class="small">Ikuti kami di media sosial untuk mendapatkan penawaran terbaik!</p>
-          <div class="d-flex gap-3">
-            <a href="#" class="btn btn-outline-light btn-sm rounded-circle hover-success">
-              <i class="bi bi-facebook"></i>
-            </a>
-            <a href="#" class="btn btn-outline-light btn-sm rounded-circle hover-success">
-              <i class="bi bi-tiktok"></i>
-            </a>
-            <a href="#" class="btn btn-outline-light btn-sm rounded-circle hover-success">
-              <i class="bi bi-instagram"></i>
-            </a>
-            <a href="#" class="btn btn-outline-light btn-sm rounded-circle hover-success">
-              <i class="bi bi-whatsapp"></i>
-            </a>
-          </div>
-        </div>
+       <!-- Sosial Media -->
+<div class="col-lg-3 col-md-6">
+  <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Sosial Media</h5>
+  <p class="small">Ikuti kami di media sosial untuk mendapatkan penawaran terbaik!</p>
+  <div class="d-flex gap-3">
+    <!-- GANTI BAGIAN INI -->
+    <a href="https://www.facebook.com/namapagekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+      <i class="bi bi-facebook"></i>
+    </a>
+    <!-- GANTI BAGIAN INI -->
+    <a href="https://www.tiktok.com/@usernamekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+      <i class="bi bi-tiktok"></i>
+    </a>
+    <!-- GANTI BAGIAN INI -->
+    <a href="https://www.instagram.com/usernamekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+      <i class="bi bi-instagram"></i>
+    </a>
+    <!-- GANTI BAGIAN INI -->
+    <a href="https://wa.me/6281234567890" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+      <i class="bi bi-whatsapp"></i>
+    </a>
+  </div>
+</div>
+
       </div>
       
       <hr class="my-4 bg-secondary">
       
-      <div class="text-center small text-muted">
-        &copy; 2023 Dewiji Explore. All Rights Reserved.
-      </div>
     </div>
   </footer>
 </template>
@@ -259,14 +272,6 @@
 <script>
 import { ref } from "vue";
 import Swal from "sweetalert2";
-
-// Contoh gambar (ganti dengan path yang sesuai di proyekmu)
-import avanza from "@/assets/avanza.png";
-import xenia from "@/assets/xenia.png";
-import innova from "@/assets/innova.png";
-import brio from "@/assets/brio.png";
-import calya from "@/assets/calya.png";
-import alphard from "@/assets/alphard.png";
 
 export default {
   setup() {
@@ -279,7 +284,7 @@ export default {
         kapasitas: 7,
         fitur: ["AC", "MP3 Player", "Driver"],
         termasuk: ["Bensin", "Driver", "Asuransi"],
-        gambar: avanza,
+        gambar: "https://www.toyota.astra.co.id//sites/default/files/2023-09/1-avanza-purplish-silver.png",
       },
       {
         nama: "Daihatsu Xenia",
@@ -289,7 +294,7 @@ export default {
         kapasitas: 7,
         fitur: ["AC", "Audio", "Driver"],
         termasuk: ["Bensin", "Driver", "Asuransi"],
-        gambar: xenia,
+        gambar: "https://images.prod.seva.id/Daihatsu/All%20New%20Xenia/main_color/black.png",
       },
       {
         nama: "Toyota Innova",
@@ -299,7 +304,7 @@ export default {
         kapasitas: 8,
         fitur: ["AC", "Audio", "Driver", "GPS"],
         termasuk: ["Bensin", "Driver", "Asuransi"],
-        gambar: innova,
+        gambar: "https://www.toyota.astra.co.id//sites/default/files/2020-10/1_innova-super-white-2_0.png",
       },
       {
         nama: "Honda Brio",
@@ -308,7 +313,7 @@ export default {
         kapasitas: 5,
         fitur: ["AC", "Audio"],
         termasuk: ["Bensin", "Asuransi"],
-        gambar: brio,
+        gambar: "https://jwc.gotra-resources.my.id/web-upload/1676866724-20-02-2023-wHgIW1mLxjUFdlpQD79yK2JMVuCEofes.png",
       },
       {
         nama: "Toyota Calya",
@@ -318,7 +323,7 @@ export default {
         kapasitas: 7,
         fitur: ["AC", "Audio", "Driver"],
         termasuk: ["Bensin", "Driver", "Asuransi"],
-        gambar: calya,
+        gambar: "https://static.wixstatic.com/media/261cbb_71a664430e3e4c5ab31469fde51d82d6~mv2.png/v1/fill/w_688,h_408,al_c,q_85,enc_avif,quality_auto/261cbb_71a664430e3e4c5ab31469fde51d82d6~mv2.png",
       },
       {
         nama: "Toyota Alphard",
@@ -327,7 +332,7 @@ export default {
         kapasitas: 7,
         fitur: ["AC", "Audio", "Driver", "TV"],
         termasuk: ["Bensin", "Driver", "Asuransi"],
-        gambar: alphard,
+        gambar: "https://arinatoyota.co.id/wp-content/uploads/2018/11/vellfire-2021-colors-black-1-600x330.png",
       },
     ];
 
@@ -576,10 +581,6 @@ export default {
   border-color: #1e7e34;
 }
 
-/* Footer */
-.bg-dark {
-  background-color: #343a40 !important;
-}
 
 .text-light {
   color: #f8f9fa !important;

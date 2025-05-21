@@ -1,27 +1,5 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-import prambanan from '@/assets/Destinasi/prambanan.jpg'
-import parangtritis from '@/assets/Destinasi/parangtritis.jpg'
-import malioboro from '@/assets/Destinasi/malioboro.jpg'
-import breksi from '@/assets/Destinasi/breksi.jpg'
-import keraton from '@/assets/Destinasi/keraton.jpg'
-import merapi from '@/assets/Destinasi/merapi.jpg'
-import tugu from '@/assets/Destinasi/tugu.jpg'
-import vredeburg from '@/assets/Destinasi/vredeburg.jpg'
-import monjali from '@/assets/Destinasi/monjali.jpg'
-import titikNol from '@/assets/Destinasi/titik-nol-km.jpg'
-import obelix from '@/assets/Destinasi/obelix-hills.jpg'
-import gumukPasir from '@/assets/Destinasi/gumuk-pasir.jpg'
-import goaPindul from '@/assets/Destinasi/goa-pindul.jpg'
-import sriGethuk from '@/assets/Destinasi/air-terjun-sri-gethuk.jpg'
-import pinusPengger from '@/assets/Destinasi/hutan-pinus-pengger.jpg'
-import kalibiru from '@/assets/Destinasi/kalibiru.jpg'
-import indrayanti from '@/assets/Destinasi/pantai-indrayanti.jpg'
-import tamansari from '@/assets/Destinasi/taman-sari.jpg'
-import avanza from '@/assets/Mobil/avanza.png'
-import innova from '@/assets/Mobil/innova.png'
-import alphard from '@/assets/Mobil/alphard.png'
-
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -41,109 +19,109 @@ const destinasi = [
   {
     nama: 'Candi Prambanan',
     deskripsi: 'Kompleks candi Hindu terbesar di Indonesia, terkenal akan relief epik Ramayana dan arsitektur megah abad ke-9.',
-    gambar: prambanan
+    gambar: "https://prambanan.injourneydestination.id/wp-content/uploads/2024/11/WhatsApp-Image-2024-11-13-at-13.37.22_f4268807.jpg"
   },
   {
     nama: 'Pantai Parangtritis',
     deskripsi: 'Pantai mistis dengan ombak besar dan pemandangan matahari terbenam yang menakjubkan, erat dengan legenda Ratu Kidul.',
-    gambar: parangtritis
+    gambar: "https://blog-images.reddoorz.com/uploads/ckeditor/pictures/3753/content_pantai_parangtritis.jpg"
   },
   {
     nama: 'Malioboro',
     deskripsi: 'Jalan ikonik di jantung kota Yogyakarta yang dipenuhi pedagang, kuliner khas, dan nuansa budaya Jawa yang kental.',
-    gambar: malioboro
+    gambar: "https://www.yogyes.com/id/yogyakarta-tourism-object/other/malioboro/1.jpg"
   },
   {
     nama: 'Bukit Breksi',
     deskripsi: 'Bekas tambang batu kapur yang disulap menjadi destinasi wisata dengan relief seni, panorama alam, dan spot foto unik.',
-    gambar: breksi
+    gambar: "https://asset-2.tstatic.net/travel/foto/bank/images/pemandangan-sunset-dari-tebing-breksi.jpg"
   },
   {
     nama: 'Keraton Yogyakarta',
     deskripsi: 'Istana resmi Kesultanan Yogyakarta yang masih aktif, menyuguhkan arsitektur klasik dan nilai budaya tinggi.',
-    gambar: keraton
+    gambar: "https://kadowisudaku.com/wp-content/uploads/2018/03/Info-Lengkap-Objek-Wisata-Sejarah-Kraton-Yogyakarta-Kraton_Yogyakarta_Pagelaran.jpg"
   },
   {
     nama: 'Gunung Merapi',
     deskripsi: 'Gunung berapi paling aktif di Indonesia yang menawarkan petualangan jeep lava tour dan panorama menakjubkan.',
-    gambar: merapi
+    gambar: "https://cdn.rri.co.id/berita/Yogyakarta/o/1729504978290-mount-merapi-113620_1280/7gdeea17tmc4r0w.jpeg"
   },
   {
     nama: 'Tugu Jogja',
     deskripsi: 'Monumen ikonik sebagai simbol kota Yogyakarta yang sering dijadikan spot foto wisatawan.',
-    gambar: tugu
+    gambar: "https://yogya.co/wp-content/uploads/tugu-jogja.webp"
   },
   {
     nama: 'Benteng Vredeburg',
     deskripsi: 'Benteng peninggalan Belanda yang kini menjadi museum sejarah perjuangan bangsa.',
-    gambar: vredeburg
+    gambar: "https://asset.kompas.com/crops/S9CnIn7qLJSrgqt9jFPyPaClkCw=/0x0:597x398/1200x800/data/photo/2021/09/16/61433b6621325.jpg"
   },
   {
     nama: 'Monumen Jogja Kembali',
     deskripsi: 'Museum berbentuk kerucut yang menggambarkan perjuangan rakyat Yogyakarta saat kemerdekaan.',
-    gambar: monjali
+    gambar: "https://cdn.rri.co.id/berita-foto/Yogyakarta/o/1730264707236-WhatsApp_Image_2024-10-24_at_21.55.50(1)/szvsiiu4sqgxhxp.jpeg"
   },
   {
     nama: 'Titik Nol KM',
     deskripsi: 'Pusat keramaian dan simbol awal jalanan utama kota Yogyakarta, sering dijadikan tempat nongkrong.',
-    gambar: titikNol
+    gambar: "https://asset.kompas.com/crops/tp7dCEi1zgzGJG-ZhoFOZwi2TGs=/0x0:972x648/1200x800/data/photo/2021/12/26/61c813b14760e.png"
   },
   {
     nama: 'Obelix Hills',
     deskripsi: 'Destinasi wisata hits di atas bukit dengan spot foto instagramable dan pemandangan sunset memukau.',
-    gambar: obelix
+    gambar: "https://www.yogyes.com/id/yogyakarta-tourism-object/other/obelix-hills/1.jpg"
   },
   {
     nama: 'Gumuk Pasir',
     deskripsi: 'Hamparan pasir seperti gurun yang jadi tempat sandboarding favorit wisatawan.',
-    gambar: gumukPasir
+    gambar: "https://assets.promediateknologi.id/crop/0x0:0x0/750x500/webp/photo/ayojogjakarta/images/post/articles/2021/07/18/45251/gumuk-pasir.jpeg"
   },
   {
     nama: 'Goa Pindul',
     deskripsi: 'Goa bawah tanah yang bisa dijelajahi dengan tubing menyusuri sungai bawah tanah.',
-    gambar: goaPindul
+    gambar: "https://visitingjogja.jogjaprov.go.id/wp-content/uploads/2021/04/106921857_2692730127668337_6628211008296078543_n-1024x681.jpg"
   },
   {
     nama: 'Air Terjun Sri Gethuk',
     deskripsi: 'Air terjun alami yang eksotis di Gunungkidul dengan aliran jernih di tengah tebing batu.',
-    gambar: sriGethuk
+    gambar: "https://labirutour.com/wp-content/uploads/2016/04/Keindahan-Alam-Air-Terjun-Sri-Gethuk-Yogyakarta-Bara-Purnomo.jpg"
   },
   {
     nama: 'Hutan Pinus Pengger',
     deskripsi: 'Hutan pinus sejuk dengan instalasi seni kayu unik yang cocok untuk hunting foto.',
-    gambar: pinusPengger
+    gambar: "https://asset.kompas.com/crops/x4CiCXv80iFcxxnE_Vm3TDS2S1M=/0x0:780x390/1200x800/data/photo/2018/12/27/776378636.jpg"
   },
   {
     nama: 'Kalibiru',
     deskripsi: 'Wisata alam di perbukitan dengan spot foto di atas pohon dan pemandangan Waduk Sermo.',
-    gambar: kalibiru
+    gambar: "https://s-light.tiket.photos/t/01E25EBZS3W0FY9GTG6C42E1SE/rsfit1440960gsm/events/2022/02/11/253e2394-2e8c-4ff1-84f6-697a173bfe36-1644582202846-5f8fdcb08b487a22c588a769d69fbd4e.jpg"
   },
   {
     nama: 'Pantai Indrayanti',
     deskripsi: 'Pantai pasir putih yang bersih dan tertata, cocok untuk wisata keluarga.',
-    gambar: indrayanti
+    gambar: "https://nagantour.com/wp-content/uploads/2023/09/pantai-indrayanti.webp"
   },
   {
     nama: 'Taman Sari',
     deskripsi: 'Bekas taman kerajaan Kesultanan Yogyakarta dengan lorong bawah tanah dan kolam pemandian.',
-    gambar: tamansari
+    gambar: "https://asset.kompas.com/crops/nOQ3a7G-PrgyRoSVCR2vvlWiLFQ=/0x0:1000x667/750x500/data/photo/2022/03/13/622e12c85befb.jpg"
   }
 ]
 const Rental = [
   {
     nama: 'Toyota Avanza',
     deskripsi: 'Mobil keluarga yang nyaman dan irit bahan bakar, cocok untuk perjalanan harian maupun liburan bersama keluarga.',
-    gambar: avanza// contoh gambar Avanza
+    gambar: "https://www.toyota.astra.co.id//sites/default/files/2023-09/1-avanza-purplish-silver.png"// contoh gambar Avanza
   },
   {
     nama: 'Toyota Innova',
     deskripsi: 'MPV andalan dengan kabin luas dan fitur lengkap, memberikan kenyamanan ekstra untuk perjalanan jauh.',
-    gambar: innova
+    gambar: "https://www.toyota.astra.co.id//sites/default/files/2020-10/1_innova-super-white-2_0.png"
   },
   {
     nama: 'Toyota Alphard',
     deskripsi: 'Mobil mewah dengan interior premium dan fitur lengkap, cocok untuk perjalanan bisnis atau acara istimewa.',
-    gambar: alphard
+    gambar: "https://arinatoyota.co.id/wp-content/uploads/2018/11/vellfire-2021-colors-black-1-600x330.png"
   }
 ]
 
@@ -379,85 +357,6 @@ onMounted(() => {
       
       <hr class="my-4 bg-secondary">
       
-      <div class="text-center small text-muted">
-        &copy; 2023 Dewiji Explore. All Rights Reserved.
-      </div>
     </div>
   </footer>
 </template>
-
-<style scoped>
-.hero-section {
-  position: relative;
-  min-height: 100vh;
-  background: url('@/assets/merapi.png') center center / cover no-repeat;
-}
-
-.overlay {
-  position: absolute;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(2px);
-  z-index: 1;
-}
-
-.container {
-  z-index: 2;
-}
-
-.scroll-wrapper {
-  display: flex;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  gap: 1rem;
-  padding-bottom: 1rem;
-  scrollbar-width: thin;
-}
-
-.scroll-wrapper::-webkit-scrollbar {
-  height: 8px;
-}
-
-.scroll-wrapper::-webkit-scrollbar-thumb {
-  background-color: #888;
-  border-radius: 4px;
-}
-.border-success{
-  border-color: #198754 !important;
-}
-.destinasi-element-card {
-  flex: 0 0 auto;
-  width: 400px;
-  background: white;
-  border-radius: 1rem;
-  padding: 1rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-.element-card {
-  flex: 0 0 auto;
-  width: 350px;
-  background: white;
-  border-radius: 1rem;
-  padding: 1rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-.card-title {
-  font-size: 1.25rem;
-}
-
-.card-text a {
-  text-decoration: none;
-  font-weight: 600;
-  color: #f0ad4e; /* matching btn-warning */
-}
-
-.card-text a:hover {
-  text-decoration: underline;
-}
-
-section.py-5 {
-  padding-top: 3rem !important;
-  padding-bottom: 3rem !important;
-}
-</style>
