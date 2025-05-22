@@ -6,7 +6,6 @@ const items = [
   { to: '/carrent',name: 'Rental Mobil' },
   { to: '/package', name: 'Paket Liburan' },
   { to: '/comment', name: 'Kritik & Saran' },
-  { to: '/registerasi', name: 'Registerasi' },
   { to: '/login', name: 'Login' },
 ]
 </script>
