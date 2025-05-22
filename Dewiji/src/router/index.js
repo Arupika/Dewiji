@@ -6,6 +6,8 @@ import Destination from '@/views/Destination.vue'
 import CarRent     from '@/views/CarRent.vue'
 import Package     from '@/views/Package.vue'
 import Comment     from '@/views/Faq.vue'
+import Register    from '@/views/Registerasi.vue'
+import Login       from '@/views/Login.vue'
 
 const routes = [
   { path: '/',            name: 'Home',         component: Home },
@@ -13,6 +15,8 @@ const routes = [
   { path: '/carrent',     name: 'CarRent',      component: CarRent },
   { path: '/package',     name: 'Package',      component: Package },
   { path: '/comment',     name: 'Comment',      component: Comment },
+  { path: '/registerasi', name: 'Register',     component: Register },
+  { path: '/login',       name: 'Login',        component: Login },
 ]
 
 const router = createRouter({
