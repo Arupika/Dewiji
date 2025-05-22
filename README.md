@@ -41,11 +41,11 @@ Website ini terinspirasi dari blog [Yogyakarta Explore](https://www.yogyakartaex
 
 Website ini dikembangkan sebagai bagian dari tugas mata kuliah **Pemrograman Web**, oleh tim mahasiswa/i:
 
--Irzha Fahrizaldy 			      : 23.11.5385
--Samuel Jari Hartako 			    : 23.11.5389
--Rayyis Hammam Mukhayyar 	    : 23.11.5405
--Ilham Bintang Saputra 		    : 23.11.5432
--Halimatussadiyah Lola Putri 	: 23.11.5398
+-Irzha Fahrizaldy 			      : 23.11.5385,
+-Samuel Jari Hartako 			    : 23.11.5389,
+-Rayyis Hammam Mukhayyar 	    : 23.11.5405,
+-Ilham Bintang Saputra 		    : 23.11.5432,
+-Halimatussadiyah Lola Putri 	: 23.11.5398,
 -Chintya Sheila Masterina 		: 23.11.5404
 
 
