@@ -18,12 +18,20 @@ Website ini dibuat untuk memperkenalkan berbagai destinasi wisata populer dan me
 - **Vue.js 3 (tanpa build tool)**
 
 ## 📂 Struktur Proyek
-wisata-jogja/
-├── index.html # Halaman utama
-├── style.css # Custom styling
-├── app.js # Script Vue.js
-├── /assets/images/ # Gambar-gambar destinasi
-└── /components/ # Komponen Vue (inline dalam app.js)
+src/
+├── assets/
+├── components/
+│   └── icons/
+├── layouts/
+├── router/
+├── views/
+│   ├── CarRent.vue
+│   ├── Destination.vue
+│   ├── Faq.vue
+│   ├── Home.vue
+│   └── Package.vue
+├── App.vue
+└── main.js
 
 ## 🚀 Cara Menjalankan
 
@@ -41,12 +49,12 @@ Website ini terinspirasi dari blog [Yogyakarta Explore](https://www.yogyakartaex
 
 Website ini dikembangkan sebagai bagian dari tugas mata kuliah **Pemrograman Web**, oleh tim mahasiswa/i:
 
--Irzha Fahrizaldy 			      : 23.11.5385,
--Samuel Jari Hartako 			    : 23.11.5389,
--Rayyis Hammam Mukhayyar 	    : 23.11.5405,
--Ilham Bintang Saputra 		    : 23.11.5432,
--Halimatussadiyah Lola Putri 	: 23.11.5398,
--Chintya Sheila Masterina 		: 23.11.5404
+Irzha Fahrizaldy 			        : 23.11.5385,
+Samuel Jari Hartako 			    : 23.11.5389,
+Rayyis Hammam Mukhayyar 	    : 23.11.5405,
+Ilham Bintang Saputra 		    : 23.11.5432,
+Halimatussadiyah Lola Putri 	: 23.11.5398,
+Chintya Sheila Masterina 		  : 23.11.5404
 
 
 Terima kasih telah mengunjungi website kami. Semoga bermanfaat untuk para wisatawan yang ingin menjelajahi keindahan Yogyakarta!
