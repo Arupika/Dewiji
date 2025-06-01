@@ -1,5 +1,4 @@
 <template>
-  <div>
     <div class="container py-5">
       <div class="container py-5">
         <div class="row justify-content-center">
@@ -254,23 +253,11 @@
       
     </div>
   </footer>
-  </div>
 </template>
 
 <script>
 import { useRouter } from 'vue-router'
 
-const router = useRouter()
-
-function goToRentalPage() {
-  router.push('/CarRent')  // Ganti sesuai path halaman rental mobil kamu
-}
-function goToDestinationPage() {
-  router.push('/Destination')  // Ganti sesuai path halaman rental mobil kamu
-}
-function goToPackagePage() {
-  router.push('/Package')  // Ganti sesuai path halaman rental mobil kamu
-}
 import Swal from 'sweetalert2'
 
 export default {
@@ -656,65 +643,3 @@ Mohon info lebih lanjut untuk proses pemesanan. Terima kasih.`
   }
 }
 </script>
-
-<style scoped>
-.hover-success:hover {
-  color: #198754 !important;
-  border-color: #198754 !important;
-}
-
-.card {
-  border-radius: 1rem;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  overflow: hidden;
-  border: none;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
-}
-
-.card-img-top {
-  overflow: hidden;
-}
-
-.card-img-top img {
-  transition: transform 0.5s ease;
-}
-
-.card:hover .card-img-top img {
-  transform: scale(1.05);
-}
-
-.btn-success {
-  transition: all 0.3s ease;
-  padding: 0.5rem 1rem;
-}
-
-.btn-success:hover {
-  background-color: #157347;
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(25, 135, 84, 0.3);
-}
-
-.border-success {
-  border-color: #198754 !important;
-}
-
-.modal-content {
-  border: none;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .display-5 {
-    font-size: 2rem;
-  }
-
-  .lead {
-    font-size: 1rem;
-  }
-}
-</style>

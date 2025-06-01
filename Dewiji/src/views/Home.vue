@@ -165,28 +165,26 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- Hero Section -->
-  <header class="hero-section text-white d-flex align-items-center justify-content-center">
-    <div class="overlay"></div>
-    <div class="container text-center position-relative">
-      <h1 class="display-4 fw-bold" data-aos="fade-down">
-        Selamat Datang di <span class="text-warning">Dewiji!</span>
-      </h1>
-      <p class="lead mt-3" data-aos="fade-up" data-aos-delay="100">
-        Temukan pesona wisata Yogyakarta yang kaya akan budaya, alam, dan sejarah.  
-        Dari pantai hingga candi, semua destinasi terbaik kami rangkum untuk Anda jelajahi!
-      </p>
+  <!-- Hero Section dengan Background -->
+<header class="position-relative text-white d-flex align-items-center justify-content-center" style="min-height: 100vh; background-image: url('/src/assets/merapi.png'); background-size: cover; background-position: center;">
+  <!-- Overlay gelap -->
+  <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-50"></div>
 
-      <a
-        href="#destinasi"
-        class="btn btn-warning mt-4 px-4 py-2 shadow grow-on-hover"
-        data-aos="zoom-in"
-        data-aos-delay="200">
-        Lihat Destinasi
-      </a>
-    </div>
-  </header>
-  
+  <!-- Konten -->
+  <div class="container text-center position-relative z-1 p-4">
+    <h1 class="display-4 fw-bold" data-aos="fade-down">
+      Selamat Datang di <span class="text-warning">Dewiji!</span>
+    </h1>
+    <p class="lead mt-3" data-aos="fade-up" data-aos-delay="100">
+      Temukan pesona wisata Yogyakarta yang kaya akan budaya, alam, dan sejarah.  
+      Dari pantai hingga candi, semua destinasi terbaik kami rangkum untuk Anda jelajahi!
+    </p>
+    <a href="#destinasi" class="btn btn-warning mt-4 px-4 py-2 shadow" data-aos="zoom-in" data-aos-delay="200">
+      Lihat Destinasi
+    </a>
+  </div>
+</header>
+
 <!-- Destinasi Terkenal Section -->
 <section id="destinasi" class="py-5 bg-light">
   <div class="container">
@@ -201,7 +199,7 @@ onMounted(() => {
       <!-- Kartu Rental Mobil -->
       <div class="scroll-wrapper mb-4">
       <div class="destinasi-element-card" v-for="(item, i) in destinasi" :key="i">
-        <img :src="item.gambar" class="img-fluid rounded" :alt="item.nama" />
+        <img :src="item.gambar" loading="lazy" class="img-fluid rounded" :alt="item.nama" />
         <h5 class="mt-3 fw-bold">{{ item.nama }}</h5>
         <p class="text-muted">{{ item.deskripsi }}</p>
       </div>
@@ -232,7 +230,7 @@ onMounted(() => {
       <!-- Kartu Rental Mobil -->
       <div class="scroll-wrapper mb-4">
       <div class="element-card" v-for="(item, i) in Rental" :key="i">
-        <img :src="item.gambar" class="img-fluid rounded" :alt="item.nama" />
+        <img :src="item.gambar" loading="lazy" class="img-fluid rounded" :alt="item.nama" />
         <h5 class="mt-3 fw-bold">{{ item.nama }}</h5>
         <p class="text-muted">{{ item.deskripsi }}</p>
       </div>
@@ -262,7 +260,7 @@ onMounted(() => {
       <!-- Kartu Rental Mobil -->
       <div class="scroll-wrapper mb-4">
       <div class="element-card" v-for="(item, i) in Packages" :key="i">
-        <img :src="item.gambar" class="img-fluid rounded" :alt="item.nama" />
+        <img :src="item.gambar" loading="lazy" class="img-fluid rounded" :alt="item.nama" />
         <h5 class="mt-3 fw-bold">{{ item.nama }}</h5>
         <p class="text-muted">{{ item.deskripsi }}</p>
       </div>
