@@ -241,7 +241,7 @@
       <i class="bi bi-instagram"></i>
     </a>
     <!-- GANTI BAGIAN INI -->
-    <a href="https://wa.me/6281234567890" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+    <a href="https://wa.me/62813486880937" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
       <i class="bi bi-whatsapp"></i>
     </a>
   </div>

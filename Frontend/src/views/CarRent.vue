@@ -254,7 +254,7 @@
       <i class="bi bi-instagram"></i>
     </a>
     <!-- GANTI BAGIAN INI -->
-    <a href="https://wa.me/6281234567890" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+    <a href="https://wa.me/6281348680937" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
       <i class="bi bi-whatsapp"></i>
     </a>
   </div>
@@ -281,8 +281,8 @@ export default {
         harga: 350000,
         harga12jam: 200000,
         kapasitas: 7,
-        fitur: ["AC", "MP3 Player", "Driver"],
-        termasuk: ["Bensin", "Driver", "Asuransi"],
+        fitur: ["AC", "MP3 Player"],
+        termasuk: ["Bensin", "Asuransi"],
         gambar: "https://www.toyota.astra.co.id//sites/default/files/2023-09/1-avanza-purplish-silver.png",
       },
       {
@@ -291,8 +291,8 @@ export default {
         harga: 330000,
         harga12jam: 190000,
         kapasitas: 7,
-        fitur: ["AC", "Audio", "Driver"],
-        termasuk: ["Bensin", "Driver", "Asuransi"],
+        fitur: ["AC", "Audio"],
+        termasuk: ["Bensin", "Asuransi"],
         gambar: "https://images.prod.seva.id/Daihatsu/All%20New%20Xenia/main_color/black.png",
       },
       {
@@ -301,8 +301,8 @@ export default {
         harga: 550000,
         harga12jam: 300000,
         kapasitas: 8,
-        fitur: ["AC", "Audio", "Driver", "GPS"],
-        termasuk: ["Bensin", "Driver", "Asuransi"],
+        fitur: ["AC", "Audio", "GPS"],
+        termasuk: ["Bensin", "Asuransi"],
         gambar: "https://www.toyota.astra.co.id//sites/default/files/2020-10/1_innova-super-white-2_0.png",
       },
       {
@@ -320,8 +320,8 @@ export default {
         harga: 320000,
         harga12jam: 180000,
         kapasitas: 7,
-        fitur: ["AC", "Audio", "Driver"],
-        termasuk: ["Bensin", "Driver", "Asuransi"],
+        fitur: ["AC", "Audio"],
+        termasuk: ["Bensin", "Asuransi"],
         gambar: "https://static.wixstatic.com/media/261cbb_71a664430e3e4c5ab31469fde51d82d6~mv2.png/v1/fill/w_688,h_408,al_c,q_85,enc_avif,quality_auto/261cbb_71a664430e3e4c5ab31469fde51d82d6~mv2.png",
       },
       {
@@ -329,8 +329,8 @@ export default {
         deskripsi: "Mobil mewah untuk perjalanan eksklusif dan VIP.",
         harga: 1500000,
         kapasitas: 7,
-        fitur: ["AC", "Audio", "Driver", "TV"],
-        termasuk: ["Bensin", "Driver", "Asuransi"],
+        fitur: ["AC", "Audio", "TV"],
+        termasuk: ["Bensin", "Asuransi"],
         gambar: "https://arinatoyota.co.id/wp-content/uploads/2018/11/vellfire-2021-colors-black-1-600x330.png",
       },
     ];
@@ -342,7 +342,7 @@ export default {
     const lokasiAmbil = ref("kantor");
     const customerName = ref("");
     const customerPhone = ref("");
-    const adminPhone = "6281234567890"; // Ganti dengan nomor admin yang benar
+    const adminPhone = "6281348680937"; // Ganti dengan nomor admin yang benar
 
     const showDetails = (mobil) => {
       selectedMobil.value = mobil;
