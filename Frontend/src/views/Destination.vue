@@ -150,7 +150,7 @@ export default {
           id: 1,
           nama: "Gunung Merapi",
           deskripsi: "Gunung Merapi merupakan salah satu destinasi wisata alam paling ikonik di Indonesia, terletak di perbatasan Daerah Istimewa Yogyakarta dan Jawa Tengah. Dikenal sebagai gunung berapi paling aktif di Indonesia, Merapi tidak hanya menawarkan pesona keindahan alam yang luar biasa, tetapi juga menyimpan kisah sejarah, budaya, dan kekuatan alam yang memukau.",
-          gambar: "https://cdn.rri.co.id/berita/Yogyakarta/o/1729504978290-mount-merapi-113620_1280/7gdeea17tmc4r0w.jpeg",
+          gambar: '/src/assets/destination/merapi.jpg',
           location: "Sleman, DIY",
           kategori: ["Alam", "Petualangan"],
           harga: {
@@ -163,20 +163,20 @@ export default {
           id: 2,
           nama: "Keraton Yogyakarta",
           deskripsi: "Keraton Yogyakarta, atau secara resmi disebut Keraton Ngayogyakarta Hadiningrat, adalah istana resmi Sultan Yogyakarta sekaligus pusat kebudayaan Jawa yang masih hidup hingga kini. Terletak di pusat Kota Yogyakarta, keraton ini bukan sekadar bangunan bersejarah, melainkan simbol hidup dari warisan budaya, tradisi, dan filosofi Jawa.",
-          gambar: "https://kadowisudaku.com/wp-content/uploads/2018/03/Info-Lengkap-Objek-Wisata-Sejarah-Kraton-Yogyakarta-Kraton_Yogyakarta_Pagelaran.jpg",
+          gambar: '/src/assets/destination/keraton.jpg',
           location: "Yogyakarta, DIY",
           kategori: ["Sejarah", "Budaya"],
           harga: {
             "Dewasa": "Rp 20.000",
             "Pelajar": "Rp 10.000"
           },
-          jamOperasional: "Setiap hari 08:30 - 14:00 WIB (kecuali Jumat sampai 13:00)"
+          jamOperasional: "Setiap hari 08:30 - 14:00 WIB (kecuali hari Senin)"
         },
         {
           id: 3,
           nama: "Candi Prambanan",
           deskripsi: "Candi Prambanan adalah kompleks candi Hindu terbesar dan termegah di Indonesia, bahkan di Asia Tenggara. Terletak di perbatasan Daerah Istimewa Yogyakarta dan Jawa Tengah, Candi Prambanan merupakan simbol kejayaan peradaban Hindu abad ke-9 dan menjadi salah satu Warisan Budaya Dunia UNESCO sejak tahun 1991.",
-          gambar: "https://prambanan.injourneydestination.id/wp-content/uploads/2024/11/WhatsApp-Image-2024-11-13-at-13.37.22_f4268807.jpg",
+          gambar: '/src/assets/destination/prambanan.jpg',
           location: "Sleman, DIY",
           kategori: ["Sejarah", "UNESCO"],
           harga: {
@@ -189,12 +189,12 @@ export default {
           id: 4,
           nama: "Pantai Parangtritis",
           deskripsi: "Pantai Parangtritis adalah salah satu destinasi wisata paling terkenal di Yogyakarta, terletak sekitar 27 km ke arah selatan dari pusat kota. Pantai ini tidak hanya menawarkan panorama alam yang indah, tetapi juga menyimpan nilai historis, budaya, dan spiritual yang kuat.",
-          gambar: "https://blog-images.reddoorz.com/uploads/ckeditor/pictures/3753/content_pantai_parangtritis.jpg",
+          gambar: '/src/assets/destination/parangtritis.jpg',
           location: "Bantul, DIY",
           kategori: ["Pantai", "Alam"],
           harga: {
-            "Parkir Motor": "Rp 5.000",
-            "Parkir Mobil": "Rp 10.000"
+            "Parkir Motor": "Rp 2.000",
+            "Parkir Mobil": "Rp 5.000"
           },
           jamOperasional: "24 Jam"
         },
@@ -202,7 +202,7 @@ export default {
           id: 5,
           nama: "Jalan Malioboro",
           deskripsi: "Jalan Malioboro adalah ikon wisata paling terkenal di Yogyakarta. Terletak di jantung kota, Malioboro bukan sekadar jalan saja ia adalah denyut nadi kehidupan kota yang memadukan sejarah, belanja, seni, dan budaya Jawa dalam satu jalur yang hidup selama 24 jam.",
-          gambar: "https://www.yogyes.com/id/yogyakarta-tourism-object/other/malioboro/1.jpg",
+          gambar: '/src/assets/destination/malioboro.jpg',
           location: "Yogyakarta, DIY",
           kategori: ["Belanja", "Kuliner"],
           jamOperasional: "24 Jam"
@@ -211,7 +211,7 @@ export default {
           id: 6,
           nama: "Tugu Jogja",
           deskripsi: "Tugu Jogja, atau juga dikenal sebagai Tugu Pal Putih, adalah salah satu landmark paling ikonik di Yogyakarta. Monumen bersejarah ini bukan hanya titik penanda geografis, tetapi juga memiliki makna filosofis mendalam bagi masyarakat Jogja dan para pengunjungnya.",
-          gambar: "https://i0.wp.com/yogyacreative.com/wp-content/uploads/2022/08/Tugu-Pal-Putih-Jogjabike-sumber-jogjabike.id_.jpg?resize=750%2C500&ssl=1",
+          gambar: '/src/assets/destination/tugu.jpg',
           location: "Yogyakarta, DIY",
           kategori: ["Landmark", "Sejarah"],
           jamOperasional: "24 Jam"
@@ -220,12 +220,12 @@ export default {
           id: 7,
           nama: "Benteng Vredeburg",
           deskripsi: "Benteng Vredeburg adalah salah satu situs sejarah paling penting di Yogyakarta, yang kini difungsikan sebagai museum perjuangan nasional. Terletak strategis di ujung Jalan Malioboro, benteng ini menjadi saksi bisu perjalanan panjang bangsa Indonesia dari masa penjajahan hingga kemerdekaan.",
-          gambar: "https://asset.kompas.com/crops/S9CnIn7qLJSrgqt9jFPyPaClkCw=/0x0:597x398/1200x800/data/photo/2021/09/16/61433b6621325.jpg",
+          gambar: '/src/assets/destination/vredeburg.jpg',
           location: "Yogyakarta, DIY",
           kategori: ["Sejarah", "Museum"],
           harga: {
-            "Dewasa": "Rp 10.000",
-            "Pelajar": "Rp 5.000"
+            "Dewasa": "Rp 3.000",
+            "Anak Anak": "Rp 2.000"
           },
           jamOperasional: "08:00 - 16:00 WIB (Senin tutup)"
         },
@@ -233,12 +233,12 @@ export default {
           id: 8,
           nama: "Tebing Breksi",
           deskripsi: "Tebing Breksi adalah destinasi wisata unik di Sleman, Yogyakarta, yang menyajikan keindahan tebing batu kapur berpadu dengan seni ukir dan panorama alam. Terletak di kawasan perbukitan Desa Sambirejo, dekat Candi Ijo dan Candi Ratu Boko, Tebing Breksi menjadi magnet baru bagi wisatawan pencinta foto, seni, dan alam terbuka.",
-          gambar: "https://asset-2.tstatic.net/travel/foto/bank/images/pemandangan-sunset-dari-tebing-breksi.jpg",
+          gambar: '/src/assets/destination/breksi.jpg',
           location: "Sleman, DIY",
           kategori: ["Alam", "Seni"],
           harga: {
-            "Weekday": "Rp 20.000",
-            "Weekend": "Rp 30.000"
+            "Weekday": "Rp 10.000",
+            "Weekend": "Rp 15.000"
           },
           jamOperasional: "08:00 - 17:00 WIB"
         },
@@ -246,7 +246,7 @@ export default {
           id: 9,
           nama: "Monumen Jogja Kembali",
           deskripsi: "Monumen Jogja Kembali, atau yang lebih dikenal sebagai Monjali, adalah monumen sejarah yang dibangun untuk mengenang perjuangan rakyat Yogyakarta dalam mempertahankan kemerdekaan Indonesia. Terletak di Ngaglik, Sleman, sekitar 6 km dari pusat Kota Yogyakarta, Monjali menjadi simbol semangat perjuangan dan nasionalisme yang patut dikenang.",
-          gambar: "https://cdn.rri.co.id/berita-foto/Yogyakarta/o/1730264707236-WhatsApp_Image_2024-10-24_at_21.55.50(1)/szvsiiu4sqgxhxp.jpeg",
+          gambar: '/src/assets/destination/monjali.jpg',
           location: "Sleman, DIY",
           kategori: ["Sejarah", "Monumen"],
           harga: {
@@ -259,7 +259,7 @@ export default {
           id: 10,
           nama: "Titik Nol KM",
           deskripsi: "Titik Nol Kilometer Yogyakarta adalah salah satu landmark paling ikonik dan ramai dikunjungi di jantung Kota Yogyakarta. Terletak di pertemuan jalan utama (Jalan Ahmad Yani, Jalan Trikora, dan Jalan Senopati), titik ini menandai pusat administratif dan simbolis Kota Jogja, tempat di mana sejarah, budaya, dan kehidupan urban bertemu.",
-          gambar: "https://atourin.obs.ap-southeast-3.myhuaweicloud.com/images/destination/yogyakarta/titik-nol-km-jogja-profile1646131657.png?x-image-process=image/resize,p_100,limit_1/imageslim",
+          gambar: '/src/assets/destination/titik-nol-km.jpg',
           location: "Yogyakarta, DIY",
           kategori: ["Landmark", "Sejarah"],
           jamOperasional: "24 Jam"
@@ -268,12 +268,12 @@ export default {
           id: 11,
           nama: "Obelix Hills",
           deskripsi: "Obelix Hills adalah destinasi wisata dengan pemandangan alam yang indah di kawasan perbukitan Yogyakarta. Tempat ini menawarkan panorama kota Yogyakarta dari ketinggian yang memukau, terutama saat matahari terbit atau terbenam.",
-          gambar: "https://www.yogyes.com/id/yogyakarta-tourism-object/other/obelix-hills/1.jpg",
+          gambar: '/src/assets/destination/obelix-hills.jpg',
           location: "Sleman, DIY",
           kategori: ["Alam", "Pemandangan"],
           harga: {
-            "Weekday": "Rp 25.000",
-            "Weekend": "Rp 35.000"
+            "Weekday": "Rp 20.000",
+            "Weekend": "Rp 25.000"
           },
           jamOperasional: "06:00 - 18:00 WIB"
         },
@@ -281,12 +281,11 @@ export default {
           id: 12,
           nama: "Gumuk Pasir",
           deskripsi: "Gumuk Pasir adalah fenomena alam unik berupa bukit pasir yang terbentuk secara alami di pesisir pantai Yogyakarta. Tempat ini merupakan salah satu dari sedikit gurun pasir yang ada di Indonesia dan menjadi daya tarik wisata yang unik.",
-          gambar: "https://assets.promediateknologi.id/crop/0x0:0x0/750x500/webp/photo/ayojogjakarta/images/post/articles/2021/07/18/45251/gumuk-pasir.jpeg",
+          gambar: '/src/assets/destination/gumuk-pasir.jpg',
           location: "Bantul, DIY",
           kategori: ["Alam", "Unik"],
           harga: {
-            "Dewasa": "Rp 10.000",
-            "Anak-anak": "Rp 5.000"
+            "Wisatawan": "Rp 15.000"
           },
           jamOperasional: "07:00 - 17:00 WIB"
         },
@@ -294,7 +293,7 @@ export default {
           id: 13,
           nama: "Goa Pindul",
           deskripsi: "Goa Pindul adalah destinasi wisata petualangan berupa gua vertikal dengan aktivitas cave tubing yang menantang. Pengunjung akan mengapung di atas ban dalam menyusuri sungai bawah tanah sambil menikmati keindahan stalaktit dan stalagmit.",
-          gambar: "https://visitingjogja.jogjaprov.go.id/wp-content/uploads/2021/04/106921857_2692730127668337_6628211008296078543_n-1024x681.jpg",
+          gambar: '/src/assets/destination/goa-pindul.jpg',
           location: "Gunungkidul, DIY",
           kategori: ["Petualangan", "Alam"],
           harga: {
@@ -307,12 +306,11 @@ export default {
           id: 14,
           nama: "Air Terjun Sri Gethuk",
           deskripsi: "Air Terjun Sri Gethuk adalah salah satu air terjun paling indah di Yogyakarta yang terletak di Kabupaten Gunungkidul. Air terjun ini memiliki keunikan berupa susunan batu kapur yang membentuk undakan alami dengan air jernih yang mengalir deras.",
-          gambar: "https://labirutour.com/wp-content/uploads/2016/04/Keindahan-Alam-Air-Terjun-Sri-Gethuk-Yogyakarta-Bara-Purnomo.jpg",
+          gambar: '/src/assets/destination/air-terjun-sri-gethuk.jpg',
           location: "Gunungkidul, DIY",
           kategori: ["Alam", "Air Terjun"],
           harga: {
-            "Tiket Masuk": "Rp 15.000",
-            "Parkir Motor": "Rp 5.000"
+            "Tiket Masuk": "Rp 15.000"
           },
           jamOperasional: "07:00 - 17:00 WIB"
         },
@@ -320,12 +318,11 @@ export default {
           id: 15,
           nama: "Hutan Pinus Pengger",
           deskripsi: "Hutan Pinus Pengger adalah destinasi wisata alam dengan pemandangan hutan pinus yang asri dan spot foto menarik. Terletak di kawasan perbukitan, tempat ini menawarkan panorama kota Yogyakarta dari ketinggian dengan udara yang sejuk.",
-          gambar: "https://asset.kompas.com/crops/x4CiCXv80iFcxxnE_Vm3TDS2S1M=/0x0:780x390/1200x800/data/photo/2018/12/27/776378636.jpg",
+          gambar: '/src/assets/destination/hutan-pinus-pengger.jpg',
           location: "Bantul, DIY",
           kategori: ["Alam", "Pemandangan"],
           harga: {
-            "Tiket Masuk": "Rp 10.000",
-            "Parkir Motor": "Rp 5.000"
+            "Tiket Masuk": "Rp 10.000"
           },
           jamOperasional: "24 Jam"
         },
@@ -333,12 +330,11 @@ export default {
           id: 16,
           nama: "Hutan Mangrove",
           deskripsi: "Hutan Mangrove di Kulon Progo adalah destinasi ekowisata yang menawarkan pengalaman menyusuri sungai di antara hutan bakau yang rimbun. Pengunjung bisa menikmati keindahan alam sambil belajar tentang pentingnya ekosistem mangrove.",
-          gambar: "https://visitingjogja.jogjaprov.go.id/wp-content/uploads/2016/11/hutan-mangrove-pantai-congot-2.jpg",
+          gambar: '/src/assets/destination/hutan-mangrove.jpg',
           location: "Kulonprogo, DIY",
           kategori: ["Alam", "Ekowisata"],
           harga: {
-            "Perahu": "Rp 25.000/orang",
-            "Jembatan Gantung": "Rp 10.000"
+            "Harga Masuk": "Rp 5.000/orang"
           },
           jamOperasional: "08:00 - 17:00 WIB"
         },
@@ -346,12 +342,11 @@ export default {
           id: 17,
           nama: "Kalibiru",
           deskripsi: "Kalibiru adalah destinasi wisata alam di Kulon Progo yang terkenal dengan spot foto di atas bukit dengan pemandangan Waduk Sermo dan perbukitan menakjubkan. Tempat ini juga menawarkan berbagai aktivitas outbound dan flying fox.",
-          gambar: "https://s-light.tiket.photos/t/01E25EBZS3W0FY9GTG6C42E1SE/rsfit1440960gsm/events/2022/02/11/253e2394-2e8c-4ff1-84f6-697a173bfe36-1644582202846-5f8fdcb08b487a22c588a769d69fbd4e.jpg",
+          gambar: '/src/assets/destination/kalibiru.jpg',
           location: "Kulonprogo, DIY",
           kategori: ["Alam", "Pemandangan"],
           harga: {
-            "Weekday": "Rp 20.000",
-            "Weekend": "Rp 30.000"
+            "Harga Masuk": "Rp 20.000"
           },
           jamOperasional: "07:00 - 17:00 WIB"
         },
@@ -359,7 +354,7 @@ export default {
           id: 18,
           nama: "Waduk Sermo",
           deskripsi: "Waduk Sermo adalah bendungan air yang terletak di Kulon Progo dengan pemandangan alam yang indah. Pengunjung bisa menikmati suasana tenang sambil berjalan-jalan di sekitar waduk atau menyewa perahu untuk berkeliling.",
-          gambar: "https://assets.telkomsel.com/public/2025-02/Waduk-Sermo-Salah-Satu-Wisata-Favorit-di-Kulon-Progo.jpg?VersionId=ut_BpZ0vWMXYBRLPxswxopAQDPBufYrx",
+          gambar: '/src/assets/destination/Waduk-Sermo.jpg',
           location: "Kulonprogo, DIY",
           kategori: ["Alam", "Waduk"],
           harga: {
@@ -372,12 +367,11 @@ export default {
           id: 19,
           nama: "Pantai Indrayanti",
           deskripsi: "Pantai Indrayanti adalah salah satu pantai terindah di Gunungkidul dengan pasir putih dan air laut yang jernih. Pantai ini dilengkapi dengan berbagai fasilitas seperti gazebo, restoran, dan toilet yang nyaman.",
-          gambar: "https://nagantour.com/wp-content/uploads/2023/09/pantai-indrayanti.webp",
+          gambar: '/src/assets/destination/pantai-indrayanti.jpg',
           location: "Gunungkidul, DIY",
           kategori: ["Pantai", "Alam"],
           harga: {
-            "Weekday": "Rp 15.000",
-            "Weekend": "Rp 20.000"
+            "Weekday": "Rp 10.000"
           },
           jamOperasional: "06:00 - 18:00 WIB"
         },
@@ -385,12 +379,11 @@ export default {
           id: 20,
           nama: "Pantai Pok Tunggal",
           deskripsi: "Pantai Pok Tunggal adalah pantai tersembunyi di Gunungkidul dengan tebing-tebing karang yang indah dan ombak yang tenang. Pantai ini cocok untuk mereka yang ingin menikmati suasana pantai yang lebih sepi dan alami.",
-          gambar: "https://visitingjogja.jogjaprov.go.id/wp-content/uploads/2017/01/pantai-pok-tunggal-1068x522.jpg",
+          gambar: '/src/assets/destination/pantai-pok-tunggal.jpg',
           location: "Gunungkidul, DIY",
           kategori: ["Pantai", "Alam"],
           harga: {
-            "Tiket Masuk": "Rp 10.000",
-            "Parkir Motor": "Rp 5.000"
+            "Tiket Masuk": "Rp 10.000"
           },
           jamOperasional: "06:00 - 18:00 WIB"
         },
@@ -398,12 +391,12 @@ export default {
           id: 21,
           nama: "Bukit Bintang",
           deskripsi: "Bukit Bintang adalah destinasi wisata alam di Bantul yang menawarkan pemandangan kota Yogyakarta dari ketinggian, terutama indah saat malam hari dengan gemerlap lampu kota. Tempat ini juga populer untuk camping dan melihat bintang.",
-          gambar: "https://nagantour.com/wp-content/uploads/2023/02/bukit-bintang.webp",
+          gambar: '/src/assets/destination/Bukit-Bintang.jpg',
           location: "Bantul, DIY",
           kategori: ["Alam", "Pemandangan"],
           harga: {
-            "Tiket Masuk": "Rp 15.000",
-            "Camping": "Rp 50.000/tenda"
+            "Parkir Motor": "Rp 5.000",
+            "Parkir Mobil": "Rp 10.000"
           },
           jamOperasional: "24 Jam"
         },
@@ -411,7 +404,7 @@ export default {
           id: 22,
           nama: "Heha Sky View",
           deskripsi: "Heha Sky View adalah destinasi wisata dengan pemandangan spektakuler dari ketinggian. Terletak di Gunungkidul, tempat ini menawarkan berbagai spot foto instagramable dengan latar belakang perbukitan dan langit yang luas.",
-          gambar: "https://asset.kompas.com/crops/nQ7Ba-rY_JtUG0kpZMpyFIwe4-k=/165x0:1156x661/1200x800/data/photo/2022/01/13/61dfb44b7bce2.png",
+          gambar: '/src/assets/destination/Heha-skyview.png',
           location: "Gunungkidul, DIY",
           kategori: ["Pemandangan", "Alam"],
           harga: {
@@ -424,7 +417,7 @@ export default {
           id: 23,
           nama: "Heha Ocean View",
           deskripsi: "Heha Ocean View adalah destinasi wisata dengan pemandangan laut lepas dari ketinggian. Terletak di Gunungkidul, tempat ini menawarkan berbagai spot foto menarik dengan latar belakang Samudera Hindia yang biru.",
-          gambar: "https://cdn.rri.co.id/berita/Jakarta/o/1728296083732-1000514118/7o0fb3a7boyiwbc.jpeg",
+          gambar: '/src/assets/destination/Heha-Ocean.jpeg',
           location: "Gunungkidul, DIY",
           kategori: ["Pemandangan", "Alam"],
           harga: {
@@ -437,12 +430,12 @@ export default {
           id: 24,
           nama: "Pantai Jungwok Blue Ocean",
           deskripsi: "Pantai Jungwok Blue Ocean adalah pantai eksotis di Gunungkidul dengan air laut berwarna biru kehijauan yang jernih. Pantai ini dikelilingi tebing-tebing karang yang indah dan cocok untuk snorkeling.",
-          gambar: "https://ruangbogor.com/assets/berita/original/73961442388-santorini-5960352_960_720.jpg",
+          gambar: '/src/assets/destination/Pantai-Jungwok.jpg',
           location: "Gunungkidul, DIY",
           kategori: ["Pantai", "Alam"],
           harga: {
-            "Tiket Masuk": "Rp 15.000",
-            "Parkir Motor": "Rp 5.000"
+            "Weekday": "Rp 30.000",
+            "Weekend": "Rp 35.000"
           },
           jamOperasional: "06:00 - 18:00 WIB"
         },
@@ -450,7 +443,7 @@ export default {
           id: 25,
           nama: "Obelix Sea View",
           deskripsi: "Obelix Sea View adalah destinasi wisata yang menawarkan pengalaman unik menikmati panorama Laut Selatan dari ketinggian. Terletak di Hutan Giricahyo, Kecamatan Purwosari, Kabupaten Gunungkidul, tempat ini berada di timur Pantai Parangtritis dan dapat dijangkau dengan perjalanan sekitar 31 km dari pusat Kota Yogyakarta melalui Jalan Jogja-Parangtritis.",
-          gambar: "https://obelixseaview.com/images/galeri/DJI_09882.jpg",
+          gambar: '/src/assets/destination/obelix-sea-view.jpeg',
           location: "Gunungkidul, DIY",
           kategori: ["Pemandangan", "Alam"],
           harga: {
@@ -463,7 +456,7 @@ export default {
           id: 26,
           nama: "Taman Sari",
           deskripsi: "Taman Sari, dikenal juga sebagai Istana Air, adalah kompleks bersejarah yang dulunya merupakan taman kerajaan Kesultanan Yogyakarta. Dibangun pada masa Sultan Hamengkubuwono I antara tahun 1758–1765, kompleks ini berfungsi sebagai tempat peristirahatan, meditasi, pertahanan, dan rekreasi bagi keluarga kerajaan. Terletak sekitar 750 meter dari Alun-Alun Kidul, Taman Sari kini menjadi destinasi wisata budaya yang memikat dengan perpaduan arsitektur Jawa dan Eropa. ",
-          gambar: "https://asset.kompas.com/crops/nOQ3a7G-PrgyRoSVCR2vvlWiLFQ=/0x0:1000x667/750x500/data/photo/2022/03/13/622e12c85befb.jpg",
+          gambar: '/src/assets/destination/taman-sari.jpg',
           location: "Yogyakarta, DIY",
           kategori: ["Landmark", "Sejarah"],
           harga: {
@@ -476,7 +469,7 @@ export default {
           id: 27,
           nama: "Keraton Ratu Boko",
           deskripsi: "Ratu Boko adalah situs purbakala yang berada di atas bukit, sekitar 3 km dari Candi Prambanan, tepatnya di Desa Bokoharjo, Sleman, Yogyakarta. Meski sering disebut sebagai candi, Ratu Boko bukanlah tempat ibadah, melainkan reruntuhan kompleks istana kuno yang diperkirakan dibangun pada abad ke-8 Masehi oleh Wangsa Syailendra atau Mataram Kuno. Terletak di ketinggian sekitar 196 meter di atas permukaan laut, kompleks ini menyuguhkan pemandangan alam spektakuler dan sunset terbaik di Yogyakarta.",
-          gambar: "https://idsejarah.net/wp-content/uploads/2016/07/ratu-boko.jpg",
+          gambar: '/src/assets/destination/ratu-boko.jpg',
           location: "Sleman, DIY",
           kategori: ["Budaya", "Sejarah"],
           harga: {
@@ -484,6 +477,118 @@ export default {
             "Wisatawan Mancanegara": "Rp 100.000"
           },
           jamOperasional: "09:00 - 17:00 WIB"
+        },
+        {
+          id: 28,
+         nama: "Pantai Ngobaran",
+          deskripsi: "Pantai Ngobaran menawarkan keunikan perpaduan budaya dan alam, dengan keberadaan pura, mushola, dan seni patung yang berdampingan di tepi laut. Terletak di Gunungkidul, pantai ini cocok bagi pengunjung yang ingin menikmati sunset dalam suasana sakral dan eksotis.",
+          gambar: '/src/assets/destination/pantai-ngobaran.jpg',
+          location: "Gunungkidul, DIY",
+          kategori: ["Pantai", "Alam"],
+          harga: {
+            "Wisatawan Lokal": "Rp 10.000"
+          },
+          jamOperasional: "06:00 - 18:00 WIB"
+        },
+        {
+          id: 29,
+          nama: "Kebun Buah Mangunan",
+          deskripsi: "Kebun Buah Mangunan merupakan destinasi alam yang menawarkan panorama perbukitan hijau dan kabut pagi yang memukau, sering disebut “Negeri di Atas Awan.” Lokasinya berada di Dlingo, Bantul, dan cocok untuk menikmati sunrise serta udara sejuk, sambil menikmati fasilitas kebun buah dan gardu pandang.",
+          gambar: '/src/assets/destination/kebun-buah-mangunan.jpg',
+          location: "Bantul, DIY",
+          kategori: ["Wisata", "Alam"],
+          harga: {
+            "Weekday": "Rp 7.000",
+            "Weekend": "Rp 8.000"
+          },
+          jamOperasional: "04:30 - 18:00 WIB"
+        },
+        {
+          id: 30,
+          nama: "Pantai Parangkusumo",
+          deskripsi: "Pantai Parangkusumo terkenal dengan aura mistis dan spiritualnya, sering menjadi lokasi upacara adat seperti Labuhan. Terletak di Bantul, pantai ini menyuguhkan pemandangan laut selatan yang kuat dan sunset yang indah.",
+          gambar: '/src/assets/destination/Parang-Kusumo.jpg',
+          location: "Bantul, DIY",
+          kategori: ["Pantai", "Alam"],
+          harga: {
+            "Wisatawan": "Rp 10.000"
+          },
+          jamOperasional: "06:00 - 18:00 WIB"
+        },
+        {
+          id: 31,
+          nama: "Puncak Becici",
+          deskripsi: "Puncak Becici adalah kawasan hutan pinus alami di Bantul yang menawarkan suasana sejuk, pemandangan perbukitan hingga laut selatan, dan spot selfie kekinian. Tempat ini sangat cocok untuk bersantai, menikmati sunset, berkemah, atau sekadar berjalan di bawah rindangnya pepohonan.",
+          gambar: '/src/assets/destination/puncak-becici.jpg',
+          location: "bantul, DIY",
+          kategori: ["Wisata", "Alam"],
+          harga: {
+            "Wisatawan": "Rp 5.000",
+            "Parkir": "Rp 10.000"
+          },
+          jamOperasional: "08:00 - 22:00 WIB"
+        },
+        {
+          id: 32,
+          nama: "Pantai Sepanjang",
+          deskripsi: "Pantai Sepanjang di Gunungkidul dikenal sebagai salah satu pantai berpasir putih terpanjang di kawasan selatan Yogyakarta. Suasananya masih alami, dengan ombak yang cukup besar, deretan warung kayu, dan cocok untuk keluarga yang ingin bersantai atau bermain air.",
+          gambar: '/src/assets/destination/pantaisepanjang.jpg',
+          location: "Gunungkidul, DIY",
+          kategori: ["Pantai", "Alam"],
+          harga: {
+            "Wisatawan": "Rp 10.000"
+          },
+          jamOperasional: "06:00 - 18:00 WIB"
+        },
+        {
+          id: 33,
+          nama: "Candi Kalasan",
+          deskripsi: "Candi Kalasan adalah salah satu peninggalan Buddha tertua di Yogyakarta yang dibangun pada abad ke-8. Terletak di Sleman, candi ini menampilkan relief halus, arsitektur unik, dan nuansa sejarah yang kuat, menjadikannya situs menarik untuk wisata budaya dan arkeologi.",
+          gambar: '/src/assets/destination/candi-kalasan.jpeg',
+          location: "Sleman, DIY",
+          kategori: ["Budaya", "Sejarah"],
+          harga: {
+            "Wisatawan Lokal": "Rp 5.000",
+            "Wisatawan Mancanegara": "Rp 10.000"
+          },
+          jamOperasional: "07:00 - 17:00 WIB"
+        },
+        {
+          id: 34,
+          nama: "Candi Ijo",
+          deskripsi: "Candi Ijo berdiri di atas bukit tertinggi di Yogyakarta, menyuguhkan perpaduan arsitektur Hindu kuno dan panorama matahari terbenam yang luar biasa. Suasana tenang dan pemandangan dari ketinggian menjadikan tempat ini populer bagi wisatawan pencinta sejarah dan fotografi.",
+          gambar: '/src/assets/destination/candi-ijo.jpeg',
+          location: "Sleman, DIY",
+          kategori: ["Budaya", "Sejarah"],
+          harga: {
+            "Wisatawan Lokal": "Rp 7.000",
+            "Wisatawan Mancanegara": "Rp 15.000"
+          },
+          jamOperasional: "09:00 - 17:00 WIB"
+        },
+        {
+          id: 35,
+          nama: "Taman Pintar",
+          deskripsi: "Taman Pintar merupakan pusat wisata edukasi interaktif di pusat Kota Yogyakarta, ideal untuk anak-anak dan keluarga. Dengan berbagai zona sains, teknologi, dan seni yang menarik, tempat ini memadukan pembelajaran dan hiburan dalam satu kunjungan yang menyenangkan.",
+          gambar: '/src/assets/destination/taman-pintar.jpg',
+          location: "Yogyakarta, DIY",
+          kategori: ["Edukasi", "Keluarga"],
+          harga: {
+            "Wisatawan": "Rp 12.000"
+          },
+          jamOperasional: "08:30 - 16:00 WIB"
+        },
+        {
+          id: 36,
+          nama: "Goa Jomblang",
+          deskripsi: "Goa Jomblang adalah goa vertikal purba di Gunungkidul yang terkenal dengan “cahaya surga” yang masuk dari atas lubang goa. Wisata ini menantang adrenalin karena pengunjung harus turun dengan tali, namun akan terbayar dengan keindahan lorong bawah tanah dan vegetasi purba.",
+          gambar: '/src/assets/destination/Goa-Jomblang.jpg',
+          location: "Gunungkidul, DIY",
+          kategori: ["Petualangan", "Alam"],
+          harga: {
+            "Wisatawan": "Rp 450.000"
+          },
+          jamOperasional: "08:00 - 14:00 WIB"
         }
       ].map(item => ({ ...item, showFull: false }))
     };
