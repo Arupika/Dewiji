@@ -1,20 +1,17 @@
 <?php
-use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Route;
-use App\Models\User; // Pastikan model ini di-import
 
-Route::middleware('api')->group(function () {
-    Route::get('/health', function () {
-        return response()->json(['status' => 'ok']);
-    });
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\MobilController;
+use App\Http\Controllers\Api\PaketController;
+use App\Http\Controllers\Api\DestinasiController;
+use App\Http\Controllers\Api\FaqController;
 
-    Route::get('/version', function () {
-        return response()->json(['version' => config('app.version')]);
-    });
+// RESTful API Routes
+Route::apiResource('/users', UserController::class);
+Route::apiResource('/mobils', MobilController::class);
+Route::apiResource('/pakets', PaketController::class);
+Route::apiResource('/destinasis', DestinasiController::class);
+Route::apiResource('/faqs', FaqController::class);
 
-    // Add more API routes here
-    Route::get('/users', function (Request $request) {
-    $users = User::all(); // Ambil semua user dari database
-    return response()->json(['users' => $users]);
-});
-});

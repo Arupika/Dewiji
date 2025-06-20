@@ -74,43 +74,68 @@
 </template>
 
 <script>
+import axios from 'axios';
+
+axios.defaults.withCredentials = true; // Pastikan untuk mengirim cookie dengan setiap permintaan 
+axios.defaults.withXSRFToken = true; // Pastikan untuk mengirim token CSRF jika diperlukan  
+axios.defaults.baseURL = "http://localhost:8000"; // Ganti dengan URL API backend Anda
 export default {
   data() {
     return {
       registerData: {
-        nama: '',
+        name: '',           // Ini harusnya 'name' untuk nama lengkap, bukan 'nama'
         email: '',
         phone: '',
-        birthDate: '',
+        birth_date: '',     // Ubah dari 'birthDate' menjadi 'birth_date' agar konsisten dengan backend
         password: '',
         confirmPassword: '',
-        alamat: '',
+        address: '',        // Ubah dari 'alamat' menjadi 'address' agar konsisten dengan backend
         agreeTerms: false
       }
     };
   },
   methods: {
-    handleRegister() {
-      if (this.registerData.password !== this.registerData.confirmPassword) {
-        alert('Password dan konfirmasi password tidak cocok.');
-        return;
+    async handleRegister() {
+      console.log("Mencoba melakukan registrasi...");
+      try {
+        await axios.get("http://localhost:8000/sanctum/csrf-cookie");
+
+        const response = await axios.post("http://localhost:8000/register", { // Fortify route untuk register adalah '/register'
+          name: this.registerData.name,
+          email: this.registerData.email,
+          phone: this.registerData.phone,
+          birth_date: this.registerData.birth_date, // Pastikan ini dikirim
+          password: this.registerData.password,
+          password_confirmation: this.registerData.confirmPassword, // Fortify expect 'password_confirmation'
+          address: this.registerData.address // Pastikan ini dikirim
+        });
+
+        console.log("Registrasi berhasil:", response.data);
+        alert("Registrasi berhasil!");
+        // Mungkin redirect ke halaman login atau dashboard
+        this.$router.push('/login'); // Contoh: redirect ke halaman login
+      } catch (error) {
+        console.error("Error saat registrasi:", error.response?.data || error.message);
+        if (error.response && error.response.status === 422) {
+          // Tangani error validasi dari Fortify
+          const errors = error.response.data.errors;
+          let errorMessage = "Registrasi gagal:\n";
+          for (const key in errors) {
+            errorMessage += `- ${errors[key].join(', ')}\n`;
+          }
+          alert(errorMessage);
+        } else {
+          alert("Terjadi kesalahan saat registrasi. Silakan coba lagi.");
+        }
       }
-
-      // Kirim data ke API (contoh)
-      console.log('Data registrasi:', this.registerData);
-
-      // Tambahkan logika penyimpanan / permintaan ke backend
-
-      // Setelah berhasil register, arahkan ke login
-      this.$router.push('/login');
     },
     showLoginPage() {
-      // Ganti tampilan ke halaman login
       this.$router.push('/login');
     }
   }
 };
 </script>
+
 
 <style scoped>
 /* Tambahan style opsional jika perlu */
