@@ -11,6 +11,7 @@ import './assets/global.css'
 
 import AOS from 'aos'
 
+
 createApp(App).use(router).mount('#app')
 
 AOS.init({ duration: 800, once: true })

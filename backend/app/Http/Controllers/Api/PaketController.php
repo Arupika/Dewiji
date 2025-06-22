@@ -13,7 +13,7 @@ class PaketController extends Controller
 {
     public function index()
     {
-        $pakets = Paket::latest()->paginate(5);
+        $pakets = Paket::orderBy('id', 'asc')->paginate(5);
         return new PaketResource(true, 'List Data Paket', $pakets);
     }
 

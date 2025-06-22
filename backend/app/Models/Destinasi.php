@@ -11,14 +11,15 @@ class Destinasi extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nama',
-        'deskripsi',
-        'gambar',
-        'location',
-        'kategori',
-        'harga',
-        'jamOperasional',
-    ];
+    'nama', 
+    'deskripsi', 
+    'location', 
+    'kategori',
+    'harga', 
+    'jamOperasional', 
+    'gambar'
+];
+
 
     protected $casts = [
         'kategori' => 'array',

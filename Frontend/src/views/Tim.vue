@@ -1,5 +1,5 @@
 <template>
-  <div class="container py-5">
+  
     <!-- Team Section Header -->
     <div class="container py-3 py-md-5">
       <div class="row justify-content-center">
@@ -39,7 +39,87 @@
         </div>
       </div>
     </div>
+    <footer class="bg-dark text-light pt-5 pb-4">
+    <div class="container">
+      <div class="row g-4">
+        <!-- Tentang Kami -->
+        <div class="col-lg-3 col-md-6">
+          <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Tentang Kami</h5>
+          <p class="small"><strong>Dewiji Explore</strong> menyediakan sewa mobil berkualitas, aman, dan nyaman dengan harga yang cukup terjangkau serta menyediakan paket-paket wisata di Jogja dan sekitarnya.</p>
+        </div>
+        
+        <!-- Kontak Kami -->
+        <div class="col-lg-3 col-md-6">
+          <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Kontak Kami</h5>
+          <ul class="list-unstyled small">
+            <li class="mb-2">
+              <i class="bi bi-geo-alt-fill text-success me-2"></i>
+              Jl. Ngiringsi, Sleman, Yogyakarta 12345
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-telephone-fill text-success me-2"></i>
+              081212344321
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-envelope-fill text-success me-2"></i>
+              yogyakartaDewiji@gmail.com
+            </li>
+          </ul>
+        </div>
+        
+        <!-- Navigasi -->
+<div class="col-lg-3 col-md-6">
+  <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Navigasi</h5>
+  <ul class="list-unstyled small">
+    <li class="mb-2">
+      <router-link to="/" class="text-light text-decoration-none hover-success">Home</router-link>
+    </li>
+    <li class="mb-2">
+      <router-link to="/Destination" class="text-light text-decoration-none hover-success">Destinasi</router-link>
+    </li>
+    <li class="mb-2">
+      <router-link to="/CarRent" class="text-light text-decoration-none hover-success">Rental Mobil</router-link>
+    </li>
+    <li class="mb-2">
+      <router-link to="/Package" class="text-light text-decoration-none hover-success">Paket Liburan</router-link>
+    </li>
+    <li class="mb-2">
+      <router-link to="/Comment" class="text-light text-decoration-none hover-success">Kritik & Saran</router-link>
+    </li>
+  </ul>
+</div>
+
+        
+       <!-- Sosial Media -->
+<div class="col-lg-3 col-md-6">
+  <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Sosial Media</h5>
+  <p class="small">Ikuti kami di media sosial untuk mendapatkan penawaran terbaik!</p>
+  <div class="d-flex gap-3">
+    <!-- GANTI BAGIAN INI -->
+    <a href="https://www.facebook.com/namapagekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+      <i class="bi bi-facebook"></i>
+    </a>
+    <!-- GANTI BAGIAN INI -->
+    <a href="https://www.tiktok.com/@usernamekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+      <i class="bi bi-tiktok"></i>
+    </a>
+    <!-- GANTI BAGIAN INI -->
+    <a href="https://www.instagram.com/usernamekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+      <i class="bi bi-instagram"></i>
+    </a>
+    <!-- GANTI BAGIAN INI -->
+    <a href="https://wa.me/6281348680937" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+      <i class="bi bi-whatsapp"></i>
+    </a>
   </div>
+</div>
+
+      </div>
+      
+      <hr class="my-4 bg-secondary">
+      
+    </div>
+  </footer>
 </template>
 
 <script>

@@ -7,7 +7,7 @@ const items = [
   { to: '/package', name: 'Paket Liburan' },
   { to: '/comment', name: 'Kritik & Saran' },
   { to: '/team', name: 'Tim' },
-  { to: '/login', name: 'Login' },
+  { to: '/Auth/login', name: 'Login' },
 ]
 </script>
 

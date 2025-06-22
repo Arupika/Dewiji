@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('pakets', function (Blueprint $table) {
             $table->id();
             $table->json('destinasi')->nullable(); // Contoh: ["Candi Borobudur", "Svargabumi", ...]
-            $table->json('gambar')->nullable(); // Bisa 1 atau lebih gambar
+            $table->string('gambar')->nullable()->change();
             $table->json('harga')->nullable(); // Nested JSON: jenis mobil => { lama, diskon }
             $table->json('termasuk')->nullable(); // Contoh: ["Mobil + Supir + BBM", ...]
             $table->json('tidak_termasuk')->nullable(); // Contoh: ["Parkir", "Tiket masuk", ...]
