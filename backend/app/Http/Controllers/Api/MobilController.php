@@ -13,7 +13,7 @@ class MobilController extends Controller
 {
     public function index()
     {
-        $mobils = Mobil::orderBy('id', 'asc')->paginate(5);
+        $mobils = Mobil::orderBy('id', 'asc')->paginate(6);
         return new MobilResource(true, 'List Data Mobil', $mobils);
     }
 

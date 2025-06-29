@@ -1,57 +1,84 @@
 <template>
   <div class="container py-5">
-    <div class="row justify-content-center">
-      <div class="col-md-8 text-center">
-        <h1 class="mb-4 fw-bold display-5">Pilih Paket Liburan</h1>
-        <p class="lead">Cari referensi wisata di Jogja? Kamu bisa langsung pilih paket yang sudah kami sediakan. Tentunya kamu masih bisa custom paket wisata!</p>
+    <Transition name="fade" appear>
+      <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+          <h1 class="mb-4 fw-bold display-5">Pilih Paket Liburan</h1>
+          <p class="lead">Cari referensi wisata di Jogja? Kamu bisa langsung pilih paket yang sudah kami sediakan. Tentunya kamu masih bisa custom paket wisata!</p>
+        </div>
       </div>
-    </div>
+    </Transition>
 
-    <div class="mb-4 container">
-      <input
-        type="text"
-        class="form-control rounded-pill"
-        placeholder="Cari paket liburan..."
-        v-model="searchQuery"
-      />
-    </div>
+    <Transition name="fade" appear>
+      <div class="mb-4 container">
+        <input
+          type="text"
+          class="form-control rounded-pill"
+          placeholder="Cari paket liburan..."
+          v-model="searchQuery"
+        />
+      </div>
+    </Transition>
 
-    <div class="row g-4">
+    <TransitionGroup name="list" tag="div" class="row g-4 w-100">
       <div class="col-md-4" v-for="(trip, index) in filteredTrips" :key="trip.id">
         <div class="card h-100 shadow-sm">
-          <img :src="trip.gambar[0]" class="w-100 rounded-top" style="height: 200px; object-fit: cover;" />
+          <img :src="trip.gambar || 'https://via.placeholder.com/400x300?text=No+Image'" class="w-100 rounded-top" style="height: 200px; object-fit: cover;" />
           <div class="card-body">
-            <h5 class="card-title fw-bold">Paket {{ index + 1 }}</h5>
+            <h5 class="card-title fw-bold">{{ trip.nama || `Paket ${index + 1}` }}</h5>
 
             <div class="mb-3">
               <span class="badge bg-success bg-opacity-10 text-success me-2"
-                v-for="(dest, i) in trip.destinasi.slice(0, 2)" :key="i">
+                v-for="(dest, i) in (trip.destinasi || []).slice(0, 2)" :key="i">
                 {{ dest.split(',')[0] }}
               </span>
-              <span v-if="trip.destinasi.length > 2" class="badge bg-secondary bg-opacity-10 text-secondary">
+              <span v-if="(trip.destinasi || []).length > 2" class="badge bg-secondary bg-opacity-10 text-secondary">
                 +{{ trip.destinasi.length - 2 }} lainnya
               </span>
             </div>
 
             <div class="mb-3">
               <h6 class="fw-bold mb-2">Harga:</h6>
-              <div v-for="(harga, tipe) in trip.harga" :key="tipe" class="d-flex justify-content-between mb-1">
-                <span>{{ tipe }}:</span>
+              <div v-for="(hargaItem, i) in (trip.harga || [])" :key="i" class="d-flex justify-content-between mb-1">
+                <span>{{ hargaItem.tipe || 'Harga' }}:</span>
                 <span>
-                  <del class="text-muted small me-2">{{ harga.lama }}</del>
-                  <strong class="text-success">{{ harga.diskon }}</strong>
+                  <del v-if="hargaItem.lama" class="text-muted small me-2">{{ hargaItem.lama }}</del>
+                  <strong class="text-success">{{ hargaItem.diskon || 'N/A' }}</strong>
                 </span>
               </div>
             </div>
 
+            <div class="mb-3" v-if="(trip.termasuk || []).length > 0">
+              <h6 class="fw-bold mb-1">Termasuk:</h6>
+              <ul class="list-unstyled mb-0 ms-3"> <li v-for="(item, i) in (trip.termasuk || []).slice(0, 2)" :key="i" class="small">
+                  <i class="bi bi-check-circle-fill text-success me-1"></i>{{ item }}
+                </li>
+                <li v-if="(trip.termasuk || []).length > 2" class="small text-muted">
+                  +{{ trip.termasuk.length - 2 }} lainnya
+                </li>
+              </ul>
+            </div>
+
+            <div class="mb-3" v-if="(trip.tidak_termasuk || []).length > 0">
+              <h6 class="fw-bold mb-1">Tidak Termasuk:</h6>
+              <ul class="list-unstyled mb-0 ms-3">
+                <li v-for="(item, i) in (trip.tidak_termasuk || []).slice(0, 2)" :key="i" class="small">
+                  <i class="bi bi-x-circle-fill text-danger me-1"></i>{{ item }}
+                </li>
+                <li v-if="(trip.tidak_termasuk || []).length > 2" class="small text-muted">
+                  +{{ trip.tidak_termasuk.length - 2 }} lainnya
+                </li>
+              </ul>
+            </div>
+
             <div v-if="trip.deskripsi" class="mb-3">
               <h6 class="fw-bold mb-2">Deskripsi:</h6>
-              <p class="card-text small">{{ trip.deskripsi }}</p>
+              <p class="card-text small description-clamp">{{ trip.deskripsi }}</p>
             </div>
 
             <button
               class="btn btn-success w-100 rounded-pill fw-bold"
-              @click="showBookingModal(trip, index)">
+              @click="showBookingModal(trip)">
               <i class="bi bi-whatsapp me-2"></i>Booking Sekarang
             </button>
           </div>
@@ -61,27 +88,86 @@
       <div v-if="filteredTrips.length === 0" class="col-12 text-center py-5">
         <p class="lead">Tidak ada paket yang ditemukan sesuai dengan pencarian Anda.</p>
       </div>
-    </div>
+    </TransitionGroup>
 
-    <!-- Modal Pemesanan -->
-    <div v-if="selectedPackage" class="modal fade show" tabindex="-1" style="display: block; background: rgba(0,0,0,0.5)" aria-modal="true" role="dialog">
+    <div 
+      v-if="showModal" 
+      class="modal fade" 
+      :class="{ 'show d-block': showModal }" 
+      tabindex="-1" 
+      role="dialog" 
+      aria-modal="true" 
+      :style="{ 
+        backgroundColor: showModal ? 'rgba(0,0,0,0.5)' : '', 
+        zIndex: showModal ? 1060 : 'auto', 
+        overflowY: 'auto' 
+      }" 
+      @click.self="closeModal">
+      
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content rounded-3">
           <div class="modal-header border-0">
-            <h5 class="modal-title fw-bold">Paket {{ selectedPackageIndex + 1 }}</h5>
+            <h5 class="modal-title fw-bold">{{ selectedPackage.nama || 'Detail Paket' }}</h5>
             <button type="button" class="btn-close" @click="closeModal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <div class="text-center mb-4">
-              <img :src="selectedPackage.gambar[0]" class="img-fluid rounded" style="max-height: 200px" />
+              <img 
+                :src="selectedPackage.gambar || 'https://via.placeholder.com/600x400?text=No+Image'" 
+                class="img-fluid rounded modal-image" 
+                alt="Foto paket" 
+              />
+            </div>
+            
+            <div class="mb-3">
+              <strong>Destinasi:</strong>
+              <ul class="list-unstyled mt-2">
+                <li v-for="(dest, idx) in (selectedPackage.destinasi || [])" :key="idx">
+                  <i class="bi bi-geo-alt-fill text-success me-2"></i>{{ dest }}
+                </li>
+              </ul>
             </div>
 
+            <div class="mb-3" v-if="selectedPackage.harga && selectedPackage.harga.length">
+              <strong>Harga:</strong>
+              <ul class="list-unstyled mt-2">
+                <li v-for="(hargaItem, idx) in selectedPackage.harga" :key="idx">
+                  <span>{{ hargaItem.tipe }}: <del v-if="hargaItem.lama" class="text-muted small me-2">{{ hargaItem.lama }}</del><strong class="text-success">{{ hargaItem.diskon || 'N/A' }}</strong></span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="mb-3" v-if="selectedPackage.termasuk && selectedPackage.termasuk.length">
+              <strong>Sudah Termasuk:</strong>
+              <ul class="list-unstyled mt-2">
+                <li v-for="(item, idx) in selectedPackage.termasuk" :key="idx">
+                  <i class="bi bi-check-circle-fill text-success me-2"></i>{{ item }}
+                </li>
+              </ul>
+            </div>
+
+            <div class="mb-3" v-if="selectedPackage.tidak_termasuk && selectedPackage.tidak_termasuk.length">
+              <strong>Tidak Termasuk:</strong>
+              <ul class="list-unstyled mt-2">
+                <li v-for="(item, idx) in selectedPackage.tidak_termasuk" :key="idx">
+                  <i class="bi bi-x-circle-fill text-danger me-2"></i>{{ item }}
+                </li>
+              </ul>
+            </div>
+
+            <div class="mb-3" v-if="selectedPackage.deskripsi">
+              <strong>Deskripsi:</strong>
+              <p style="white-space: pre-line;">{{ selectedPackage.deskripsi || '-' }}</p>
+            </div>
+
+            <hr />
             <form @submit.prevent="submitBooking">
-              <div class="mb-3">
-                <label class="form-label fw-bold">Tipe Mobil</label>
-                <select class="form-select" v-model="bookingData.tipeMobil" required>
-                  <option v-for="(harga, tipe) in selectedPackage.harga" :key="tipe" :value="tipe">
-                    {{ tipe }} - {{ harga.diskon }}
+              <div class="mb-3" v-if="selectedPackage.harga && selectedPackage.harga.length > 0">
+                <label class="form-label fw-bold">Pilih Jenis Harga</label>
+                <select class="form-control" v-model="bookingData.tipeHarga" required>
+                  <option disabled value="">Pilih salah satu harga</option>
+                  <option v-for="(hargaItem, idx) in selectedPackage.harga" :key="idx" :value="hargaItem.tipe">
+                    {{ hargaItem.tipe }} - {{ hargaItem.diskon }}
                   </option>
                 </select>
               </div>
@@ -160,13 +246,13 @@
       <router-link to="/Package" class="text-light text-decoration-none hover-success">Paket Liburan</router-link>
     </li>
     <li class="mb-2">
-      <router-link to="/Comment" class="text-light text-decoration-none hover-success">Kritik & Saran</router-link>
+      <router-link to="/Comment" class="text-light text-decoration-none hover-success">FAQ</router-link>
     </li>
   </ul>
 </div>
 
         
-       <!-- Sosial Media -->
+        <!-- Sosial Media-->
 <div class="col-lg-3 col-md-6">
   <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Sosial Media</h5>
   <p class="small">Ikuti kami di media sosial untuk mendapatkan penawaran terbaik!</p>
@@ -199,19 +285,19 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import api from '@/api'
 import Swal from 'sweetalert2'
 
 const trips = ref([])
 const searchQuery = ref('')
+const showModal = ref(false)
 const selectedPackage = ref(null)
-const selectedPackageIndex = ref(null)
 
 const bookingData = ref({
-  tipeMobil: '',
+  tipeHarga: '', 
   tanggal: '',
-  jumlahOrang: 1,
+  jumlahOrang: 1, 
   nama: '',
   whatsapp: '',
   catatan: ''
@@ -220,53 +306,78 @@ const bookingData = ref({
 const fetchTrips = async () => {
   try {
     const res = await api.get('/api/pakets')
-    trips.value = res.data.data.data
+    trips.value = res.data.data.data 
   } catch (err) {
     console.error('Gagal memuat paket:', err)
+    Swal.fire({
+      icon: 'error',
+      title: 'Gagal Memuat Paket',
+      text: 'Terjadi kesalahan saat memuat daftar paket liburan.'
+    });
   }
 }
 
 onMounted(fetchTrips)
 
 const filteredTrips = computed(() => {
-  const query = searchQuery.value.toLowerCase()
+  const query = searchQuery.value.toLowerCase().trim()
   return trips.value.filter(trip =>
-    trip.destinasi.join(' ').toLowerCase().includes(query) ||
-    (trip.deskripsi && trip.deskripsi.toLowerCase().includes(query))
+    (trip.nama && trip.nama.toLowerCase().includes(query)) || 
+    (trip.destinasi && trip.destinasi.join(' ').toLowerCase().includes(query)) ||
+    (trip.deskripsi && trip.deskripsi.toLowerCase().includes(query)) ||
+    (trip.harga && trip.harga.some(h => (h.tipe && h.tipe.toLowerCase().includes(query)) || (h.diskon && h.diskon.toLowerCase().includes(query)))) || // Cari di tipe & diskon harga
+    (trip.termasuk && trip.termasuk.some(t => t.toLowerCase().includes(query))) ||
+    (trip.tidak_termasuk && trip.tidak_termasuk.some(nt => nt.toLowerCase().includes(query)))
   )
 })
 
-const showBookingModal = (trip, index) => {
-  selectedPackage.value = trip
-  selectedPackageIndex.value = index
+const showBookingModal = (trip) => {
+  selectedPackage.value = trip 
+  showModal.value = true 
+  
   const tomorrow = new Date()
   tomorrow.setDate(tomorrow.getDate() + 1)
   bookingData.value.tanggal = tomorrow.toISOString().split('T')[0]
-  bookingData.value.tipeMobil = Object.keys(trip.harga)[0]
+
+  if (selectedPackage.value.harga && selectedPackage.value.harga.length > 0) {
+    bookingData.value.tipeHarga = selectedPackage.value.harga[0].tipe;
+  } else {
+    bookingData.value.tipeHarga = '';
+  }
+
+  document.body.classList.add('modal-open');
+  document.body.style.overflow = 'hidden'; 
 }
 
 const closeModal = () => {
-  selectedPackage.value = null
-  selectedPackageIndex.value = null
+  showModal.value = false 
+  selectedPackage.value = null 
+  
   bookingData.value = {
-    tipeMobil: '',
+    tipeHarga: '',
     tanggal: '',
     jumlahOrang: 1,
     nama: '',
     whatsapp: '',
     catatan: ''
   }
+
+  document.body.classList.remove('modal-open');
+  document.body.style.overflow = '';
 }
 
 const submitBooking = () => {
-  const selectedPrice = selectedPackage.value.harga[bookingData.value.tipeMobil].diskon
+  const selectedPriceObject = selectedPackage.value.harga.find(
+    price => price.tipe === bookingData.value.tipeHarga
+  );
+  const priceDisplay = selectedPriceObject ? selectedPriceObject.diskon : 'Harga tidak tersedia';
 
   Swal.fire({
     title: 'Pemesanan Berhasil!',
     html: `
       <div class="text-start">
-        <p><strong>Paket:</strong> ${selectedPackageIndex.value + 1}</p>
-        <p><strong>Tipe Mobil:</strong> ${bookingData.value.tipeMobil} (${selectedPrice})</p>
+        <p><strong>Paket:</strong> ${selectedPackage.value.nama}</p>
+        <p><strong>Jenis Harga:</strong> ${bookingData.value.tipeHarga}</p>
         <p><strong>Tanggal:</strong> ${bookingData.value.tanggal}</p>
         <p><strong>Nama:</strong> ${bookingData.value.nama}</p>
         <p><strong>WhatsApp:</strong> ${bookingData.value.whatsapp}</p>
@@ -285,20 +396,96 @@ const submitBooking = () => {
 }
 
 const sendWhatsAppMessage = () => {
+  const selectedPriceObject = selectedPackage.value.harga.find(
+    price => price.tipe === bookingData.value.tipeHarga
+  );
+  const priceDisplay = selectedPriceObject ? selectedPriceObject.diskon : 'Harga tidak tersedia';
+  const oldPriceDisplay = selectedPriceObject && selectedPriceObject.lama ? ` (Harga normal: ${selectedPriceObject.lama})` : '';
+
   const message = `Halo Dewiji Explore, saya ingin memesan:
 
-📌 *Paket ${selectedPackageIndex.value + 1}*
-📍 Destinasi: ${selectedPackage.value.destinasi.join(', ')}
-🚗 Tipe Mobil: ${bookingData.value.tipeMobil}
-💰 Harga: ${selectedPackage.value.harga[bookingData.value.tipeMobil].diskon}
+📌 *Paket ${selectedPackage.value.nama}*
+📍 Destinasi: ${(selectedPackage.value.destinasi || []).join(', ')}
+
+💰 Harga: ${priceDisplay}${oldPriceDisplay}
 📅 Tanggal: ${bookingData.value.tanggal}
 👤 Nama: ${bookingData.value.nama}
 📱 WhatsApp: ${bookingData.value.whatsapp}
-${bookingData.value.catatan ? `✏️ Catatan: ${bookingData.value.catatan}` : ''}
+${(selectedPackage.value.termasuk && selectedPackage.value.termasuk.length) ? `✅ Termasuk: ${selectedPackage.value.termasuk.join(', ')}\n` : ''}
+${(selectedPackage.value.tidak_termasuk && selectedPackage.value.tidak_termasuk.length) ? `❌ Tidak Termasuk: ${selectedPackage.value.tidak_termasuk.join(', ')}\n` : ''}
+${selectedPackage.value.deskripsi ? `📝 Deskripsi Paket: ${selectedPackage.value.deskripsi}\n` : ''}
+${bookingData.value.catatan ? `✏️ Catatan Pribadi: ${bookingData.value.catatan}` : ''}
 
 Mohon info lebih lanjut. Terima kasih.`
 
   const encoded = encodeURIComponent(message)
   window.open(`https://wa.me/6281348680937?text=${encoded}`, '_blank')
 }
+
+watch(showModal, (newValue) => {
+  if (!newValue) {
+    document.body.classList.remove('modal-open');
+    document.body.style.overflow = '';
+  }
+});
 </script>
+
+<style scoped>
+/* Animasi Fade */
+.fade-enter-active,
+.fade-leave-active {
+ transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+ opacity: 0;
+}
+
+/* Animasi List Item (untuk kartu paket) */
+.list-enter-active,
+.list-leave-active {
+ transition: all 0.5s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+ opacity: 0;
+ transform: translateY(30px);
+}
+
+/* Penting: Untuk TransitionGroup, pastikan elemen yang di-v-for memiliki posisi relatif */
+.list-leave-active {
+ position: absolute;
+}
+
+.list-move {
+ transition: transform 0.5s ease;
+}
+
+/* Kustomisasi Modal */
+body.modal-open {
+ overflow: hidden !important; 
+ padding-right: var(--bs-modal-padding) !important; 
+}
+
+/* Penyesuaian gambar di dalam modal */
+.modal-image {
+ width: 100%; 
+ height: 200px; /* Disesuaikan agar tidak terlalu besar di modal */
+ object-fit: contain; 
+background-color: #f0f0f0; 
+}
+
+/* Custom CSS untuk deskripsi multi-baris dengan elipsis */
+.description-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Tampilkan hingga 3 baris */
+  line-clamp: 3; /* Standard property for compatibility */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis; 
+  min-height: 3.8em; /* Sesuaikan dengan line-height * jumlah baris (misal 1.2em * 3 = 3.6em) */
+  line-height: 1.2em; /* Sesuaikan line-height agar konsisten */
+}
+</style>

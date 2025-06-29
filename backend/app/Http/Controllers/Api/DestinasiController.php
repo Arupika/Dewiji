@@ -13,7 +13,7 @@ class DestinasiController extends Controller
 {
     public function index()
     {
-        $destinasis = Destinasi::orderBy('id', 'asc')->paginate(5);
+        $destinasis = Destinasi::orderBy('id', 'asc')->paginate(6);
         return new DestinasiResource(true, 'List Data Destinasi', $destinasis);
     }
 

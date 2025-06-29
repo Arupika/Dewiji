@@ -11,7 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        Schema::table('pakets', function (Blueprint $table) {
+            // Menambahkan kolom 'nama' setelah 'id'
+            $table->string('nama')->after('id'); 
+        });
     }
 
     /**
@@ -19,6 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::table('pakets', function (Blueprint $table) {
+            // Menghapus kolom 'nama' jika rollback
+            $table->dropColumn('nama');
+        });
     }
 };

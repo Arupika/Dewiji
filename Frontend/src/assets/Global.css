@@ -652,7 +652,10 @@ section.py-5 {
 .text-center a:hover {
     text-decoration: underline;
 }
+.grow-on-hover {
+  display: inline-block; /* Essential for transform animations on various elements */
+  transition: transform 0.3s ease; /* Apply transition for smooth in and out animation */
+}
 .grow-on-hover:hover {
-  transform: scale(1.05);
-  transition: 0.3s ease;
+  transform: scale(1.05); /* Scales the element to 105% of its original size on hover */
 }

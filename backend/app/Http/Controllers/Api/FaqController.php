@@ -12,7 +12,7 @@ class FaqController extends Controller
 {
     public function index()
     {
-        $faqs = Faq::orderBy('id', 'asc')->paginate(5);
+        $faqs = Faq::orderBy('id', 'asc')->paginate(6);
         return new FaqResource(true, 'List Data FAQ', $faqs);
     }
 

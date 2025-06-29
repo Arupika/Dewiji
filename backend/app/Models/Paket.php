@@ -2,17 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute; // PENTING: Tambahkan ini untuk accessor gambar
+use Illuminate\Support\Facades\URL; // PENTING: Tambahkan ini untuk accessor gambar
 
 class Paket extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'nama', // <-- BARU: Tambahkan 'nama' ke fillable
         'destinasi',
-        'gambar',
+        'gambar', // Pastikan ini di fillable untuk penyimpanan nama file
         'harga',
         'termasuk',
         'tidak_termasuk',
@@ -20,25 +22,23 @@ class Paket extends Model
     ];
 
     protected $casts = [
-        'destinasi' => 'array',
-        'gambar' => 'array',
-        'harga' => 'array',
-        'termasuk' => 'array',
-        'tidak_termasuk' => 'array',
+        'destinasi'      => 'array', // Cast ke array untuk field JSON destinasi
+        'harga'          => 'array', // Cast ke array untuk field JSON harga
+        'termasuk'       => 'array', // Cast ke array untuk field JSON termasuk
+        'tidak_termasuk' => 'array', // Cast ke array untuk field JSON tidak_termasuk
+        // 'gambar'         => 'string', // Tidak perlu di-cast jika accessor gambar() sudah mengurusnya
     ];
 
+    /**
+     * Accessor untuk gambar: Mengembalikan URL lengkap gambar paket.
+     * Asumsi gambar disimpan di storage/app/public/pakets
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
     protected function gambar(): Attribute
     {
         return Attribute::make(
-            get: fn ($gambar) => is_array($gambar)
-                ? array_map(fn($img) => url('/storage/pakets/' . $img), $gambar)
-                : [],
+            get: fn ($gambar) => $gambar ? URL::to('/storage/pakets/' . $gambar) : null,
         );
     }
 }
-
-// This model represents a travel package with fields for destinations, images, prices, included and excluded items, and a description.
-// The 'destinasi', 'gambar', 'harga', 'termasuk', and 'tidak_termasuk' fields are cast to arrays for easier manipulation.
-// The 'fillable' property specifies which attributes can be mass assigned.
-// The 'casts' property ensures that the specified attributes are treated as arrays when accessed or modified.
-// This allows for flexible handling of complex data structures, such as multiple destinations, images, and pricing details.
