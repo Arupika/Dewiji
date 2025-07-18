@@ -187,6 +187,13 @@
               </div>
 
               <div class="mb-3">
+                <label class="form-label fw-bold">Total Harga Estimasi</label>
+                <p class="form-control-plaintext fw-bold text-success">
+                  Rp {{ Number(calculatedPrice).toLocaleString('id-ID') }}
+                </p>
+              </div>
+
+              <div class="mb-3">
                 <label class="form-label fw-bold">Lokasi Pengambilan</label>
                 <select class="form-select" v-model="bookingData.pickupLocation" required>
                   <option value="Kantor Dewiji (Jl. Ngiringsi, Sleman)">Kantor Dewiji (Jl. Ngiringsi, Sleman)</option>
@@ -211,32 +218,8 @@
                 <label class="form-label fw-bold">Catatan</label>
                 <textarea class="form-control" rows="2" v-model="bookingData.catatan"></textarea>
               </div>
-
-              <hr class="my-4"> <h5 class="fw-bold text-center mb-3">Selesaikan Pembayaran Anda</h5>
-              <div class="text-center mb-3">
-                <QRCode
-                  :value="qrPaymentText"
-                  :size="200"
-                  level="H"
-                  class="mx-auto border p-2 rounded"
-                />
-              </div>
-              <p class="text-center text-muted small mb-3">Scan QRIS ini untuk melakukan pembayaran.</p>
-
-              <div class="text-center mb-4">
-                  <p class="fw-bold mb-1">Atau Transfer Manual:</p>
-                  <p class="mb-0">Bank: Bank Syariah Indonesia (BSI)</p>
-                  <p class="mb-0">No. Rekening: 7213052386</p> <p class="mb-0">A.N.: irzha fahrizaldy</p> <p class="mt-2 text-danger small">Mohon lakukan pembayaran sesuai Total Harga Estimasi.</p>
-              </div>
-              <div class="mb-3">
-                <label class="form-label fw-bold">Total Harga Estimasi</label>
-                <p class="form-control-plaintext fw-bold text-success display-6">
-                  Rp {{ Number(calculatedPrice).toLocaleString('id-ID') }}
-                </p>
-              </div>
-
               <button type="submit" class="btn btn-success w-100 fw-bold rounded-pill py-2">
-                <i class="bi bi-whatsapp me-2"></i>Konfirmasi Pemesanan via WhatsApp
+                <i class="bi bi-whatsapp me-2"></i>Booking via WhatsApp
               </button>
             </form>
           </div>
@@ -319,7 +302,7 @@
 import { ref, onMounted, watch, computed } from 'vue'
 import api from '@/api'
 import Swal from 'sweetalert2'
-import QRCode from 'qrcode.vue' // <--- Pastikan ini diimpor!
+// import QRCode from 'qrcode.vue' // <--- QRCode dihapus karena sudah tidak digunakan di template
 
 const daftarMobil = ref([])
 const pagination = ref({})
@@ -339,28 +322,20 @@ const bookingData = ref({
 })
 
 // ===============================================================
-// Data untuk QR Pembayaran (QRIS dan BSI)
-// PENTING: Ganti nilai ini dengan string QRIS ASLI Anda.
-// Jika Anda tidak memiliki string QRIS, Anda bisa menggunakan nomor rekening bank.
-// Contoh QRIS string (ini HANYA CONTOH, JANGAN DIGUNAKAN UNTUK PRODUKSI):
-// '000201010212235204423853039995802ID5920PT. DEWIJI EXPLORE6007JAKARTA610512345678962050401A036304C907'
-// Jika belum ada QRIS, bisa pakai format rekening bank biasa:
-// 'Transfer Bank BSI: 7123456789 A.N. PT. Dewiji Explore'
-const qrPaymentText = ref('7213052386'); // <--- GANTI DENGAN STRING QRIS ASLI ATAU INFO REKENING BSI ANDA
-
-const bsiBankDetails = {
-  bankName: 'Bank Syariah Indonesia (BSI)',
-  accountNumber: '7213052386', // Ganti dengan nomor rekening BSI Anda
-  accountName: 'irzha fahrizaldy' // Ganti dengan nama rekening BSI Anda
-}
+// Data terkait QRIS dan BSI dihapus karena kembali ke versi semula
+// const qrPaymentText = ref(...);
+// const bsiBankDetails = { ... };
 // ===============================================================
+
+// Nomor WhatsApp untuk konfirmasi booking (tetap ada)
+const whatsappContactNumber = '6281348680937'; // Ganti dengan nomor WhatsApp Anda
 
 // Computed property to determine the unit for duration
 const unitDuration = computed(() => {
   return bookingData.value.rentalPackage === 'Sewa Mingguan' ? 'minggu' : 'hari';
 });
 
-// Computed property for calculated price
+// Computed property for calculated price (tetap ada)
 const calculatedPrice = computed(() => {
   let total = 0;
 
@@ -446,6 +421,18 @@ const showDetails = (mobil) => {
 
 const closeModal = () => {
   showModal.value = false;
+  // Reset bookingData to its initial state when closing modal
+  selectedMobil.value = {}; // Reset selected mobil
+  bookingData.value = {
+    rentalPackage: 'Sewa Harian (24 Jam)',
+    tanggal: '',
+    duration: 1,
+    pickupLocation: 'Kantor Dewiji (Jl. Ngiringsi, Sleman)',
+    nama: '',
+    whatsapp: '',
+    catatan: ''
+  };
+
   document.body.classList.remove('modal-open');
   document.body.style.overflow = '';
 }
@@ -463,8 +450,8 @@ const submitBooking = () => {
     ? `Durasi: ${bookingData.value.duration} ${unitDuration.value}\n`
     : '';
 
-  // Pesan WhatsApp setelah pembayaran dilakukan (sebelumnya ada konfirmasi di modal)
-  const message = `Halo Dewiji Explore, saya telah melakukan pemesanan sewa mobil:
+  // Pesan WhatsApp dikembalikan ke semula
+  const message = `Halo Dewiji Explore, saya ingin memesan sewa mobil:
 
 🚗 Mobil: ${selectedMobil.value.nama}
 📦 Paket Penyewaan: ${bookingData.value.rentalPackage}
@@ -479,22 +466,32 @@ ${selectedMobil.value.deskripsi ? `📝 Deskripsi Mobil: ${selectedMobil.value.d
 ${selectedMobil.value.fitur && selectedMobil.value.fitur.length ? `✨ Fitur: ${selectedMobil.value.fitur.join(', ')}\n` : ''}
 ${bookingData.value.catatan ? `✏️ Catatan: ${bookingData.value.catatan}` : ''}
 
-Saya sudah melakukan pembayaran melalui ${bsiBankDetails.bankName} (${bsiBankDetails.accountNumber} A.N. ${bsiBankDetails.accountName}) atau QRIS. Mohon konfirmasi pemesanan saya. Terima kasih.
-`;
+Mohon informasi lebih lanjut. Terima kasih.`
 
   const encoded = encodeURIComponent(message)
-  window.open(`https://wa.me/6281348680937?text=${encoded}`, '_blank')
 
-  // Tampilkan SweetAlert konfirmasi akhir setelah membuka WhatsApp
+  // SweetAlert asli Anda (meringkas pemesanan lalu membuka WhatsApp)
   Swal.fire({
     title: 'Pemesanan Berhasil!',
-    text: 'Mohon lanjutkan konfirmasi pemesanan Anda via WhatsApp.',
+    html: `
+      <div class="text-start">
+        <p><strong>Mobil:</strong> ${selectedMobil.value.nama}</p>
+        <p><strong>Paket Penyewaan:</strong> ${bookingData.value.rentalPackage}</p>
+        <p><strong>Tanggal Pengambilan:</strong> ${bookingData.value.tanggal}</p>
+        ${durationText ? `<p><strong>Durasi:</strong> ${bookingData.value.duration} ${unitDuration.value}</p>` : ''}
+        <p><strong>Total Harga Estimasi:</strong> Rp ${Number(calculatedPrice.value).toLocaleString('id-ID')}</p>
+        <p><strong>Lokasi Pengambilan:</strong> ${bookingData.value.pickupLocation}</p>
+        <p><strong>Nama:</strong> ${bookingData.value.nama}</p>
+        <p><strong>WhatsApp:</strong> ${bookingData.value.whatsapp}</p>
+        ${bookingData.value.catatan ? `<p><strong>Catatan:</strong> ${bookingData.value.catatan}</p>` : ''}
+      </div>
+    `,
     icon: 'success',
-    confirmButtonText: 'Oke',
-    allowOutsideClick: false // Mencegah modal tertutup saat klik di luar
-  }).then(() => {
-    closeModal(); // Tutup modal setelah konfirmasi SweetAlert ditutup
-  });
+    confirmButtonText: 'Tutup'
+  })
+
+  window.open(`https://wa.me/${whatsappContactNumber}?text=${encoded}`, '_blank') // Kembali membuka WA setelah SweetAlert
+  closeModal() // Tutup modal booking
 }
 
 onMounted(() => fetchMobils())
