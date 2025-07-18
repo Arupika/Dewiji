@@ -90,20 +90,20 @@
       </div>
     </TransitionGroup>
 
-    <div 
-      v-if="showModal" 
-      class="modal fade" 
-      :class="{ 'show d-block': showModal }" 
-      tabindex="-1" 
-      role="dialog" 
-      aria-modal="true" 
-      :style="{ 
-        backgroundColor: showModal ? 'rgba(0,0,0,0.5)' : '', 
-        zIndex: showModal ? 1060 : 'auto', 
-        overflowY: 'auto' 
-      }" 
+    <div
+      v-if="showModal"
+      class="modal fade"
+      :class="{ 'show d-block': showModal }"
+      tabindex="-1"
+      role="dialog"
+      aria-modal="true"
+      :style="{
+        backgroundColor: showModal ? 'rgba(0,0,0,0.5)' : '',
+        zIndex: showModal ? 1060 : 'auto',
+        overflowY: 'auto'
+      }"
       @click.self="closeModal">
-      
+
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content rounded-3">
           <div class="modal-header border-0">
@@ -112,13 +112,13 @@
           </div>
           <div class="modal-body">
             <div class="text-center mb-4">
-              <img 
-                :src="selectedPackage.gambar || 'https://via.placeholder.com/600x400?text=No+Image'" 
-                class="img-fluid rounded modal-image" 
-                alt="Foto paket" 
+              <img
+                :src="selectedPackage.gambar || 'https://via.placeholder.com/600x400?text=No+Image'"
+                class="img-fluid rounded modal-image"
+                alt="Foto paket"
               />
             </div>
-            
+
             <div class="mb-3">
               <strong>Destinasi:</strong>
               <ul class="list-unstyled mt-2">
@@ -192,6 +192,35 @@
                 <textarea class="form-control" v-model="bookingData.catatan" rows="2"></textarea>
               </div>
 
+              <hr class="my-4">
+              <h5 class="fw-bold text-center mb-3">Selesaikan Pembayaran Anda</h5>
+              <div class="text-center mb-3">
+                <QRCode
+                  :value="qrPaymentText"
+                  :size="200"
+                  level="H"
+                  class="mx-auto border p-2 rounded"
+                />
+              </div>
+              <p class="text-center text-muted small mb-3">Scan QRIS ini untuk melakukan pembayaran.</p>
+
+              <div class="text-center mb-4">
+                  <p class="fw-bold mb-1">Atau Transfer Manual:</p>
+                  <p class="mb-0">Bank: {{ bsiBankDetails.bankName }}</p>
+                  <p class="mb-0">No. Rekening: {{ bsiBankDetails.accountNumber }}</p>
+                  <p class="mb-0">A.N.: {{ bsiBankDetails.accountName }}</p>
+                  <p class="mt-2 text-danger small">Mohon lakukan pembayaran sesuai Total Harga Estimasi.</p>
+                  <p class="text-info small fw-bold">
+                      *Sertakan bukti transfer di kolom chat WhatsApp.
+                  </p>
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-bold">Total Harga Estimasi</label>
+                <p class="form-control-plaintext fw-bold text-success display-6">
+                  Rp {{ Number(calculatedPackagePrice).toLocaleString('id-ID') }}
+                </p>
+              </div>
+
               <button type="submit" class="btn btn-success w-100 rounded-pill fw-bold py-2">
                 <i class="bi bi-whatsapp me-2"></i>Konfirmasi Pemesanan
               </button>
@@ -204,13 +233,11 @@
   <footer class="bg-dark text-light pt-5 pb-4">
     <div class="container">
       <div class="row g-4">
-        <!-- Tentang Kami -->
         <div class="col-lg-3 col-md-6">
           <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Tentang Kami</h5>
           <p class="small"><strong>Dewiji Explore</strong> menyediakan sewa mobil berkualitas, aman, dan nyaman dengan harga yang cukup terjangkau serta menyediakan paket-paket wisata di Jogja dan sekitarnya.</p>
         </div>
-        
-        <!-- Kontak Kami -->
+
         <div class="col-lg-3 col-md-6">
           <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Kontak Kami</h5>
           <ul class="list-unstyled small">
@@ -228,58 +255,48 @@
             </li>
           </ul>
         </div>
-        
-        <!-- Navigasi -->
-<div class="col-lg-3 col-md-6">
-  <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Navigasi</h5>
-  <ul class="list-unstyled small">
-    <li class="mb-2">
-      <router-link to="/" class="text-light text-decoration-none hover-success">Home</router-link>
-    </li>
-    <li class="mb-2">
-      <router-link to="/Destination" class="text-light text-decoration-none hover-success">Destinasi</router-link>
-    </li>
-    <li class="mb-2">
-      <router-link to="/CarRent" class="text-light text-decoration-none hover-success">Rental Mobil</router-link>
-    </li>
-    <li class="mb-2">
-      <router-link to="/Package" class="text-light text-decoration-none hover-success">Paket Liburan</router-link>
-    </li>
-    <li class="mb-2">
-      <router-link to="/Comment" class="text-light text-decoration-none hover-success">FAQ</router-link>
-    </li>
-  </ul>
-</div>
 
-        
-        <!-- Sosial Media-->
-<div class="col-lg-3 col-md-6">
-  <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Sosial Media</h5>
-  <p class="small">Ikuti kami di media sosial untuk mendapatkan penawaran terbaik!</p>
-  <div class="d-flex gap-3">
-    <!-- GANTI BAGIAN INI -->
-    <a href="https://www.facebook.com/namapagekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
-      <i class="bi bi-facebook"></i>
-    </a>
-    <!-- GANTI BAGIAN INI -->
-    <a href="https://www.tiktok.com/@usernamekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
-      <i class="bi bi-tiktok"></i>
-    </a>
-    <!-- GANTI BAGIAN INI -->
-    <a href="https://www.instagram.com/usernamekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
-      <i class="bi bi-instagram"></i>
-    </a>
-    <!-- GANTI BAGIAN INI -->
-    <a href="https://wa.me/6281348680937" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
-      <i class="bi bi-whatsapp"></i>
-    </a>
-  </div>
-</div>
+        <div class="col-lg-3 col-md-6">
+          <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Navigasi</h5>
+          <ul class="list-unstyled small">
+            <li class="mb-2">
+              <router-link to="/" class="text-light text-decoration-none hover-success">Home</router-link>
+            </li>
+            <li class="mb-2">
+              <router-link to="/Destination" class="text-light text-decoration-none hover-success">Destinasi</router-link>
+            </li>
+            <li class="mb-2">
+              <router-link to="/CarRent" class="text-light text-decoration-none hover-success">Rental Mobil</router-link>
+            </li>
+            <li class="mb-2">
+              <router-link to="/Package" class="text-light text-decoration-none hover-success">Paket Liburan</router-link>
+            </li>
+            <li class="mb-2">
+              <router-link to="/Comment" class="text-light text-decoration-none hover-success">FAQ</router-link>
+            </li>
+          </ul>
+        </div>
 
+        <div class="col-lg-3 col-md-6">
+          <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Sosial Media</h5>
+          <p class="small">Ikuti kami di media sosial untuk mendapatkan penawaran terbaik!</p>
+          <div class="d-flex gap-3">
+            <a href="https://www.facebook.com/namapagekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+              <i class="bi bi-facebook"></i>
+            </a>
+            <a href="https://www.tiktok.com/@usernamekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+              <i class="bi bi-tiktok"></i>
+            </a>
+            <a href="https://www.instagram.com/usernamekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+              <i class="bi bi-instagram"></i>
+            </a>
+            <a href="https://wa.me/6281348680937" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+              <i class="bi bi-whatsapp"></i>
+            </a>
+          </div>
+        </div>
       </div>
-      
       <hr class="my-4 bg-secondary">
-      
     </div>
   </footer>
 </template>
@@ -288,6 +305,7 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import api from '@/api'
 import Swal from 'sweetalert2'
+import QRCode from 'qrcode.vue' // <--- Pastikan ini diimpor!
 
 const trips = ref([])
 const searchQuery = ref('')
@@ -295,18 +313,53 @@ const showModal = ref(false)
 const selectedPackage = ref(null)
 
 const bookingData = ref({
-  tipeHarga: '', 
+  tipeHarga: '',
   tanggal: '',
-  jumlahOrang: 1, 
+  jumlahOrang: 1, // Tambahan field jumlahOrang jika ada
   nama: '',
   whatsapp: '',
   catatan: ''
 })
 
+// ===============================================================
+// Data untuk QR Pembayaran (QRIS dan BSI) - Sama seperti CarRent.vue
+// PENTING: Ganti nilai ini dengan string QRIS ASLI Anda.
+// Jika Anda tidak memiliki string QRIS, Anda bisa menggunakan nomor rekening bank.
+const qrPaymentText = ref('Transfer Bank BSI: 7213052386 A.N. irzha fahrizaldy'); // GANTI DENGAN DATA ASLI ANDA
+
+const bsiBankDetails = {
+  bankName: 'Bank Syariah Indonesia (BSI)',
+  accountNumber: '7213052386', // Contoh: '7123456789'
+  accountName: 'irzha fahrizaldy'        // Contoh: 'PT. Dewiji Explore'
+}
+
+// Nomor WhatsApp untuk konfirmasi booking
+const whatsappContactNumber = '6281348680937'; // Contoh: '6281348680937'
+// ===============================================================
+
+// Computed property untuk menghitung total harga paket
+const calculatedPackagePrice = computed(() => {
+  if (!selectedPackage.value || !bookingData.value.tipeHarga) {
+    return 0;
+  }
+  const selectedPriceObject = selectedPackage.value.harga.find(
+    price => price.tipe === bookingData.value.tipeHarga
+  );
+  if (!selectedPriceObject || !selectedPriceObject.diskon) {
+    return 0;
+  }
+  // Menghilangkan karakter non-digit dan mengonversi ke float
+  const price = parseFloat(String(selectedPriceObject.diskon).replace(/[^0-9,-]+/g, "").replace(/,/g, ".")) || 0;
+  // Jika ada jumlah orang, kalikan
+  const total = price * (bookingData.value.jumlahOrang || 1);
+  return total;
+});
+
+
 const fetchTrips = async () => {
   try {
     const res = await api.get('/api/pakets')
-    trips.value = res.data.data.data 
+    trips.value = res.data.data.data
   } catch (err) {
     console.error('Gagal memuat paket:', err)
     Swal.fire({
@@ -322,23 +375,31 @@ onMounted(fetchTrips)
 const filteredTrips = computed(() => {
   const query = searchQuery.value.toLowerCase().trim()
   return trips.value.filter(trip =>
-    (trip.nama && trip.nama.toLowerCase().includes(query)) || 
+    (trip.nama && trip.nama.toLowerCase().includes(query)) ||
     (trip.destinasi && trip.destinasi.join(' ').toLowerCase().includes(query)) ||
     (trip.deskripsi && trip.deskripsi.toLowerCase().includes(query)) ||
-    (trip.harga && trip.harga.some(h => (h.tipe && h.tipe.toLowerCase().includes(query)) || (h.diskon && h.diskon.toLowerCase().includes(query)))) || // Cari di tipe & diskon harga
+    (trip.harga && trip.harga.some(h => (h.tipe && h.tipe.toLowerCase().includes(query)) || (h.diskon && String(h.diskon).toLowerCase().includes(query)))) ||
     (trip.termasuk && trip.termasuk.some(t => t.toLowerCase().includes(query))) ||
     (trip.tidak_termasuk && trip.tidak_termasuk.some(nt => nt.toLowerCase().includes(query)))
   )
 })
 
 const showBookingModal = (trip) => {
-  selectedPackage.value = trip 
-  showModal.value = true 
-  
+  selectedPackage.value = trip
+  showModal.value = true
+
   const tomorrow = new Date()
   tomorrow.setDate(tomorrow.getDate() + 1)
   bookingData.value.tanggal = tomorrow.toISOString().split('T')[0]
 
+  // Reset booking data for a new booking
+  bookingData.value.tipeHarga = ''; // Reset tipeHarga
+  bookingData.value.jumlahOrang = 1; // Reset jumlahOrang
+  bookingData.value.nama = '';
+  bookingData.value.whatsapp = '';
+  bookingData.value.catatan = '';
+
+  // Set default selected price if available
   if (selectedPackage.value.harga && selectedPackage.value.harga.length > 0) {
     bookingData.value.tipeHarga = selectedPackage.value.harga[0].tipe;
   } else {
@@ -346,13 +407,13 @@ const showBookingModal = (trip) => {
   }
 
   document.body.classList.add('modal-open');
-  document.body.style.overflow = 'hidden'; 
+  document.body.style.overflow = 'hidden';
 }
 
 const closeModal = () => {
-  showModal.value = false 
-  selectedPackage.value = null 
-  
+  showModal.value = false
+  selectedPackage.value = null
+
   bookingData.value = {
     tipeHarga: '',
     tanggal: '',
@@ -367,35 +428,7 @@ const closeModal = () => {
 }
 
 const submitBooking = () => {
-  const selectedPriceObject = selectedPackage.value.harga.find(
-    price => price.tipe === bookingData.value.tipeHarga
-  );
-  const priceDisplay = selectedPriceObject ? selectedPriceObject.diskon : 'Harga tidak tersedia';
-
-  Swal.fire({
-    title: 'Pemesanan Berhasil!',
-    html: `
-      <div class="text-start">
-        <p><strong>Paket:</strong> ${selectedPackage.value.nama}</p>
-        <p><strong>Jenis Harga:</strong> ${bookingData.value.tipeHarga}</p>
-        <p><strong>Tanggal:</strong> ${bookingData.value.tanggal}</p>
-        <p><strong>Nama:</strong> ${bookingData.value.nama}</p>
-        <p><strong>WhatsApp:</strong> ${bookingData.value.whatsapp}</p>
-        ${bookingData.value.catatan ? `<p><strong>Catatan:</strong> ${bookingData.value.catatan}</p>` : ''}
-      </div>
-    `,
-    icon: 'success',
-    confirmButtonText: 'Tutup',
-    customClass: {
-      popup: 'rounded-3'
-    }
-  })
-
-  sendWhatsAppMessage()
-  closeModal()
-}
-
-const sendWhatsAppMessage = () => {
+  // Construct WhatsApp message
   const selectedPriceObject = selectedPackage.value.harga.find(
     price => price.tipe === bookingData.value.tipeHarga
   );
@@ -407,8 +440,10 @@ const sendWhatsAppMessage = () => {
 📌 *Paket ${selectedPackage.value.nama}*
 📍 Destinasi: ${(selectedPackage.value.destinasi || []).join(', ')}
 
-💰 Harga: ${priceDisplay}${oldPriceDisplay}
-📅 Tanggal: ${bookingData.value.tanggal}
+👥 Jumlah Orang: ${bookingData.value.jumlahOrang}
+💰 Harga Per Orang (${bookingData.value.tipeHarga}): ${priceDisplay}${oldPriceDisplay}
+💲 Total Harga Estimasi: Rp ${Number(calculatedPackagePrice.value).toLocaleString('id-ID')}
+📅 Tanggal Tour: ${bookingData.value.tanggal}
 👤 Nama: ${bookingData.value.nama}
 📱 WhatsApp: ${bookingData.value.whatsapp}
 ${(selectedPackage.value.termasuk && selectedPackage.value.termasuk.length) ? `✅ Termasuk: ${selectedPackage.value.termasuk.join(', ')}\n` : ''}
@@ -416,11 +451,24 @@ ${(selectedPackage.value.tidak_termasuk && selectedPackage.value.tidak_termasuk.
 ${selectedPackage.value.deskripsi ? `📝 Deskripsi Paket: ${selectedPackage.value.deskripsi}\n` : ''}
 ${bookingData.value.catatan ? `✏️ Catatan Pribadi: ${bookingData.value.catatan}` : ''}
 
-Mohon info lebih lanjut. Terima kasih.`
+Saya sudah melakukan pembayaran melalui ${bsiBankDetails.bankName} (${bsiBankDetails.accountNumber} A.N. ${bsiBankDetails.accountName}) atau QRIS. Mohon konfirmasi pemesanan saya. Terima kasih.`
 
   const encoded = encodeURIComponent(message)
-  window.open(`https://wa.me/6281348680937?text=${encoded}`, '_blank')
+  window.open(`https://wa.me/${whatsappContactNumber}?text=${encoded}`, '_blank') // GUNAKAN VARIABEL WHATSAPP
+
+  // Tampilkan SweetAlert konfirmasi akhir setelah membuka WhatsApp
+  Swal.fire({
+    title: 'Pemesanan Berhasil!',
+    text: 'Mohon tunggu konfirmasi dari kami melalui WhatsApp.', // <--- TEKS BARU
+    icon: 'success',
+    confirmButtonText: 'Oke',
+    allowOutsideClick: false
+  }).then(() => {
+    closeModal();
+  });
 }
+
+// sendWhatsAppMessage dihapus karena logikanya digabung ke submitBooking
 
 watch(showModal, (newValue) => {
   if (!newValue) {
@@ -434,47 +482,47 @@ watch(showModal, (newValue) => {
 /* Animasi Fade */
 .fade-enter-active,
 .fade-leave-active {
- transition: opacity 0.5s ease;
+  transition: opacity 0.5s ease;
 }
 
 .fade-enter-from,
 .fade-leave-to {
- opacity: 0;
+  opacity: 0;
 }
 
 /* Animasi List Item (untuk kartu paket) */
 .list-enter-active,
 .list-leave-active {
- transition: all 0.5s ease;
+  transition: all 0.5s ease;
 }
 
 .list-enter-from,
 .list-leave-to {
- opacity: 0;
- transform: translateY(30px);
+  opacity: 0;
+  transform: translateY(30px);
 }
 
 /* Penting: Untuk TransitionGroup, pastikan elemen yang di-v-for memiliki posisi relatif */
 .list-leave-active {
- position: absolute;
+  position: absolute;
 }
 
 .list-move {
- transition: transform 0.5s ease;
+  transition: transform 0.5s ease;
 }
 
 /* Kustomisasi Modal */
 body.modal-open {
- overflow: hidden !important; 
- padding-right: var(--bs-modal-padding) !important; 
+  overflow: hidden !important;
+  padding-right: var(--bs-modal-padding) !important;
 }
 
 /* Penyesuaian gambar di dalam modal */
 .modal-image {
- width: 100%; 
- height: 200px; /* Disesuaikan agar tidak terlalu besar di modal */
- object-fit: contain; 
-background-color: #f0f0f0; 
+  width: 100%;
+  height: 200px; /* Disesuaikan agar tidak terlalu besar di modal */
+  object-fit: contain;
+  background-color: #f0f0f0;
 }
 
 /* Custom CSS untuk deskripsi multi-baris dengan elipsis */
@@ -484,7 +532,7 @@ background-color: #f0f0f0;
   line-clamp: 3; /* Standard property for compatibility */
   -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis; 
+  text-overflow: ellipsis;
   min-height: 3.8em; /* Sesuaikan dengan line-height * jumlah baris (misal 1.2em * 3 = 3.6em) */
   line-height: 1.2em; /* Sesuaikan line-height agar konsisten */
 }

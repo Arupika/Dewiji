@@ -25,17 +25,17 @@
     <TransitionGroup name="list" tag="div" class="row g-4 w-100">
       <div class="col-md-4" v-for="mobil in filteredMobils" :key="mobil.id">
         <div class="card h-100 shadow-sm">
-          <img 
-            v-if="mobil.gambar" 
-            :src="mobil.gambar" 
-            class="w-100 rounded-top" 
-            style="height: 200px; object-fit: cover;" 
-            :alt="mobil.nama" 
-            loading="lazy" 
+          <img
+            v-if="mobil.gambar"
+            :src="mobil.gambar"
+            class="w-100 rounded-top"
+            style="height: 200px; object-fit: cover;"
+            :alt="mobil.nama"
+            loading="lazy"
           />
           <div class="card-body">
             <h5 class="card-title fw-bold">{{ mobil.nama }}</h5>
-            
+
             <p class="card-text text-muted mb-2">
               <i class="bi bi-people-fill text-success me-1"></i> Kapasitas: {{ mobil.kapasitas }} Orang
             </p>
@@ -100,20 +100,20 @@
       </div>
     </Transition>
 
-    <div 
-      class="modal fade" 
-      :class="{ 'show d-block': showModal }" 
-      tabindex="-1" 
-      role="dialog" 
-      aria-modal="true" 
-      :style="{ 
-        backgroundColor: showModal ? 'rgba(0,0,0,0.5)' : '', 
-        zIndex: showModal ? 1060 : 'auto', 
-        overflowY: 'auto' 
-      }" 
-      v-if="showModal" 
+    <div
+      class="modal fade"
+      :class="{ 'show d-block': showModal }"
+      tabindex="-1"
+      role="dialog"
+      aria-modal="true"
+      :style="{
+        backgroundColor: showModal ? 'rgba(0,0,0,0.5)' : '',
+        zIndex: showModal ? 1060 : 'auto',
+        overflowY: 'auto'
+      }"
+      v-if="showModal"
       @click.self="closeModal">
-      
+
       <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content shadow">
           <div class="modal-header bg-success text-white">
@@ -121,15 +121,15 @@
             <button type="button" class="btn-close" @click="closeModal"></button>
           </div>
           <div class="modal-body">
-            <img 
-              :src="selectedMobil.gambar" 
-              class="w-100 rounded mb-3 modal-image" 
-              alt="Foto mobil" 
+            <img
+              :src="selectedMobil.gambar"
+              class="w-100 rounded mb-3 modal-image"
+              alt="Foto mobil"
             />
 
             <h5 class="fw-bold mb-3">{{ selectedMobil.nama }}</h5>
             <p class="text-muted">{{ selectedMobil.deskripsi }}</p>
-            
+
             <div class="mb-3">
               <strong>Kapasitas Penumpang:</strong>
               <p class="mb-0"><i class="bi bi-people-fill text-success me-2"></i> {{ selectedMobil.kapasitas }} Orang</p>
@@ -180,17 +180,10 @@
                 <label class="form-label fw-bold">Tanggal Pengambilan</label>
                 <input type="date" class="form-control" v-model="bookingData.tanggal" required />
               </div>
-              
+
               <div class="mb-3" v-if="bookingData.rentalPackage !== 'Sewa 12 Jam'">
                 <label class="form-label fw-bold">Durasi ({{ unitDuration }})</label>
                 <input type="number" class="form-control" v-model="bookingData.duration" min="1" required />
-              </div>
-
-              <div class="mb-3">
-                <label class="form-label fw-bold">Total Harga Estimasi</label>
-                <p class="form-control-plaintext fw-bold text-success">
-                  Rp {{ Number(calculatedPrice).toLocaleString('id-ID') }}
-                </p>
               </div>
 
               <div class="mb-3">
@@ -208,18 +201,42 @@
                 <label class="form-label fw-bold">Nama Lengkap</label>
                 <input type="text" class="form-control" v-model="bookingData.nama" required />
               </div>
-              
+
               <div class="mb-3">
                 <label class="form-label fw-bold">Nomor WhatsApp</label>
                 <input type="tel" class="form-control" v-model="bookingData.whatsapp" required />
               </div>
-              
+
               <div class="mb-3">
                 <label class="form-label fw-bold">Catatan</label>
                 <textarea class="form-control" rows="2" v-model="bookingData.catatan"></textarea>
               </div>
+
+              <hr class="my-4"> <h5 class="fw-bold text-center mb-3">Selesaikan Pembayaran Anda</h5>
+              <div class="text-center mb-3">
+                <QRCode
+                  :value="qrPaymentText"
+                  :size="200"
+                  level="H"
+                  class="mx-auto border p-2 rounded"
+                />
+              </div>
+              <p class="text-center text-muted small mb-3">Scan QRIS ini untuk melakukan pembayaran.</p>
+
+              <div class="text-center mb-4">
+                  <p class="fw-bold mb-1">Atau Transfer Manual:</p>
+                  <p class="mb-0">Bank: Bank Syariah Indonesia (BSI)</p>
+                  <p class="mb-0">No. Rekening: 7213052386</p> <p class="mb-0">A.N.: irzha fahrizaldy</p> <p class="mt-2 text-danger small">Mohon lakukan pembayaran sesuai Total Harga Estimasi.</p>
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-bold">Total Harga Estimasi</label>
+                <p class="form-control-plaintext fw-bold text-success display-6">
+                  Rp {{ Number(calculatedPrice).toLocaleString('id-ID') }}
+                </p>
+              </div>
+
               <button type="submit" class="btn btn-success w-100 fw-bold rounded-pill py-2">
-                <i class="bi bi-whatsapp me-2"></i>Booking via WhatsApp
+                <i class="bi bi-whatsapp me-2"></i>Konfirmasi Pemesanan via WhatsApp
               </button>
             </form>
           </div>
@@ -230,13 +247,11 @@
   <footer class="bg-dark text-light pt-5 pb-4">
     <div class="container">
       <div class="row g-4">
-        <!-- Tentang Kami -->
         <div class="col-lg-3 col-md-6">
           <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Tentang Kami</h5>
           <p class="small"><strong>Dewiji Explore</strong> menyediakan sewa mobil berkualitas, aman, dan nyaman dengan harga yang cukup terjangkau serta menyediakan paket-paket wisata di Jogja dan sekitarnya.</p>
         </div>
-        
-        <!-- Kontak Kami -->
+
         <div class="col-lg-3 col-md-6">
           <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Kontak Kami</h5>
           <ul class="list-unstyled small">
@@ -254,58 +269,48 @@
             </li>
           </ul>
         </div>
-        
-        <!-- Navigasi -->
-<div class="col-lg-3 col-md-6">
-  <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Navigasi</h5>
-  <ul class="list-unstyled small">
-    <li class="mb-2">
-      <router-link to="/" class="text-light text-decoration-none hover-success">Home</router-link>
-    </li>
-    <li class="mb-2">
-      <router-link to="/Destination" class="text-light text-decoration-none hover-success">Destinasi</router-link>
-    </li>
-    <li class="mb-2">
-      <router-link to="/CarRent" class="text-light text-decoration-none hover-success">Rental Mobil</router-link>
-    </li>
-    <li class="mb-2">
-      <router-link to="/Package" class="text-light text-decoration-none hover-success">Paket Liburan</router-link>
-    </li>
-    <li class="mb-2">
-      <router-link to="/Comment" class="text-light text-decoration-none hover-success">FAQ</router-link>
-    </li>
-  </ul>
-</div>
 
-        
-        <!-- Sosial Media-->
-<div class="col-lg-3 col-md-6">
-  <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Sosial Media</h5>
-  <p class="small">Ikuti kami di media sosial untuk mendapatkan penawaran terbaik!</p>
-  <div class="d-flex gap-3">
-    <!-- GANTI BAGIAN INI -->
-    <a href="https://www.facebook.com/namapagekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
-      <i class="bi bi-facebook"></i>
-    </a>
-    <!-- GANTI BAGIAN INI -->
-    <a href="https://www.tiktok.com/@usernamekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
-      <i class="bi bi-tiktok"></i>
-    </a>
-    <!-- GANTI BAGIAN INI -->
-    <a href="https://www.instagram.com/usernamekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
-      <i class="bi bi-instagram"></i>
-    </a>
-    <!-- GANTI BAGIAN INI -->
-    <a href="https://wa.me/6281348680937" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
-      <i class="bi bi-whatsapp"></i>
-    </a>
-  </div>
-</div>
+        <div class="col-lg-3 col-md-6">
+          <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Navigasi</h5>
+          <ul class="list-unstyled small">
+            <li class="mb-2">
+              <router-link to="/" class="text-light text-decoration-none hover-success">Home</router-link>
+            </li>
+            <li class="mb-2">
+              <router-link to="/Destination" class="text-light text-decoration-none hover-success">Destinasi</router-link>
+            </li>
+            <li class="mb-2">
+              <router-link to="/CarRent" class="text-light text-decoration-none hover-success">Rental Mobil</router-link>
+            </li>
+            <li class="mb-2">
+              <router-link to="/Package" class="text-light text-decoration-none hover-success">Paket Liburan</router-link>
+            </li>
+            <li class="mb-2">
+              <router-link to="/Comment" class="text-light text-decoration-none hover-success">FAQ</router-link>
+            </li>
+          </ul>
+        </div>
 
+        <div class="col-lg-3 col-md-6">
+          <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Sosial Media</h5>
+          <p class="small">Ikuti kami di media sosial untuk mendapatkan penawaran terbaik!</p>
+          <div class="d-flex gap-3">
+            <a href="https://www.facebook.com/namapagekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+              <i class="bi bi-facebook"></i>
+            </a>
+            <a href="https://www.tiktok.com/@usernamekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+              <i class="bi bi-tiktok"></i>
+            </a>
+            <a href="https://www.instagram.com/usernamekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+              <i class="bi bi-instagram"></i>
+            </a>
+            <a href="https://wa.me/6281348680937" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+              <i class="bi bi-whatsapp"></i>
+            </a>
+          </div>
+        </div>
       </div>
-      
       <hr class="my-4 bg-secondary">
-      
     </div>
   </footer>
 </template>
@@ -314,6 +319,7 @@
 import { ref, onMounted, watch, computed } from 'vue'
 import api from '@/api'
 import Swal from 'sweetalert2'
+import QRCode from 'qrcode.vue' // <--- Pastikan ini diimpor!
 
 const daftarMobil = ref([])
 const pagination = ref({})
@@ -323,52 +329,66 @@ const selectedMobil = ref({})
 const searchQuery = ref('')
 
 const bookingData = ref({
-  rentalPackage: 'Sewa Harian (24 Jam)', 
+  rentalPackage: 'Sewa Harian (24 Jam)',
   tanggal: '',
-  duration: 1, 
-  pickupLocation: 'Kantor Dewiji (Jl. Ngiringsi, Sleman)', 
+  duration: 1,
+  pickupLocation: 'Kantor Dewiji (Jl. Ngiringsi, Sleman)',
   nama: '',
   whatsapp: '',
   catatan: ''
 })
+
+// ===============================================================
+// Data untuk QR Pembayaran (QRIS dan BSI)
+// PENTING: Ganti nilai ini dengan string QRIS ASLI Anda.
+// Jika Anda tidak memiliki string QRIS, Anda bisa menggunakan nomor rekening bank.
+// Contoh QRIS string (ini HANYA CONTOH, JANGAN DIGUNAKAN UNTUK PRODUKSI):
+// '000201010212235204423853039995802ID5920PT. DEWIJI EXPLORE6007JAKARTA610512345678962050401A036304C907'
+// Jika belum ada QRIS, bisa pakai format rekening bank biasa:
+// 'Transfer Bank BSI: 7123456789 A.N. PT. Dewiji Explore'
+const qrPaymentText = ref('7213052386'); // <--- GANTI DENGAN STRING QRIS ASLI ATAU INFO REKENING BSI ANDA
+
+const bsiBankDetails = {
+  bankName: 'Bank Syariah Indonesia (BSI)',
+  accountNumber: '7213052386', // Ganti dengan nomor rekening BSI Anda
+  accountName: 'irzha fahrizaldy' // Ganti dengan nama rekening BSI Anda
+}
+// ===============================================================
 
 // Computed property to determine the unit for duration
 const unitDuration = computed(() => {
   return bookingData.value.rentalPackage === 'Sewa Mingguan' ? 'minggu' : 'hari';
 });
 
-// Computed property for calculated price (NEW)
+// Computed property for calculated price
 const calculatedPrice = computed(() => {
-    let total = 0;
+  let total = 0;
 
-    // Pastikan selectedMobil dan harganya tersedia
-    if (!selectedMobil.value || (!selectedMobil.value.harga && !selectedMobil.value.harga12jam)) {
-        return 0; // Kembalikan 0 jika data belum siap
-    }
+  if (!selectedMobil.value || (!selectedMobil.value.harga && !selectedMobil.value.harga12jam)) {
+    return 0;
+  }
 
-    // Bersihkan harga dari format string "350.000" menjadi angka (350000)
-    // Asumsi harga dari API adalah number atau string dengan titik pemisah ribuan
-    const hargaPerHari = parseFloat(String(selectedMobil.value.harga).replace(/\./g, '')) || 0;
-    const harga12Jam = parseFloat(String(selectedMobil.value.harga12jam).replace(/\./g, '')) || 0;
+  const hargaPerHari = parseFloat(String(selectedMobil.value.harga).replace(/\./g, '')) || 0;
+  const harga12Jam = parseFloat(String(selectedMobil.value.harga12jam).replace(/\./g, '')) || 0;
 
-    const duration = bookingData.value.duration || 1; // Default durasi ke 1
+  const duration = bookingData.value.duration || 1;
 
-    switch (bookingData.value.rentalPackage) {
-        case 'Sewa Harian (24 Jam)':
-            total = duration * hargaPerHari;
-            break;
-        case 'Sewa 12 Jam':
-            total = harga12Jam; // Harga tetap untuk 12 jam
-            break;
-        case 'Sewa Mingguan':
-            total = duration * 7 * hargaPerHari; // Durasi dalam minggu * 7 hari/minggu * harga_harian
-            break;
-        default:
-            total = 0; // Jika paket tidak terdefinisi
-            break;
-    }
+  switch (bookingData.value.rentalPackage) {
+    case 'Sewa Harian (24 Jam)':
+      total = duration * hargaPerHari;
+      break;
+    case 'Sewa 12 Jam':
+      total = harga12Jam;
+      break;
+    case 'Sewa Mingguan':
+      total = duration * 7 * hargaPerHari; // Durasi dalam minggu * 7 hari/minggu * harga_harian
+      break;
+    default:
+      total = 0;
+      break;
+  }
 
-    return Math.max(0, total); // Pastikan harga tidak negatif
+  return Math.max(0, total);
 });
 
 
@@ -405,7 +425,7 @@ const filteredMobils = computed(() => {
 const showDetails = (mobil) => {
   selectedMobil.value = mobil
   showModal.value = true
-  
+
   // Set default date to tomorrow
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
@@ -415,9 +435,13 @@ const showDetails = (mobil) => {
   bookingData.value.rentalPackage = 'Sewa Harian (24 Jam)'; // Reset to default
   bookingData.value.duration = 1; // Reset duration to 1 (day or week)
   bookingData.value.pickupLocation = 'Kantor Dewiji (Jl. Ngiringsi, Sleman)';
+  bookingData.value.nama = ''; // Reset nama
+  bookingData.value.whatsapp = ''; // Reset whatsapp
+  bookingData.value.catatan = ''; // Reset catatan
+
 
   document.body.classList.add('modal-open');
-  document.body.style.overflow = 'hidden'; 
+  document.body.style.overflow = 'hidden';
 }
 
 const closeModal = () => {
@@ -435,39 +459,17 @@ const changePage = (page) => {
 
 const submitBooking = () => {
   // Construct duration text based on rentalPackage
-  const durationText = bookingData.value.rentalPackage !== 'Sewa 12 Jam' 
-    ? `<p><strong>Durasi:</strong> ${bookingData.value.duration} ${unitDuration.value}</p>` 
+  const durationText = bookingData.value.rentalPackage !== 'Sewa 12 Jam'
+    ? `Durasi: ${bookingData.value.duration} ${unitDuration.value}\n`
     : '';
 
-  Swal.fire({
-    title: 'Pemesanan Berhasil!',
-    html: `
-      <div class="text-start">
-        <p><strong>Mobil:</strong> ${selectedMobil.value.nama}</p>
-        <p><strong>Paket Penyewaan:</strong> ${bookingData.value.rentalPackage}</p>
-        <p><strong>Tanggal Pengambilan:</strong> ${bookingData.value.tanggal}</p>
-        ${durationText}
-        <p><strong>Total Harga Estimasi:</strong> Rp ${Number(calculatedPrice.value).toLocaleString('id-ID')}</p> <p><strong>Lokasi Pengambilan:</strong> ${bookingData.value.pickupLocation}</p>
-        <p><strong>Nama:</strong> ${bookingData.value.nama}</p>
-        <p><strong>WhatsApp:</strong> ${bookingData.value.whatsapp}</p>
-        ${bookingData.value.catatan ? `<p><strong>Catatan:</strong> ${bookingData.value.catatan}</p>` : ''}
-      </div>
-    `,
-    icon: 'success',
-    confirmButtonText: 'Tutup'
-  })
-
-  // Construct WhatsApp message with conditional duration and calculated price
-  const whatsappDurationLine = bookingData.value.rentalPackage !== 'Sewa 12 Jam' 
-    ? `⏳ Durasi: ${bookingData.value.duration} ${unitDuration.value}\n` 
-    : '';
-
-  const message = `Halo Dewiji Explore, saya ingin memesan sewa mobil:
+  // Pesan WhatsApp setelah pembayaran dilakukan (sebelumnya ada konfirmasi di modal)
+  const message = `Halo Dewiji Explore, saya telah melakukan pemesanan sewa mobil:
 
 🚗 Mobil: ${selectedMobil.value.nama}
 📦 Paket Penyewaan: ${bookingData.value.rentalPackage}
 📅 Tanggal Pengambilan: ${bookingData.value.tanggal}
-${whatsappDurationLine}
+${durationText}
 💰 Total Harga Estimasi: Rp ${Number(calculatedPrice.value).toLocaleString('id-ID')}
 📍 Lokasi Pengambilan: ${bookingData.value.pickupLocation}
 👤 Nama: ${bookingData.value.nama}
@@ -477,12 +479,22 @@ ${selectedMobil.value.deskripsi ? `📝 Deskripsi Mobil: ${selectedMobil.value.d
 ${selectedMobil.value.fitur && selectedMobil.value.fitur.length ? `✨ Fitur: ${selectedMobil.value.fitur.join(', ')}\n` : ''}
 ${bookingData.value.catatan ? `✏️ Catatan: ${bookingData.value.catatan}` : ''}
 
-Mohon informasi lebih lanjut. Terima kasih.`
+Saya sudah melakukan pembayaran melalui ${bsiBankDetails.bankName} (${bsiBankDetails.accountNumber} A.N. ${bsiBankDetails.accountName}) atau QRIS. Mohon konfirmasi pemesanan saya. Terima kasih.
+`;
 
   const encoded = encodeURIComponent(message)
   window.open(`https://wa.me/6281348680937?text=${encoded}`, '_blank')
 
-  closeModal(); 
+  // Tampilkan SweetAlert konfirmasi akhir setelah membuka WhatsApp
+  Swal.fire({
+    title: 'Pemesanan Berhasil!',
+    text: 'Mohon lanjutkan konfirmasi pemesanan Anda via WhatsApp.',
+    icon: 'success',
+    confirmButtonText: 'Oke',
+    allowOutsideClick: false // Mencegah modal tertutup saat klik di luar
+  }).then(() => {
+    closeModal(); // Tutup modal setelah konfirmasi SweetAlert ditutup
+  });
 }
 
 onMounted(() => fetchMobils())
@@ -499,56 +511,56 @@ watch(showModal, (newValue) => {
 /* Animasi Fade */
 .fade-enter-active,
 .fade-leave-active {
- transition: opacity 0.5s ease;
+  transition: opacity 0.5s ease;
 }
 
 .fade-enter-from,
 .fade-leave-to {
- opacity: 0;
+  opacity: 0;
 }
 
 /* Animasi List Item (untuk kartu mobil) */
 .list-enter-active,
 .list-leave-active {
- transition: all 0.5s ease;
+  transition: all 0.5s ease;
 }
 
 .list-enter-from,
 .list-leave-to {
- opacity: 0;
- transform: translateY(30px);
+  opacity: 0;
+  transform: translateY(30px);
 }
 
 /* Penting: Untuk TransitionGroup, pastikan elemen yang di-v-for memiliki posisi relatif */
 .list-leave-active {
- position: absolute;
+  position: absolute;
 }
 
 .list-move {
- transition: transform 0.5s ease;
+  transition: transform 0.5s ease;
 }
 
 /* Kustomisasi Modal */
 body.modal-open {
- overflow: hidden !important; 
- padding-right: var(--bs-modal-padding) !important; 
+  overflow: hidden !important;
+  padding-right: var(--bs-modal-padding) !important;
 }
 
 /* Penyesuaian gambar di dalam modal */
 .modal-image {
- width: 100%; 
- height: 200px; 
- object-fit: contain; 
- background-color: #f0f0f0; 
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  background-color: #f0f0f0;
 }
 
 /* Jika masih ada masalah z-index, coba aktifkan ini */
 /*
 .modal {
-  z-index: 1060 !important; 
+  z-index: 1060 !important;
 }
 .modal-backdrop {
-  z-index: 1059 !important;
+  z-index: 1059 !important;
 }
 */
 </style>
