@@ -186,39 +186,46 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, watch } from 'vue' // Tambahkan 'watch'
-import api from '@/api'
+// --- Impor Modul ---
+import { ref, onMounted, computed, watch } from 'vue' // Fungsi inti Vue untuk data reaktif, lifecycle, data turunan, dan pengawasan.
+import api from '@/api' // Konfigurasi Axios untuk request API.
 
-const allFaqs = ref([]) // NEW: Menyimpan semua data FAQ untuk pencarian dan kategori
-const loading = ref(true) // NEW: State loading
-const currentPage = ref(1) // Halaman saat ini untuk paginasi frontend
-const itemsPerPage = 6; // NEW: Jumlah item per halaman untuk paginasi frontend (sesuaikan jika perlu)
+// --- State (Data Reaktif) ---
+const allFaqs = ref([]) // Menyimpan SEMUA data FAQ dari API. Paginasi dan filter akan dilakukan di frontend.
+const loading = ref(true) // Status untuk menampilkan/menyembunyikan spinner loading.
+const currentPage = ref(1) // Menyimpan nomor halaman yang sedang aktif.
+const itemsPerPage = 6; // Menentukan berapa banyak FAQ yang ditampilkan per halaman.
 
-const searchQuery = ref('')
-const selectedTopic = ref(null)
+const searchQuery = ref('') // Menyimpan teks dari input pencarian atau kategori yang dipilih.
+const selectedTopic = ref(null) // Menyimpan data FAQ yang dipilih untuk ditampilkan di modal.
 
-// NEW: Fungsi untuk mengambil SEMUA FAQ
+// --- Fungsi-Fungsi ---
+
+// Fungsi untuk mengambil SEMUA data FAQ dari API.
 const fetchAllFaqs = async () => {
-  loading.value = true;
+  loading.value = true; // Tampilkan loading spinner.
   try {
     // Panggil API dengan parameter `per_page=all` untuk mengambil semua data
     const res = await api.get('/api/faqs?per_page=all'); // URL disesuaikan dengan controller
     // Asumsi: respons API mengembalikan array data di `res.data.data`
-    allFaqs.value = res.data.data;
+    allFaqs.value = res.data.data; // Simpan semua data ke state 'allFaqs'.
   } catch (err) {
     console.error('Gagal memuat semua FAQ:', err);
     // Swal.fire({ ... pesan error ... });
     allFaqs.value = [];
   } finally {
-    loading.value = false;
+    // Blok ini akan selalu berjalan, baik berhasil maupun gagal.
+    loading.value = false; // Sembunyikan loading spinner.
   }
 }
 
-// NEW: Computed property untuk memfilter dan memaginasi FAQ
+// --- Logika Utama (Computed Property) ---
+
+// Computed property untuk memfilter DAN memaginasi data di frontend.
 const filteredAndPaginatedFaqs = computed(() => {
   const query = searchQuery.value.toLowerCase().trim();
 
-  // 1. Filter data berdasarkan query dari `allFaqs`
+  // 1. Filter: Saring semua data di `allFaqs` berdasarkan `searchQuery`.
   const filtered = allFaqs.value.filter(faq =>
     (faq.title && faq.title.toLowerCase().includes(query)) ||
     (faq.answer && faq.answer.toLowerCase().includes(query)) ||
@@ -226,21 +233,23 @@ const filteredAndPaginatedFaqs = computed(() => {
     (Array.isArray(faq.category) ? faq.category.some(cat => cat.toLowerCase().includes(query)) : (faq.category?.toLowerCase().includes(query)))
   );
 
-  // 2. Terapkan paginasi pada data yang sudah difilter
+  // 2. Paginasi: Ambil sebagian data dari hasil filter sesuai halaman saat ini.
   const startIndex = (currentPage.value - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  return filtered.slice(startIndex, endIndex);
+  return filtered.slice(startIndex, endIndex); // `slice` memotong array untuk paginasi.
 });
 
-// NEW: Computed property untuk informasi paginasi di frontend
+// Computed property untuk menghitung informasi paginasi di frontend.
 const pagination = computed(() => {
   const query = searchQuery.value.toLowerCase().trim();
+  // Filter lagi untuk mendapatkan jumlah total item yang cocok dengan pencarian.
   const filtered = allFaqs.value.filter(faq =>
     (faq.title && faq.title.toLowerCase().includes(query)) ||
     (faq.answer && faq.answer.toLowerCase().includes(query)) ||
     (Array.isArray(faq.category) ? faq.category.some(cat => cat.toLowerCase().includes(query)) : (faq.category?.toLowerCase().includes(query)))
   );
   const totalItems = filtered.length;
+  // Hitung total halaman berdasarkan jumlah item dan item per halaman.
   const lastPage = Math.ceil(totalItems / itemsPerPage);
 
   return {
@@ -250,66 +259,73 @@ const pagination = computed(() => {
   };
 });
 
-// Computed property untuk semua kategori unik dari `allFaqs`
+// Computed property untuk membuat daftar kategori yang unik dari SEMUA data FAQ.
 const allCategories = computed(() => {
-  const unique = {};
-  allFaqs.value.forEach(faq => { // Menggunakan data lengkap dari `allFaqs`
+  const unique = {}; // Objek untuk menampung kategori unik agar tidak duplikat.
+  allFaqs.value.forEach(faq => { // Looping melalui semua FAQ.
     const cat = faq.category;
     if (Array.isArray(cat)) {
       cat.forEach(c => unique[c] = true);
     } else if (cat) {
-      unique[cat] = true;
+      unique[cat] = true; // Jika string, tambahkan langsung.
     }
   });
+  // Ubah objek menjadi array objek dengan format { slug, name } dan urutkan.
   return Object.keys(unique).map(slug => ({
     slug,
-    name: slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
+    name: slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) // Format nama agar lebih mudah dibaca.
   })).sort((a,b) => a.name.localeCompare(b.name));
 });
 
+// --- Fungsi-Fungsi Interaksi ---
+// Fungsi untuk memfilter berdasarkan kategori.
 const filterByCategory = (slug) => {
-  searchQuery.value = slug; // Mengubah searchQuery agar memicu filter
+  searchQuery.value = slug; // Cukup ubah 'searchQuery', maka computed property akan berjalan otomatis.
 };
-
+// Fungsi untuk menghapus filter.
 const clearFilter = () => {
   searchQuery.value = ''; // Mengosongkan searchQuery
 };
-
+// Fungsi untuk menampilkan detail di modal.
 const showTopicDetail = (faq) => {
-  selectedTopic.value = faq;
+  selectedTopic.value = faq; // Simpan data FAQ yang diklik.
   // Menambahkan class untuk mengunci scroll body saat modal terbuka
-  document.body.classList.add('modal-open');
+  document.body.classList.add('modal-open'); // Cegah scroll halaman di latar belakang.
   document.body.style.overflow = 'hidden';
 };
 
-// Watcher untuk mengelola overflow body saat modal tertutup
+// Mengawasi perubahan pada 'selectedTopic' untuk mengelola scroll lock.
 watch(selectedTopic, (newValue) => {
+  // Jika modal ditutup (newValue menjadi null), kembalikan kemampuan scroll.
   if (!newValue) {
     document.body.classList.remove('modal-open');
     document.body.style.overflow = '';
   }
 });
-
+// Fungsi untuk berpindah halaman (paginasi).
 const changePage = (page) => {
+  // Cek apakah halaman yang dituju valid.
   if (page !== currentPage.value && page > 0 && page <= pagination.value.last_page) {
-    currentPage.value = page
+    currentPage.value = page // Cukup ubah nomor halaman saat ini, tidak perlu panggil API lagi.
     // Tidak perlu memanggil fetch lagi karena data sudah ada di `allFaqs`
   }
 }
 
-// Panggil fungsi untuk mengambil semua data saat komponen dimuat
+// --- Lifecycle dan Watcher ---
+
+// Panggil fetchAllFaqs() saat komponen pertama kali dimuat.
 onMounted(() => {
   fetchAllFaqs();
 });
 
 // Watcher untuk mereset halaman ke 1 setiap kali query pencarian berubah
 watch(searchQuery, () => {
-  currentPage.value = 1;
+  currentPage.value = 1; // Jika user mulai mengetik, reset ke halaman 1.
 });
 </script>
 
 <style scoped>
-/* Search Input Custom */
+/* // Kustomisasi gaya untuk kotak pencarian */
 .input-group input.form-control {
   border-right: 0;
 }
@@ -325,13 +341,13 @@ watch(searchQuery, () => {
   border-radius: 50px;
 }
 
-/* Popular Topics Card Style */
+/* // Gaya untuk kartu "Popular Topics" agar terlihat interaktif */
 .card-hover {
   background-color: #fff;
   border: 1px solid #e0e0e0;
   border-radius: 0.5rem;
-  transition: all 0.3s ease;
-  cursor: pointer;
+  transition: all 0.3s ease; /* // Menambahkan animasi transisi yang mulus. */
+  cursor: pointer; /* // Mengubah kursor menjadi tangan saat di atas kartu. */
   text-align: left;
   font-weight: 500;
   font-size: 1rem;
@@ -352,13 +368,13 @@ watch(searchQuery, () => {
   box-shadow: 0 4px 8px rgba(0,0,0,.1);
 }
 .card-hover span {
-  flex-grow: 1;
+  flex-grow: 1; /* // Memastikan teks mengisi sisa ruang. */
 }
 .card-hover i {
   color: #6c757d; /* Grey icon color */
 }
 
-/* Explore by Service Buttons */
+/* // Gaya untuk tombol filter kategori */
 .btn-square {
   min-width: 120px;
   height: 60px;
@@ -375,6 +391,7 @@ watch(searchQuery, () => {
   transition: all 0.2s ease;
 }
 
+/* // Gaya khusus untuk tombol kategori yang sedang aktif atau disentuh mouse */
 .btn-square.btn-outline-dark:hover,
 .btn-square.active-category {
   background-color: #1d976c;
@@ -383,7 +400,7 @@ watch(searchQuery, () => {
   box-shadow: 0 2px 5px rgba(0,0,0,.15);
 }
 
-/* Pagination Style */
+/* // Kustomisasi warna untuk paginasi yang aktif */
 .page-item.active .page-link {
   background-color: #1d976c;
   border-color: #1d976c;
@@ -392,7 +409,7 @@ watch(searchQuery, () => {
 .page-link {
   color: #1d976c;
 }
-/* Hover effect for footer links */
+/* // Memberi efek hover pada link di footer. */
 .hover-success:hover {
   color: #198754 !important; /* Warna hijau success Bootstrap */
 }
