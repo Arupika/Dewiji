@@ -329,20 +329,24 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, computed } from 'vue'
-import api from '@/api'
-import Swal from 'sweetalert2'
-import QRCode from 'qrcode.vue' // <--- Pastikan ini diimpor!
 
-const allMobils = ref([]) // NEW: Menyimpan semua data mobil
-const loading = ref(true) // NEW: State loading
-const currentPage = ref(1) // Halaman saat ini untuk paginasi frontend
-const itemsPerPage = 6; // NEW: Jumlah item per halaman untuk paginasi frontend (sesuaikan jika perlu)
+ // --- Impor Modul ---
+import { ref, onMounted, watch, computed } from 'vue' // Fungsi inti Vue.
+import api from '@/api' // Konfigurasi Axios untuk request API.
+import Swal from 'sweetalert2' // Import library untuk notifikasi pop-up
+import QRCode from 'qrcode.vue' // Komponen untuk men-generate QR Code.
 
-const showModal = ref(false)
-const selectedMobil = ref({})
-const searchQuery = ref('')
+// --- State (Data Reaktif) ---
+const allMobils = ref([]) // Menyimpan SEMUA data mobil dari API. Paginasi akan dilakukan di frontend.
+const loading = ref(true) // Status untuk menampilkan/menyembunyikan spinner loading.
+const currentPage = ref(1) // Menyimpan nomor halaman yang sedang aktif.
+const itemsPerPage = 6; // Menentukan berapa banyak item yang ditampilkan per halaman.
 
+const showModal = ref(false) // Status untuk menampilkan/menyembunyikan modal.
+const selectedMobil = ref({}) // Menyimpan data mobil yang dipilih.
+const searchQuery = ref('') // Menyimpan teks dari input pencarian.
+
+// Objek untuk menampung data dari form booking.
 const bookingData = ref({
   rentalPackage: 'Sewa Harian (24 Jam)',
   tanggal: '',
@@ -366,12 +370,13 @@ const bsiBankDetails = {
 }
 // ===============================================================
 
-// Computed property to determine the unit for duration
+// --- Logika Utama (Computed Property) ---
+// // Computed property untuk menentukan satuan durasi (hari/minggu).
 const unitDuration = computed(() => {
   return bookingData.value.rentalPackage === 'Sewa Mingguan' ? 'minggu' : 'hari';
 });
 
-// Computed property for calculated price
+// Computed property untuk menghitung total harga secara otomatis.
 const calculatedPrice = computed(() => {
   let total = 0;
 
@@ -404,20 +409,21 @@ const calculatedPrice = computed(() => {
 });
 
 
-// Function to reset duration to 1 when rental package changes
+// Fungsi untuk mereset durasi menjadi 1 saat paket sewa diganti.
 const resetDuration = () => {
   bookingData.value.duration = 1;
 };
 
-// NEW: Fungsi untuk mengambil SEMUA mobil
+// Fungsi untuk mengambil SEMUA data mobil dari API.
 const fetchAllMobils = async () => {
-  loading.value = true;
+  loading.value = true; // Tampilkan loading spinner
   try {
-    // Panggil API dengan parameter `per_page=all` untuk mengambil semua data
+    // Panggil API untuk mengambil semua data (contoh: dengan parameter `per_page=all`).
     const res = await api.get('/api/mobils?per_page=all');
     // Asumsi: respons API mengembalikan array data di `res.data.data`
-    allMobils.value = res.data.data;
+    allMobils.value = res.data.data; // Simpan semua data ke state 'allMobils'.
   } catch (err) {
+    // Tangani error jika gagal.
     console.error('Gagal fetch semua mobil:', err);
     Swal.fire({
       icon: 'error',
@@ -426,15 +432,16 @@ const fetchAllMobils = async () => {
     });
     allMobils.value = [];
   } finally {
-    loading.value = false;
+    // Blok ini akan selalu berjalan, baik berhasil maupun gagal.
+    loading.value = false; // Sembunyikan loading spinner.
   }
 }
 
-// NEW: Computed property untuk memfilter dan kemudian memaginasi mobil
+// Computed property untuk memfilter DAN memaginasi data di frontend.
 const filteredAndPaginatedMobils = computed(() => {
   const query = searchQuery.value.toLowerCase().trim();
 
-  // 1. Filter data berdasarkan query dari `allMobils`
+  // 1. Filter: Saring semua data di `allMobils` berdasarkan `searchQuery`.
   const filtered = allMobils.value.filter(mobil =>
     mobil.nama.toLowerCase().includes(query) ||
     (mobil.deskripsi && mobil.deskripsi.toLowerCase().includes(query)) ||
@@ -442,7 +449,7 @@ const filteredAndPaginatedMobils = computed(() => {
     (mobil.fitur && Array.isArray(mobil.fitur) && mobil.fitur.some(fitur => fitur.toLowerCase().includes(query)))
   );
 
-  // 2. Terapkan paginasi pada data yang sudah difilter
+  // 2. Paginasi: Ambil sebagian data dari hasil filter sesuai halaman saat ini.
   const startIndex = (currentPage.value - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   return filtered.slice(startIndex, endIndex);
@@ -466,7 +473,7 @@ const pagination = computed(() => {
   };
 });
 
-
+// Fungsi untuk membuka modal dan mereset form ke nilai default.
 const showDetails = (mobil) => {
   selectedMobil.value = mobil
   showModal.value = true
@@ -489,19 +496,21 @@ const showDetails = (mobil) => {
   document.body.style.overflow = 'hidden';
 }
 
+// Fungsi untuk menutup modal.
 const closeModal = () => {
   showModal.value = false;
   document.body.classList.remove('modal-open');
   document.body.style.overflow = '';
 }
 
+// Fungsi untuk berpindah halaman (paginasi).
 const changePage = (page) => {
   if (page !== currentPage.value && page > 0 && page <= pagination.value.last_page) {
-    currentPage.value = page
-    // Tidak perlu memanggil fetch lagi karena data sudah ada di `allMobils`
+    currentPage.value = page // Cukup ubah nomor halaman saat ini, tidak perlu panggil API lagi.
   }
 }
 
+// Fungsi yang dijalankan saat form booking di-submit.
 const submitBooking = () => {
   const durationText = bookingData.value.rentalPackage !== 'Sewa 12 Jam'
     ? `Durasi: ${bookingData.value.duration} ${unitDuration.value}\n`
@@ -528,6 +537,7 @@ Saya sudah melakukan pembayaran melalui ${bsiBankDetails.bankName} (${bsiBankDet
   const encoded = encodeURIComponent(message)
   window.open(`https://wa.me/6281348680937?text=${encoded}`, '_blank')
 
+  // Tampilkan notifikasi bahwa pesanan berhasil dan user harus konfirmasi via WA.
   Swal.fire({
     title: 'Pemesanan Berhasil!',
     text: 'Mohon lanjutkan konfirmasi pemesanan Anda via WhatsApp.',
@@ -535,7 +545,7 @@ Saya sudah melakukan pembayaran melalui ${bsiBankDetails.bankName} (${bsiBankDet
     confirmButtonText: 'Oke',
     allowOutsideClick: false
   }).then(() => {
-    closeModal();
+    closeModal(); // Tutup modal setelah user menekan 'Oke'.
   });
 }
 
@@ -545,9 +555,10 @@ onMounted(() => fetchAllMobils())
 
 // NEW: Watcher untuk mereset halaman ke 1 setiap kali query pencarian berubah
 watch(searchQuery, () => {
-  currentPage.value = 1;
+  currentPage.value = 1; // Jika user mulai mengetik, reset ke halaman 1.
 });
 
+// Mengawasi perubahan pada 'showModal'.
 watch(showModal, (newValue) => {
   if (!newValue) {
     document.body.classList.remove('modal-open');
@@ -557,7 +568,7 @@ watch(showModal, (newValue) => {
 </script>
 
 <style scoped>
-/* Animasi Fade */
+/* Aturan untuk animasi fade saat elemen muncul/hilang. */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s ease;
@@ -568,7 +579,7 @@ watch(showModal, (newValue) => {
   opacity: 0;
 }
 
-/* Animasi List Item (untuk kartu mobil) */
+/* Aturan untuk animasi daftar kartu mobil. */
 .list-enter-active,
 .list-leave-active {
   transition: all 0.5s ease;
@@ -577,10 +588,10 @@ watch(showModal, (newValue) => {
 .list-enter-from,
 .list-leave-to {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(30px); /* // Efek muncul dari bawah. */
 }
 
-/* Penting: Untuk TransitionGroup, pastikan elemen yang di-v-for memiliki posisi relatif */
+ /* // Aturan khusus untuk item yang keluar dari daftar agar animasi mulus. */
 .list-leave-active {
   position: absolute;
 }
@@ -589,13 +600,13 @@ watch(showModal, (newValue) => {
   transition: transform 0.5s ease;
 }
 
-/* Kustomisasi Modal */
+/* // Aturan untuk mencegah body bisa di-scroll saat modal terbuka. */
 body.modal-open {
   overflow: hidden !important;
   /* padding-right: var(--bs-modal-padding) !important;  Aktifkan jika ada isu scrollbar */
 }
 
-/* Penyesuaian gambar di dalam modal */
+/* // Mengatur gaya gambar di dalam modal. */
 .modal-image {
   width: 100%;
   height: 200px;
@@ -603,7 +614,7 @@ body.modal-open {
   background-color: #f0f0f0;
 }
 
-/* Hover effect for footer links */
+/* // Memberi efek hover pada link di footer. */
 .hover-success:hover {
   color: #198754 !important; /* Warna hijau success Bootstrap */
 }
