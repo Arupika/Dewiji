@@ -14,7 +14,7 @@
         <input
           type="text"
           class="form-control border-0 py-3 ps-4"
-          placeholder="Type your topic here (e.g. rental mobil, refund)"
+          placeholder="Cari topik (contoh: rental mobil, refund)"
           v-model="searchQuery"
         />
         <button class="btn btn-primary px-4 py-3 border-0" type="button">
@@ -25,8 +25,22 @@
 
     <section class="mb-5">
       <h4 class="fw-semibold mb-3">Popular Topics</h4>
-      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
-        <div class="col" v-for="faq in filteredFaqs" :key="faq.id">
+
+      <div v-if="loading" class="col-12 text-center py-5">
+        <p class="lead">Memuat FAQ...</p>
+        <div class="spinner-border text-success" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+      <div v-else-if="allFaqs.length === 0 && searchQuery === ''" class="col-12 text-center py-5">
+        <p class="lead">Tidak ada FAQ yang tersedia saat ini.</p>
+      </div>
+      <div v-else-if="filteredAndPaginatedFaqs.length === 0 && searchQuery !== ''" class="col-12 text-center py-5">
+        <p class="lead">Tidak ada hasil ditemukan untuk pencarian Anda.</p>
+      </div>
+
+      <div v-else class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+        <div class="col" v-for="faq in filteredAndPaginatedFaqs" :key="faq.id">
           <button
             class="card card-hover h-100 p-3 d-flex flex-row justify-content-between align-items-center"
             @click="showTopicDetail(faq)"
@@ -35,7 +49,6 @@
             <i class="bi bi-chevron-right ms-2"></i>
           </button>
         </div>
-        <div v-if="!filteredFaqs.length" class="col-12 text-muted text-center py-3">Tidak ada hasil ditemukan.</div>
       </div>
     </section>
 
@@ -47,7 +60,7 @@
           v-for="cat in allCategories"
           :key="cat.slug"
           @click="filterByCategory(cat.slug)"
-          :class="{ 'active-category': searchQuery === cat.slug }"
+          :class="{ 'active-category': searchQuery.toLowerCase() === cat.slug.toLowerCase() }"
         >
           {{ cat.name }}
         </button>
@@ -85,7 +98,7 @@
     </nav>
   </div>
 
-  <div v-if="selectedTopic" class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5)">
+  <div v-if="selectedTopic" class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5); overflow-y: auto;">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content rounded-3">
         <div class="modal-header">
@@ -98,16 +111,15 @@
       </div>
     </div>
   </div>
+
   <footer class="bg-dark text-light pt-5 pb-4">
     <div class="container">
       <div class="row g-4">
-        <!-- Tentang Kami -->
         <div class="col-lg-3 col-md-6">
           <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Tentang Kami</h5>
           <p class="small"><strong>Dewiji Explore</strong> menyediakan sewa mobil berkualitas, aman, dan nyaman dengan harga yang cukup terjangkau serta menyediakan paket-paket wisata di Jogja dan sekitarnya.</p>
         </div>
-        
-        <!-- Kontak Kami -->
+
         <div class="col-lg-3 col-md-6">
           <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Kontak Kami</h5>
           <ul class="list-unstyled small">
@@ -125,122 +137,123 @@
             </li>
           </ul>
         </div>
-        
-        <!-- Navigasi -->
-<div class="col-lg-3 col-md-6">
-  <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Navigasi</h5>
-  <ul class="list-unstyled small">
-    <li class="mb-2">
-      <router-link to="/" class="text-light text-decoration-none hover-success">Home</router-link>
-    </li>
-    <li class="mb-2">
-      <router-link to="/Destination" class="text-light text-decoration-none hover-success">Destinasi</router-link>
-    </li>
-    <li class="mb-2">
-      <router-link to="/CarRent" class="text-light text-decoration-none hover-success">Rental Mobil</router-link>
-    </li>
-    <li class="mb-2">
-      <router-link to="/Package" class="text-light text-decoration-none hover-success">Paket Liburan</router-link>
-    </li>
-    <li class="mb-2">
-      <router-link to="/Comment" class="text-light text-decoration-none hover-success">FAQ</router-link>
-    </li>
-  </ul>
-</div>
 
-        
-        <!-- Sosial Media-->
-<div class="col-lg-3 col-md-6">
-  <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Sosial Media</h5>
-  <p class="small">Ikuti kami di media sosial untuk mendapatkan penawaran terbaik!</p>
-  <div class="d-flex gap-3">
-    <!-- GANTI BAGIAN INI -->
-    <a href="https://www.facebook.com/namapagekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
-      <i class="bi bi-facebook"></i>
-    </a>
-    <!-- GANTI BAGIAN INI -->
-    <a href="https://www.tiktok.com/@usernamekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
-      <i class="bi bi-tiktok"></i>
-    </a>
-    <!-- GANTI BAGIAN INI -->
-    <a href="https://www.instagram.com/usernamekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
-      <i class="bi bi-instagram"></i>
-    </a>
-    <!-- GANTI BAGIAN INI -->
-    <a href="https://wa.me/6281348680937" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
-      <i class="bi bi-whatsapp"></i>
-    </a>
-  </div>
-</div>
+        <div class="col-lg-3 col-md-6">
+          <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Navigasi</h5>
+          <ul class="list-unstyled small">
+            <li class="mb-2">
+              <router-link to="/" class="text-light text-decoration-none hover-success">Home</router-link>
+            </li>
+            <li class="mb-2">
+              <router-link to="/Destination" class="text-light text-decoration-none hover-success">Destinasi</router-link>
+            </li>
+            <li class="mb-2">
+              <router-link to="/CarRent" class="text-light text-decoration-none hover-success">Rental Mobil</router-link>
+            </li>
+            <li class="mb-2">
+              <router-link to="/Package" class="text-light text-decoration-none hover-success">Paket Liburan</router-link>
+            </li>
+            <li class="mb-2">
+              <router-link to="/Comment" class="text-light text-decoration-none hover-success">FAQ</router-link>
+            </li>
+          </ul>
+        </div>
 
+        <div class="col-lg-3 col-md-6">
+          <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Sosial Media</h5>
+          <p class="small">Ikuti kami di media sosial untuk mendapatkan penawaran terbaik!</p>
+          <div class="d-flex gap-3">
+            <a href="https://www.facebook.com/dewiji" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+              <i class="bi bi-facebook"></i>
+            </a>
+            <a href="https://www.tiktok.com/@segawo.n.lanang" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+              <i class="bi bi-tiktok"></i>
+            </a>
+            <a href="https://www.instagram.com/_irzha_" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+              <i class="bi bi-instagram"></i>
+            </a>
+            <a href="https://wa.me/6281348680937" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+              <i class="bi bi-whatsapp"></i>
+            </a>
+          </div>
+        </div>
       </div>
-      
+
       <hr class="my-4 bg-secondary">
-      
+
     </div>
   </footer>
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue' // Tambahkan 'watch'
 import api from '@/api'
 
-const faqs = ref([]) // Untuk FAQ yang dipaginasi (Popular Topics)
-const allFaqsForCategories = ref([]) // NEW: Untuk mendapatkan semua kategori tanpa pagination
+const allFaqs = ref([]) // NEW: Menyimpan semua data FAQ untuk pencarian dan kategori
+const loading = ref(true) // NEW: State loading
+const currentPage = ref(1) // Halaman saat ini untuk paginasi frontend
+const itemsPerPage = 6; // NEW: Jumlah item per halaman untuk paginasi frontend (sesuaikan jika perlu)
+
 const searchQuery = ref('')
 const selectedTopic = ref(null)
-const pagination = ref({ current_page: 1, last_page: 1 })
 
-// Fungsi untuk mengambil FAQ yang dipaginasi
-const fetchFaqs = async (page = 1) => {
+// NEW: Fungsi untuk mengambil SEMUA FAQ
+const fetchAllFaqs = async () => {
+  loading.value = true;
   try {
-    const res = await api.get(`/api/faqs?page=${page}`)
-    faqs.value = res.data.data.data || res.data.data // Sesuaikan jika API hanya mengembalikan array langsung
-    pagination.value = {
-      current_page: res.data.data.current_page,
-      last_page: res.data.data.last_page,
-    }
+    // Panggil API dengan parameter `per_page=all` untuk mengambil semua data
+    const res = await api.get('/api/faqs?per_page=all'); // URL disesuaikan dengan controller
+    // Asumsi: respons API mengembalikan array data di `res.data.data`
+    allFaqs.value = res.data.data;
   } catch (err) {
-    console.error('Gagal memuat FAQ paginated:', err)
+    console.error('Gagal memuat semua FAQ:', err);
+    // Swal.fire({ ... pesan error ... });
+    allFaqs.value = [];
+  } finally {
+    loading.value = false;
   }
 }
 
-// NEW: Fungsi untuk mengambil SEMUA FAQ (hanya untuk kategori)
-const fetchAllFaqsForCategories = async () => {
-  try {
-    // Asumsi: endpoint /api/faqs tanpa 'page' parameter mengembalikan SEMUA FAQ
-    // Atau, jika ada endpoint khusus untuk kategori, gunakan itu.
-    const res = await api.get('/api/faqs'); 
-    allFaqsForCategories.value = res.data.data.data || res.data.data;
-  } catch (err) {
-    console.error('Gagal memuat semua FAQ untuk kategori:', err);
-  }
-}
-
-const changePage = (page) => {
-  pagination.value.current_page = page
-  fetchFaqs(page)
-}
-
-const filteredFaqs = computed(() => {
+// NEW: Computed property untuk memfilter dan memaginasi FAQ
+const filteredAndPaginatedFaqs = computed(() => {
   const query = searchQuery.value.toLowerCase().trim();
-  if (!query) {
-    // Tampilkan 6 FAQ teratas dari data yang dipaginasi jika tidak ada query
-    // Atau, jika Anda ingin 6 "popular" dari SEMUA FAQ, gunakan allFaqsForCategories.value.slice(0,6)
-    return faqs.value.slice(0, 6); 
-  }
-  // Filter dari data yang dipaginasi atau data yang diambil dengan `fetchFaqs`
-  return faqs.value.filter(faq => // Perhatikan: ini masih memfilter dari FAQ yang dipaginasi
-    faq.title.toLowerCase().includes(query) ||
-    faq.answer.toLowerCase().includes(query) ||
-    (Array.isArray(faq.category) ? faq.category.some(cat => cat.toLowerCase().includes(query)) : faq.category?.toLowerCase().includes(query))
-  );
-})
 
-// NEW: Computed property untuk semua kategori, diambil dari `allFaqsForCategories`
+  // 1. Filter data berdasarkan query dari `allFaqs`
+  const filtered = allFaqs.value.filter(faq =>
+    (faq.title && faq.title.toLowerCase().includes(query)) ||
+    (faq.answer && faq.answer.toLowerCase().includes(query)) ||
+    // Pastikan `category` adalah array atau string
+    (Array.isArray(faq.category) ? faq.category.some(cat => cat.toLowerCase().includes(query)) : (faq.category?.toLowerCase().includes(query)))
+  );
+
+  // 2. Terapkan paginasi pada data yang sudah difilter
+  const startIndex = (currentPage.value - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  return filtered.slice(startIndex, endIndex);
+});
+
+// NEW: Computed property untuk informasi paginasi di frontend
+const pagination = computed(() => {
+  const query = searchQuery.value.toLowerCase().trim();
+  const filtered = allFaqs.value.filter(faq =>
+    (faq.title && faq.title.toLowerCase().includes(query)) ||
+    (faq.answer && faq.answer.toLowerCase().includes(query)) ||
+    (Array.isArray(faq.category) ? faq.category.some(cat => cat.toLowerCase().includes(query)) : (faq.category?.toLowerCase().includes(query)))
+  );
+  const totalItems = filtered.length;
+  const lastPage = Math.ceil(totalItems / itemsPerPage);
+
+  return {
+    current_page: currentPage.value,
+    last_page: lastPage,
+    total: totalItems
+  };
+});
+
+// Computed property untuk semua kategori unik dari `allFaqs`
 const allCategories = computed(() => {
   const unique = {};
-  allFaqsForCategories.value.forEach(faq => { // Menggunakan data lengkap
+  allFaqs.value.forEach(faq => { // Menggunakan data lengkap dari `allFaqs`
     const cat = faq.category;
     if (Array.isArray(cat)) {
       cat.forEach(c => unique[c] = true);
@@ -255,24 +268,43 @@ const allCategories = computed(() => {
 });
 
 const filterByCategory = (slug) => {
-  searchQuery.value = slug;
-  // Saat filter kategori diklik, kita perlu mengambil FAQ yang sesuai dari API
-  // Jika API Anda mendukung filter berdasarkan kategori:
-  // fetchFaqs(1, { category: slug }); // Anda mungkin perlu memodifikasi fetchFaqs agar menerima parameter filter
-  // Karena API Anda saat ini hanya menggunakan 'page', kita filter di frontend
-}
+  searchQuery.value = slug; // Mengubah searchQuery agar memicu filter
+};
 
 const clearFilter = () => {
-  searchQuery.value = '';
-}
+  searchQuery.value = ''; // Mengosongkan searchQuery
+};
 
 const showTopicDetail = (faq) => {
   selectedTopic.value = faq;
+  // Menambahkan class untuk mengunci scroll body saat modal terbuka
+  document.body.classList.add('modal-open');
+  document.body.style.overflow = 'hidden';
+};
+
+// Watcher untuk mengelola overflow body saat modal tertutup
+watch(selectedTopic, (newValue) => {
+  if (!newValue) {
+    document.body.classList.remove('modal-open');
+    document.body.style.overflow = '';
+  }
+});
+
+const changePage = (page) => {
+  if (page !== currentPage.value && page > 0 && page <= pagination.value.last_page) {
+    currentPage.value = page
+    // Tidak perlu memanggil fetch lagi karena data sudah ada di `allFaqs`
+  }
 }
 
+// Panggil fungsi untuk mengambil semua data saat komponen dimuat
 onMounted(() => {
-  fetchFaqs(); // Ambil FAQ yang dipaginasi untuk "Popular Topics"
-  fetchAllFaqsForCategories(); // Ambil semua FAQ (atau kategori) untuk "Explore by Service"
+  fetchAllFaqs();
+});
+
+// Watcher untuk mereset halaman ke 1 setiap kali query pencarian berubah
+watch(searchQuery, () => {
+  currentPage.value = 1;
 });
 </script>
 
@@ -328,24 +360,24 @@ onMounted(() => {
 
 /* Explore by Service Buttons */
 .btn-square {
-  min-width: 120px; 
-  height: 60px; 
+  min-width: 120px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  border-radius: 0.75rem; 
+  border-radius: 0.75rem;
   font-weight: 600;
-  white-space: nowrap; 
+  white-space: nowrap;
   border: 1px solid #dee2e6;
-  color: #343a40; 
-  background-color: #f8f9fa; 
+  color: #343a40;
+  background-color: #f8f9fa;
   transition: all 0.2s ease;
 }
 
 .btn-square.btn-outline-dark:hover,
 .btn-square.active-category {
-  background-color: #1d976c; 
+  background-color: #1d976c;
   color: white;
   border-color: #1d976c;
   box-shadow: 0 2px 5px rgba(0,0,0,.15);
@@ -353,11 +385,15 @@ onMounted(() => {
 
 /* Pagination Style */
 .page-item.active .page-link {
-  background-color: #1d976c; 
+  background-color: #1d976c;
   border-color: #1d976c;
   color: #fff;
 }
 .page-link {
-  color: #1d976c; 
+  color: #1d976c;
+}
+/* Hover effect for footer links */
+.hover-success:hover {
+  color: #198754 !important; /* Warna hijau success Bootstrap */
 }
 </style>

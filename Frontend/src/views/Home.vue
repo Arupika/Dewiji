@@ -159,27 +159,23 @@ onMounted(() => {
         
         <!-- Sosial Media-->
 <div class="col-lg-3 col-md-6">
-  <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Sosial Media</h5>
-  <p class="small">Ikuti kami di media sosial untuk mendapatkan penawaran terbaik!</p>
-  <div class="d-flex gap-3">
-    <!-- GANTI BAGIAN INI -->
-    <a href="https://www.facebook.com/namapagekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
-      <i class="bi bi-facebook"></i>
-    </a>
-    <!-- GANTI BAGIAN INI -->
-    <a href="https://www.tiktok.com/@usernamekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
-      <i class="bi bi-tiktok"></i>
-    </a>
-    <!-- GANTI BAGIAN INI -->
-    <a href="https://www.instagram.com/usernamekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
-      <i class="bi bi-instagram"></i>
-    </a>
-    <!-- GANTI BAGIAN INI -->
-    <a href="https://wa.me/6281348680937" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
-      <i class="bi bi-whatsapp"></i>
-    </a>
-  </div>
-</div>
+          <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Sosial Media</h5>
+          <p class="small">Ikuti kami di media sosial untuk mendapatkan penawaran terbaik!</p>
+          <div class="d-flex gap-3">
+            <a href="https://www.facebook.com/dewiji" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+              <i class="bi bi-facebook"></i>
+            </a>
+            <a href="https://www.tiktok.com/@segawo.n.lanang" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+              <i class="bi bi-tiktok"></i>
+            </a>
+            <a href="https://www.instagram.com/_irzha_" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+              <i class="bi bi-instagram"></i>
+            </a>
+            <a href="https://wa.me/6281348680937" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+              <i class="bi bi-whatsapp"></i>
+            </a>
+          </div>
+        </div>
 
       </div>
       

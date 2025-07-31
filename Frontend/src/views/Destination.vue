@@ -20,8 +20,22 @@
       </div>
     </Transition>
 
+    <div v-if="loading" class="col-12 text-center py-5">
+      <p class="lead">Memuat destinasi...</p>
+      <div class="spinner-border text-success" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <div v-else-if="allDestinations.length === 0 && searchQuery === ''" class="col-12 text-center py-5">
+      <p class="lead">Tidak ada destinasi yang tersedia saat ini.</p>
+    </div>
+    <div v-else-if="filteredAndPaginatedDestinations.length === 0 && searchQuery !== ''" class="col-12 text-center py-5">
+      <p class="lead">Tidak ada destinasi yang ditemukan sesuai dengan pencarian Anda.</p>
+    </div>
+
+
     <TransitionGroup name="list" tag="div" class="row g-4 w-100">
-      <div class="col-md-4" v-for="destination in filteredDestinations" :key="destination.id">
+      <div class="col-md-4" v-for="destination in filteredAndPaginatedDestinations" :key="destination.id">
         <div class="card h-100 shadow-sm">
           <img
             v-if="destination.gambar"
@@ -66,10 +80,6 @@
       </div>
     </TransitionGroup>
 
-    <div v-if="filteredDestinations.length === 0" class="col-12 text-center py-5">
-      <p class="lead">Tidak ada destinasi yang ditemukan sesuai dengan pencarian Anda.</p>
-    </div>
-
     <Transition name="fade" appear>
       <div class="col-12 mt-4 d-flex justify-content-center" v-if="pagination.last_page > 1">
         <nav>
@@ -95,21 +105,21 @@
       </div>
     </Transition>
 
-    <div 
-      class="modal fade" 
-      :class="{ 'show d-block': showModal }" 
-      tabindex="-1" 
-      role="dialog" 
-      aria-modal="true" 
-      :style="{ 
-        backgroundColor: showModal ? 'rgba(0,0,0,0.5)' : '', 
-        zIndex: showModal ? 1060 : 'auto', 
-        overflowY: 'auto' 
-      }" 
-      v-if="showModal" 
+    <div
+      class="modal fade"
+      :class="{ 'show d-block': showModal }"
+      tabindex="-1"
+      role="dialog"
+      aria-modal="true"
+      :style="{
+        backgroundColor: showModal ? 'rgba(0,0,0,0.5)' : '',
+        zIndex: showModal ? 1060 : 'auto',
+        overflowY: 'auto'
+      }"
+      v-if="showModal"
       @click.self="closeModal">
-      
-      <div class="modal-dialog modal-lg modal-dialog-centered"> 
+
+      <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content shadow">
           <div class="modal-header bg-success text-white">
             <h5 class="modal-title">{{ selectedDestinasi.nama }}</h5>
@@ -156,6 +166,7 @@
       </div>
     </div>
   </div>
+
   <footer class="bg-dark text-light pt-5 pb-4">
     <div class="container">
       <div class="row g-4">
@@ -163,7 +174,7 @@
           <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Tentang Kami</h5>
           <p class="small"><strong>Dewiji Explore</strong> menyediakan sewa mobil berkualitas, aman, dan nyaman dengan harga yang cukup terjangkau serta menyediakan paket-paket wisata di Jogja dan sekitarnya.</p>
         </div>
-        
+
         <div class="col-lg-3 col-md-6">
           <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Kontak Kami</h5>
           <ul class="list-unstyled small">
@@ -181,122 +192,170 @@
             </li>
           </ul>
         </div>
-        
+
         <div class="col-lg-3 col-md-6">
-  <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Navigasi</h5>
-  <ul class="list-unstyled small">
-    <li class="mb-2">
-      <router-link to="/" class="text-light text-decoration-none hover-success">Home</router-link>
-    </li>
-    <li class="mb-2">
-      <router-link to="/Destination" class="text-light text-decoration-none hover-success">Destinasi</router-link>
-    </li>
-    <li class="mb-2">
-      <router-link to="/CarRent" class="text-light text-decoration-none hover-success">Rental Mobil</router-link>
-    </li>
-    <li class="mb-2">
-      <router-link to="/Package" class="text-light text-decoration-none hover-success">Paket Liburan</router-link>
-    </li>
-    <li class="mb-2">
-      <router-link to="/Comment" class="text-light text-decoration-none hover-success">FAQ</router-link>
-    </li>
-  </ul>
-</div>
+          <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Navigasi</h5>
+          <ul class="list-unstyled small">
+            <li class="mb-2">
+              <router-link to="/" class="text-light text-decoration-none hover-success">Home</router-link>
+            </li>
+            <li class="mb-2">
+              <router-link to="/Destination" class="text-light text-decoration-none hover-success">Destinasi</router-link>
+            </li>
+            <li class="mb-2">
+              <router-link to="/CarRent" class="text-light text-decoration-none hover-success">Rental Mobil</router-link>
+            </li>
+            <li class="mb-2">
+              <router-link to="/Package" class="text-light text-decoration-none hover-success">Paket Liburan</router-link>
+            </li>
+            <li class="mb-2">
+              <router-link to="/Comment" class="text-light text-decoration-none hover-success">FAQ</router-link>
+            </li>
+          </ul>
+        </div>
 
-        
-       <div class="col-lg-3 col-md-6">
-  <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Sosial Media</h5>
-  <p class="small">Ikuti kami di media sosial untuk mendapatkan penawaran terbaik!</p>
-  <div class="d-flex gap-3">
-    <a href="https://www.facebook.com/namapagekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
-      <i class="bi bi-facebook"></i>
-    </a>
-    <a href="https://www.tiktok.com/@usernamekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
-      <i class="bi bi-tiktok"></i>
-    </a>
-    <a href="https://www.instagram.com/usernamekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
-      <i class="bi bi-instagram"></i>
-    </a>
-    <a href="https://wa.me/6281348680937" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
-      <i class="bi bi-whatsapp"></i>
-    </a>
-  </div>
-</div>
-
+        <div class="col-lg-3 col-md-6">
+          <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Sosial Media</h5>
+          <p class="small">Ikuti kami di media sosial untuk mendapatkan penawaran terbaik!</p>
+          <div class="d-flex gap-3">
+            <a href="https://www.facebook.com/dewiji" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+              <i class="bi bi-facebook"></i>
+            </a>
+            <a href="https://www.tiktok.com/@segawo.n.lanang" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+              <i class="bi bi-tiktok"></i>
+            </a>
+            <a href="https://www.instagram.com/_irzha_" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+              <i class="bi bi-instagram"></i>
+            </a>
+            <a href="https://wa.me/6281348680937" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+              <i class="bi bi-whatsapp"></i>
+            </a>
+          </div>
+        </div>
       </div>
-      
+
       <hr class="my-4 bg-secondary">
-      
     </div>
   </footer>
 </template>
 
 <script setup>
-import { ref, onMounted, watch, computed } from 'vue' // Tambahkan 'computed'
-import api from '@/api'
+import { ref, onMounted, watch, computed } from 'vue'
+import api from '@/api' // Pastikan ini mengarah ke instance Axios Anda
 
-const destinations = ref([])
-const pagination = ref({})
-const currentPage = ref(1)
+const allDestinations = ref([]) // Menyimpan semua data destinasi
+const loading = ref(true) // Menambahkan state loading untuk UX
+const currentPage = ref(1) // Halaman saat ini untuk paginasi frontend
+const itemsPerPage = 6; // Jumlah item per halaman untuk paginasi frontend
+
 const showModal = ref(false)
 const selectedDestinasi = ref({})
-const searchQuery = ref('') // NEW: Untuk input pencarian
+const searchQuery = ref('') // Untuk input pencarian
 
-const fetchDestinasi = async (page = 1) => {
+// Fungsi untuk mengambil SEMUA destinasi dari API
+const fetchAllDestinasi = async () => {
+  loading.value = true; // Set loading true saat memulai fetch
   try {
-    const res = await api.get(`/api/destinasis?page=${page}`)
-    destinations.value = res.data.data.data
-    pagination.value = {
-      current_page: res.data.data.current_page,
-      last_page: res.data.data.last_page
-    }
+    // Panggil API dengan parameter `per_page=all` agar controller mengembalikan semua data
+    const res = await api.get('/api/destinasis?per_page=all');
+
+    // Asumsi: respons API mengembalikan array data di `res.data.data`
+    // Sesuaikan ini jika struktur respons DestinasiResource Anda berbeda
+    // Contoh: jika langsung array, pakai `res.data`
+    // Contoh: jika ada objek { message, data: { data: [...] } }, pakai `res.data.data.data`
+    allDestinations.value = res.data.data;
   } catch (err) {
-    console.error('Fetch error:', err)
+    console.error('Fetch all destinations error:', err);
+    // Tampilkan pesan error kepada pengguna jika fetch gagal
+    // Misalnya dengan SweetAlert2
+    // Swal.fire({
+    //   icon: 'error',
+    //   title: 'Gagal Memuat Destinasi',
+    //   text: 'Terjadi kesalahan saat mengambil data destinasi. Mohon coba lagi.'
+    // });
+    allDestinations.value = []; // Kosongkan data jika ada error
+  } finally {
+    loading.value = false; // Set loading false setelah fetch selesai (baik berhasil/gagal)
   }
 }
 
-// NEW: Computed property untuk memfilter destinasi
-const filteredDestinations = computed(() => {
+// Computed property untuk memfilter dan kemudian memaginasi destinasi
+const filteredAndPaginatedDestinations = computed(() => {
   const query = searchQuery.value.toLowerCase().trim();
-  if (!query) {
-    return destinations.value; // Jika query kosong, tampilkan semua destinasi
-  }
-  return destinations.value.filter(destination =>
+
+  // 1. Filter data berdasarkan query dari `allDestinations`
+  const filtered = allDestinations.value.filter(destination =>
     destination.nama.toLowerCase().includes(query) ||
     (destination.location && destination.location.toLowerCase().includes(query)) ||
     (destination.deskripsi && destination.deskripsi.toLowerCase().includes(query)) ||
-    (destination.kategori && destination.kategori.some(kategori => kategori.toLowerCase().includes(query)))
+    // Pastikan `kategori` adalah array di data Anda agar `.some()` berfungsi
+    (destination.kategori && Array.isArray(destination.kategori) && destination.kategori.some(kategori => kategori.toLowerCase().includes(query)))
   );
+
+  // 2. Terapkan paginasi pada data yang sudah difilter
+  const startIndex = (currentPage.value - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  return filtered.slice(startIndex, endIndex);
+});
+
+// Computed property untuk informasi paginasi di frontend
+const pagination = computed(() => {
+  const query = searchQuery.value.toLowerCase().trim();
+  const filtered = allDestinations.value.filter(destination =>
+    destination.nama.toLowerCase().includes(query) ||
+    (destination.location && destination.location.toLowerCase().includes(query)) ||
+    (destination.deskripsi && destination.deskripsi.toLowerCase().includes(query)) ||
+    (destination.kategori && Array.isArray(destination.kategori) && destination.kategori.some(kategori => kategori.toLowerCase().includes(query)))
+  );
+  const totalItems = filtered.length;
+  const lastPage = Math.ceil(totalItems / itemsPerPage);
+
+  return {
+    current_page: currentPage.value,
+    last_page: lastPage,
+    total: totalItems
+  };
 });
 
 const showDetails = (d) => {
   selectedDestinasi.value = d
   showModal.value = true
-  document.body.classList.add('modal-open');
-  document.body.style.overflow = 'hidden'; 
+  document.body.classList.add('modal-open'); // Bootstrap class to prevent body scroll
+  document.body.style.overflow = 'hidden'; // Fallback style
 }
 
 const closeModal = () => {
   showModal.value = false;
   document.body.classList.remove('modal-open');
-  document.body.style.overflow = '';
+  document.body.style.overflow = ''; // Reset body scroll
 }
 
 const changePage = (page) => {
-  if (page !== pagination.value.current_page && page > 0 && page <= pagination.value.last_page) {
+  // Hanya ubah halaman jika halaman baru valid dan berbeda dari halaman saat ini
+  if (page !== currentPage.value && page > 0 && page <= pagination.value.last_page) {
     currentPage.value = page
-    fetchDestinasi(page)
+    // Tidak perlu memanggil fetch lagi karena data sudah ada di `allDestinations`
   }
 }
 
-onMounted(() => fetchDestinasi())
+// Panggil fungsi untuk mengambil semua data saat komponen dimuat
+onMounted(() => {
+  fetchAllDestinasi();
+});
 
+// Watcher untuk mereset halaman ke 1 setiap kali query pencarian berubah
+watch(searchQuery, () => {
+  currentPage.value = 1;
+});
+
+// Watcher untuk mengelola overflow body saat modal berubah status
+// `immediate: true` agar fungsi ini berjalan saat inisialisasi awal
 watch(showModal, (newValue) => {
   if (!newValue) {
     document.body.classList.remove('modal-open');
     document.body.style.overflow = '';
   }
-});
+}, { immediate: true });
 </script>
 
 <style scoped>
@@ -333,26 +392,22 @@ watch(showModal, (newValue) => {
 }
 
 /* Kustomisasi Modal */
+/* Bootstrap 5.1+ sudah menangani modal-open, tapi ini sebagai fallback/penyesuaian */
 body.modal-open {
-  overflow: hidden !important; 
-  padding-right: var(--bs-modal-padding) !important; 
+  overflow: hidden !important;
+  /* padding-right: var(--bs-modal-padding) !important;  Aktifkan jika ada isu scrollbar */
 }
 
 /* Penyesuaian gambar di dalam modal */
 .modal-image {
-  width: 100%; 
-  height: 200px; /* Tinggi yang sama seperti di kartu */
+  width: 100%;
+  height: 250px; /* Tingkatkan sedikit tingginya agar lebih jelas di modal */
   object-fit: contain; /* Mempertahankan rasio aspek dan tidak gepeng */
   background-color: #f0f0f0; /* Opsional: latar belakang jika ada ruang kosong */
 }
 
-/* Jika masih ada masalah z-index, coba aktifkan ini */
-/*
-.modal {
-  z-index: 1060 !important; 
+/* Hover effect for footer links */
+.hover-success:hover {
+  color: #198754 !important; /* Warna hijau success Bootstrap */
 }
-.modal-backdrop {
-  z-index: 1059 !important;
-}
-*/
 </style>

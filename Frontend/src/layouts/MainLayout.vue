@@ -72,8 +72,8 @@ axios.interceptors.response.use(response => response, async error => {
 const handleLogout = async (silent = false) => {
   try {
     // Kirim request POST ke endpoint logout Laravel
-    await axios.post('/api/logout'); 
-    
+    await axios.post('/api/logout');
+
     // Hapus token dan role dari localStorage di frontend
     localStorage.removeItem('auth_token');
     localStorage.removeItem('user_role');
@@ -91,19 +91,19 @@ const handleLogout = async (silent = false) => {
     }
 
     // Redirect ke halaman login
-    router.push('/Auth/Login'); 
+    router.push('/Auth/Login');
   } catch (error) {
     let errorMessage = 'Terjadi kesalahan saat logout. Mohon coba lagi.';
     if (error.response && error.response.data && error.response.data.message) {
       errorMessage = error.response.data.message;
     }
-    
+
     // Meskipun ada error dari server, kita tetap menghapus token lokal
     localStorage.removeItem('auth_token');
     localStorage.removeItem('user_role');
     isLoggedIn.value = false;
     userRole.value = null;
-    
+
     if (!silent) { // Tampilkan SweetAlert jika tidak dalam mode silent
       Swal.fire({
         icon: 'error',
@@ -113,7 +113,7 @@ const handleLogout = async (silent = false) => {
     }
 
     // Tetap redirect ke halaman login
-    router.push('/Auth/Login'); 
+    router.push('/Auth/Login');
   }
 };
 
@@ -126,11 +126,6 @@ onMounted(() => {
 watch(route, () => {
   checkLoginStatus();
 });
-
-// Fungsi bantuan untuk menavigasi ke dashboard admin
-const goToAdminDashboard = () => {
-  router.push('/admin/dashboard');
-};
 </script>
 
 <template>
@@ -150,7 +145,7 @@ const goToAdminDashboard = () => {
           </li>
 
           <li class="nav-item" v-if="isLoggedIn && userRole === 'admin'">
-            <a class="nav-link" href="#" @click.prevent="goToAdminDashboard">Dashboard Admin</a>
+            <RouterLink class="nav-link" to="/admin/dashboard">Dashboard Admin</RouterLink>
           </li>
 
           <li class="nav-item auth-links">
@@ -218,12 +213,9 @@ const goToAdminDashboard = () => {
 }
 
 
-
-
 .navbar-brand img {
   height: 70px;
 }
-
 
 /* Transisi Halaman */
 .fade-page-enter-active,
@@ -234,5 +226,14 @@ const goToAdminDashboard = () => {
 .fade-page-enter-from,
 .fade-page-leave-to {
   opacity: 0;
+}
+
+/* CSS untuk highlight link aktif (biasanya otomatis diterapkan oleh Vue Router) */
+/* Pastikan ini ada di CSS global atau diatur oleh Bootstrap jika menggunakan .active */
+/* Atau tambahkan secara eksplisit jika perlu */
+.nav-link.router-link-active {
+  font-weight: bold; /* Contoh: membuat teks lebih tebal */
+  color: #fffb00 !important; /* Contoh: mengubah warna teks */
+  /* Anda bisa menambahkan border-bottom, background, dll. di sini */
 }
 </style>

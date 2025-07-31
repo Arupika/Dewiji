@@ -20,8 +20,21 @@
       </div>
     </Transition>
 
+    <div v-if="loading" class="col-12 text-center py-5">
+        <p class="lead">Memuat daftar paket...</p>
+        <div class="spinner-border text-success" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+    <div v-else-if="allTrips.length === 0 && searchQuery === ''" class="col-12 text-center py-5">
+        <p class="lead">Tidak ada paket liburan yang tersedia saat ini.</p>
+    </div>
+    <div v-else-if="filteredAndPaginatedTrips.length === 0 && searchQuery !== ''" class="col-12 text-center py-5">
+        <p class="lead">Tidak ada paket yang ditemukan sesuai dengan pencarian Anda.</p>
+    </div>
+
     <TransitionGroup name="list" tag="div" class="row g-4 w-100">
-      <div class="col-md-4" v-for="(trip, index) in filteredTrips" :key="trip.id">
+      <div class="col-md-4" v-for="(trip, index) in filteredAndPaginatedTrips" :key="trip.id">
         <div class="card h-100 shadow-sm">
           <img :src="trip.gambar || 'https://via.placeholder.com/400x300?text=No+Image'" class="w-100 rounded-top" style="height: 200px; object-fit: cover;" />
           <div class="card-body">
@@ -50,7 +63,8 @@
 
             <div class="mb-3" v-if="(trip.termasuk || []).length > 0">
               <h6 class="fw-bold mb-1">Termasuk:</h6>
-              <ul class="list-unstyled mb-0 ms-3"> <li v-for="(item, i) in (trip.termasuk || []).slice(0, 2)" :key="i" class="small">
+              <ul class="list-unstyled mb-0 ms-3">
+                <li v-for="(item, i) in (trip.termasuk || []).slice(0, 2)" :key="i" class="small">
                   <i class="bi bi-check-circle-fill text-success me-1"></i>{{ item }}
                 </li>
                 <li v-if="(trip.termasuk || []).length > 2" class="small text-muted">
@@ -84,11 +98,32 @@
           </div>
         </div>
       </div>
-
-      <div v-if="filteredTrips.length === 0" class="col-12 text-center py-5">
-        <p class="lead">Tidak ada paket yang ditemukan sesuai dengan pencarian Anda.</p>
-      </div>
     </TransitionGroup>
+
+    <Transition name="fade" appear>
+      <div class="col-12 mt-4 d-flex justify-content-center" v-if="pagination.last_page > 1">
+        <nav>
+          <ul class="pagination">
+            <li class="page-item" :class="{ disabled: pagination.current_page === 1 }">
+              <button class="page-link" @click="changePage(pagination.current_page - 1)">Sebelumnya</button>
+            </li>
+
+            <li
+              class="page-item"
+              v-for="page in pagination.last_page"
+              :key="page"
+              :class="{ active: page === pagination.current_page }"
+            >
+              <button class="page-link" @click="changePage(page)">{{ page }}</button>
+            </li>
+
+            <li class="page-item" :class="{ disabled: pagination.current_page === pagination.last_page }">
+              <button class="page-link" @click="changePage(pagination.current_page + 1)">Berikutnya</button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </Transition>
 
     <div
       v-if="showModal"
@@ -152,9 +187,6 @@
                 <li v-for="(item, idx) in selectedPackage.tidak_termasuk" :key="idx">
                   <i class="bi bi-x-circle-fill text-danger me-2"></i>{{ item }}
                 </li>
-                <li v-if="(trip.tidak_termasuk || []).length > 2" class="small text-muted">
-                  +{{ trip.tidak_termasuk.length - 2 }} lainnya
-                </li>
               </ul>
             </div>
 
@@ -181,6 +213,11 @@
               </div>
 
               <div class="mb-3">
+                <label class="form-label fw-bold">Jumlah Orang</label>
+                <input type="number" class="form-control" v-model="bookingData.jumlahOrang" min="1" required />
+              </div>
+
+              <div class="mb-3">
                 <label class="form-label fw-bold">Nama Lengkap</label>
                 <input type="text" class="form-control" v-model="bookingData.nama" required />
               </div>
@@ -193,6 +230,35 @@
               <div class="mb-3">
                 <label class="form-label fw-bold">Catatan Tambahan</label>
                 <textarea class="form-control" v-model="bookingData.catatan" rows="2"></textarea>
+              </div>
+
+              <hr class="my-4">
+              <h5 class="fw-bold text-center mb-3">Selesaikan Pembayaran Anda</h5>
+              <div class="text-center mb-3">
+                <QRCode
+                  :value="qrPaymentText"
+                  :size="200"
+                  level="H"
+                  class="mx-auto border p-2 rounded"
+                />
+              </div>
+              <p class="text-center text-muted small mb-3">Scan QRIS ini untuk melakukan pembayaran.</p>
+
+              <div class="text-center mb-4">
+                  <p class="fw-bold mb-1">Atau Transfer Manual:</p>
+                  <p class="mb-0">Bank: {{ bsiBankDetails.bankName }}</p>
+                  <p class="mb-0">No. Rekening: {{ bsiBankDetails.accountNumber }}</p>
+                  <p class="mb-0">A.N.: {{ bsiBankDetails.accountName }}</p>
+                  <p class="mt-2 text-danger small">Mohon lakukan pembayaran sesuai Total Harga Estimasi.</p>
+                  <p class="text-info small fw-bold">
+                      *Sertakan bukti transfer di kolom chat WhatsApp.
+                  </p>
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-bold">Total Harga Estimasi</label>
+                <p class="form-control-plaintext fw-bold text-success display-6">
+                  Rp {{ Number(calculatedPackagePrice).toLocaleString('id-ID') }}
+                </p>
               </div>
 
               <button type="submit" class="btn btn-success w-100 rounded-pill fw-bold py-2">
@@ -255,13 +321,13 @@
           <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Sosial Media</h5>
           <p class="small">Ikuti kami di media sosial untuk mendapatkan penawaran terbaik!</p>
           <div class="d-flex gap-3">
-            <a href="https://www.facebook.com/namapagekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+            <a href="https://www.facebook.com/dewiji" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
               <i class="bi bi-facebook"></i>
             </a>
-            <a href="https://www.tiktok.com/@usernamekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+            <a href="https://www.tiktok.com/@segawo.n.lanang" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
               <i class="bi bi-tiktok"></i>
             </a>
-            <a href="https://www.instagram.com/usernamekamu" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
+            <a href="https://www.instagram.com/_irzha_" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
               <i class="bi bi-instagram"></i>
             </a>
             <a href="https://wa.me/6281348680937" target="_blank" class="btn btn-outline-light btn-sm rounded-circle hover-success">
@@ -279,9 +345,16 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import api from '@/api'
 import Swal from 'sweetalert2'
-// import QRCode from 'qrcode.vue' // <--- QRCode dihapus karena sudah tidak digunakan di template
+import QRCode from 'qrcode.vue'
 
-const trips = ref([])
+// NEW: State untuk menyimpan semua data paket
+const allTrips = ref([])
+// NEW: State untuk indikator loading
+const loading = ref(true)
+// NEW: State untuk paginasi frontend
+const currentPage = ref(1)
+const itemsPerPage = 6; // Sesuaikan jumlah item per halaman jika diperlukan
+
 const searchQuery = ref('')
 const showModal = ref(false)
 const selectedPackage = ref(null)
@@ -289,22 +362,28 @@ const selectedPackage = ref(null)
 const bookingData = ref({
   tipeHarga: '',
   tanggal: '',
-  jumlahOrang: 1, // Tambahan field jumlahOrang jika ada
+  jumlahOrang: 1, // Tambahan field jumlahOrang
   nama: '',
   whatsapp: '',
   catatan: ''
 })
 
 // ===============================================================
-// Data untuk QR Pembayaran (dihapus karena tidak lagi ditampilkan)
-// const qrPaymentText = ref(...);
-// const bsiBankDetails = { ... };
+// Data untuk QR Pembayaran (QRIS dan BSI) - Sama seperti CarRent.vue
+// PENTING: Ganti nilai ini dengan string QRIS ASLI Anda.
+const qrPaymentText = ref('7213052386'); // GANTI DENGAN STRING QRIS ASLI ATAU INFO REKENING BSI ANDA
+
+const bsiBankDetails = {
+  bankName: 'Bank Syariah Indonesia (BSI)',
+  accountNumber: '7213052386', // Ganti dengan nomor rekening BSI Anda
+  accountName: 'irzha fahrizaldy' // Ganti dengan nama rekening BSI Anda
+}
+
+// Nomor WhatsApp untuk konfirmasi booking
+const whatsappContactNumber = '6281348680937';
 // ===============================================================
 
-// Nomor WhatsApp untuk konfirmasi booking (tetap ada)
-const whatsappContactNumber = '6281348680937'; // Ganti dengan nomor WhatsApp Anda
-
-// Computed property untuk menghitung total harga paket (tetap ada)
+// Computed property untuk menghitung total harga paket
 const calculatedPackagePrice = computed(() => {
   if (!selectedPackage.value || !bookingData.value.tipeHarga) {
     return 0;
@@ -315,15 +394,84 @@ const calculatedPackagePrice = computed(() => {
   if (!selectedPriceObject || !selectedPriceObject.diskon) {
     return 0;
   }
-  const price = parseFloat(String(selectedPriceObject.diskon).replace(/[^0-9,-]+/g, "").replace(/,/g, ".")) || 0;
+  // Menghilangkan karakter non-digit dan mengonversi ke float
+  // Ini mengasumsikan harga.diskon bisa berupa string "Rp 1.000.000"
+  const price = parseFloat(String(selectedPriceObject.diskon).replace(/[^0-9,]+/g, "").replace(/,/g, ".")) || 0;
+
+  // Jika ada jumlah orang, kalikan
   const total = price * (bookingData.value.jumlahOrang || 1);
   return total;
 });
 
 
-const fetchTrips = async () => { /* ... */ }
-onMounted(fetchTrips)
-const filteredTrips = computed(() => { /* ... */ })
+// NEW: Fungsi untuk mengambil SEMUA paket
+const fetchAllTrips = async () => {
+  loading.value = true;
+  try {
+    // Panggil API dengan parameter `per_page=all` untuk mengambil semua data
+    const res = await api.get('/api/pakets?per_page=all'); // URL disesuaikan dengan controller
+    // Asumsi: respons API mengembalikan array data di `res.data.data`
+    allTrips.value = res.data.data;
+  } catch (err) {
+    console.error('Gagal memuat semua paket:', err);
+    Swal.fire({
+      icon: 'error',
+      title: 'Gagal Memuat Paket',
+      text: 'Terjadi kesalahan saat memuat daftar paket liburan.'
+    });
+    allTrips.value = [];
+  } finally {
+    loading.value = false;
+  }
+}
+
+// NEW: Computed property untuk memfilter dan memaginasi paket
+const filteredAndPaginatedTrips = computed(() => {
+  const query = searchQuery.value.toLowerCase().trim();
+
+  // 1. Filter data berdasarkan query dari `allTrips`
+  const filtered = allTrips.value.filter(trip =>
+    (trip.nama && trip.nama.toLowerCase().includes(query)) ||
+    (trip.destinasi && Array.isArray(trip.destinasi) && trip.destinasi.join(' ').toLowerCase().includes(query)) ||
+    (trip.deskripsi && trip.deskripsi.toLowerCase().includes(query)) ||
+    (trip.harga && Array.isArray(trip.harga) && trip.harga.some(h =>
+      (h.tipe && h.tipe.toLowerCase().includes(query)) ||
+      (h.diskon && String(h.diskon).toLowerCase().includes(query))
+    )) ||
+    (trip.termasuk && Array.isArray(trip.termasuk) && trip.termasuk.some(t => t.toLowerCase().includes(query))) ||
+    (trip.tidak_termasuk && Array.isArray(trip.tidak_termasuk) && trip.tidak_termasuk.some(nt => nt.toLowerCase().includes(query)))
+  );
+
+  // 2. Terapkan paginasi pada data yang sudah difilter
+  const startIndex = (currentPage.value - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  return filtered.slice(startIndex, endIndex);
+});
+
+// NEW: Computed property untuk informasi paginasi di frontend
+const pagination = computed(() => {
+  const query = searchQuery.value.toLowerCase().trim();
+  const filtered = allTrips.value.filter(trip =>
+    (trip.nama && trip.nama.toLowerCase().includes(query)) ||
+    (trip.destinasi && Array.isArray(trip.destinasi) && trip.destinasi.join(' ').toLowerCase().includes(query)) ||
+    (trip.deskripsi && trip.deskripsi.toLowerCase().includes(query)) ||
+    (trip.harga && Array.isArray(trip.harga) && trip.harga.some(h =>
+      (h.tipe && h.tipe.toLowerCase().includes(query)) ||
+      (h.diskon && String(h.diskon).toLowerCase().includes(query))
+    )) ||
+    (trip.termasuk && Array.isArray(trip.termasuk) && trip.termasuk.some(t => t.toLowerCase().includes(query))) ||
+    (trip.tidak_termasuk && Array.isArray(trip.tidak_termasuk) && trip.tidak_termasuk.some(nt => nt.toLowerCase().includes(query)))
+  );
+  const totalItems = filtered.length;
+  const lastPage = Math.ceil(totalItems / itemsPerPage);
+
+  return {
+    current_page: currentPage.value,
+    last_page: lastPage,
+    total: totalItems
+  };
+});
+
 
 const showBookingModal = (trip) => {
   selectedPackage.value = trip
@@ -340,6 +488,7 @@ const showBookingModal = (trip) => {
   bookingData.value.whatsapp = '';
   bookingData.value.catatan = '';
 
+  // Set default selected price if available
   if (selectedPackage.value.harga && selectedPackage.value.harga.length > 0) {
     bookingData.value.tipeHarga = selectedPackage.value.harga[0].tipe;
   } else {
@@ -352,8 +501,9 @@ const showBookingModal = (trip) => {
 
 const closeModal = () => {
   showModal.value = false
-  selectedPackage.value = null
+  selectedPackage.value = null // Reset selected package
 
+  // Reset booking data when modal is closed
   bookingData.value = {
     tipeHarga: '',
     tanggal: '',
@@ -366,6 +516,15 @@ const closeModal = () => {
   document.body.classList.remove('modal-open');
   document.body.style.overflow = '';
 }
+
+// NEW: Fungsi untuk mengubah halaman paginasi
+const changePage = (page) => {
+  if (page !== currentPage.value && page > 0 && page <= pagination.value.last_page) {
+    currentPage.value = page
+    // Tidak perlu memanggil fetch lagi karena data sudah ada di `allTrips`
+  }
+}
+
 
 const submitBooking = () => {
   const selectedPriceObject = selectedPackage.value.harga.find(
@@ -390,39 +549,37 @@ ${(selectedPackage.value.tidak_termasuk && selectedPackage.value.tidak_termasuk.
 ${selectedPackage.value.deskripsi ? `📝 Deskripsi Paket: ${selectedPackage.value.deskripsi}\n` : ''}
 ${bookingData.value.catatan ? `✏️ Catatan Pribadi: ${bookingData.value.catatan}` : ''}
 
-Mohon informasi lebih lanjut. Terima kasih.`
+Saya sudah melakukan pembayaran melalui ${bsiBankDetails.bankName} (${bsiBankDetails.accountNumber} A.N. ${bsiBankDetails.accountName}) atau QRIS. Mohon konfirmasi pemesanan saya. Terima kasih.`;
 
   const encoded = encodeURIComponent(message)
+  window.open(`https://wa.me/${whatsappContactNumber}?text=${encoded}`, '_blank')
 
   Swal.fire({
     title: 'Pemesanan Berhasil!',
-    html: `
-      <div class="text-start">
-        <p><strong>Paket:</strong> ${selectedPackage.value.nama}</p>
-        <p><strong>Jenis Harga:</strong> ${bookingData.value.tipeHarga}</p>
-        <p><strong>Tanggal:</strong> ${bookingData.value.tanggal}</p>
-        <p><strong>Nama:</strong> ${bookingData.value.nama}</p>
-        <p><strong>WhatsApp:</strong> ${bookingData.value.whatsapp}</p>
-        ${bookingData.value.catatan ? `<p><strong>Catatan:</strong> ${bookingData.value.catatan}</p>` : ''}
-      </div>
-    `,
+    text: 'Mohon tunggu konfirmasi dari kami melalui WhatsApp.',
     icon: 'success',
-    confirmButtonText: 'Tutup',
-    customClass: {
-      popup: 'rounded-3'
-    }
-  })
-
-  window.open(`https://wa.me/${whatsappContactNumber}?text=${encoded}`, '_blank')
-  closeModal()
+    confirmButtonText: 'Oke',
+    allowOutsideClick: false
+  }).then(() => {
+    closeModal();
+  });
 }
+
+// OLD: onMounted(fetchTrips)
+// NEW: Panggil fetchAllTrips()
+onMounted(() => fetchAllTrips())
+
+// NEW: Watcher untuk mereset halaman ke 1 setiap kali query pencarian berubah
+watch(searchQuery, () => {
+  currentPage.value = 1;
+});
 
 watch(showModal, (newValue) => {
   if (!newValue) {
     document.body.classList.remove('modal-open');
     document.body.style.overflow = '';
   }
-});
+}, { immediate: true });
 </script>
 
 <style scoped>
@@ -482,5 +639,9 @@ body.modal-open {
   text-overflow: ellipsis;
   min-height: 3.8em; /* Sesuaikan dengan line-height * jumlah baris (misal 1.2em * 3 = 3.6em) */
   line-height: 1.2em; /* Sesuaikan line-height agar konsisten */
+}
+/* Hover effect for footer links */
+.hover-success:hover {
+  color: #198754 !important; /* Warna hijau success Bootstrap */
 }
 </style>
