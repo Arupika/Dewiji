@@ -342,9 +342,20 @@
 </template>
 
 <script setup>
+// Mengimpor `ref`, `computed`, `onMounted`, dan `watch` dari Vue
+// - `ref` digunakan untuk membuat state reaktif
+// - `computed` digunakan untuk membuat properti turunan (derived) yang otomatis update saat dependensinya berubah
+// - `onMounted` digunakan untuk mengeksekusi kode saat komponen sudah dirender ke DOM
+// - `watch` digunakan untuk mengamati perubahan nilai dari suatu data reaktif
 import { ref, computed, onMounted, watch } from 'vue'
+// Mengimpor instance API yang sudah dikonfigurasi sebelumnya (biasanya Axios)
+// Digunakan untuk melakukan request HTTP ke backend (misalnya fetch data destinasi, rental, atau paket)
 import api from '@/api'
+// Mengimpor SweetAlert2, pustaka popup/alert modern yang mendukung custom UI
+// Digunakan untuk menampilkan notifikasi atau konfirmasi dengan tampilan menarik
 import Swal from 'sweetalert2'
+// Mengimpor komponen Vue untuk menampilkan QR Code
+// Digunakan jika ingin menampilkan QR berdasarkan string/data tertentu
 import QRCode from 'qrcode.vue'
 
 // --- State (Data Reaktif) ---

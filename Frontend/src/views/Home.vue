@@ -1,21 +1,27 @@
 <script setup>
 // --- Impor Modul ---
-import { ref, onMounted } from 'vue' // 'ref' untuk data reaktif, 'onMounted' untuk kode saat komponen dimuat.
-import { useRouter } from 'vue-router' // Untuk melakukan navigasi antar halaman secara programatik.
-import api from '@/api' // Konfigurasi Axios untuk request ke API.
+import { ref, onMounted } from 'vue' 
+// 'ref' digunakan untuk membuat data reaktif.
+// 'onMounted' digunakan agar fungsi dijalankan saat komponen selesai dirender di DOM.
 
-// Mengimpor gambar dari folder assets untuk digunakan sebagai background section.
-import destinasiBg from '@/assets/destinasi-bg.jpg'
-import mobilBg from '@/assets/mobil-bg.jpg'
-import paketBg from '@/assets/paket-bg.jpg'
+import { useRouter } from 'vue-router' 
+// 'useRouter' digunakan untuk mendapatkan instance router Vue agar bisa navigasi halaman secara programatik (tanpa <router-link>).
+
+import api from '@/api' 
+// Mengimpor konfigurasi Axios dari file '@/api' untuk komunikasi ke backend API secara konsisten (misalnya GET, POST data).
+
+// Mengimpor gambar dari folder assets untuk digunakan sebagai background di bagian tertentu halaman.
+import destinasiBg from '@/assets/destinasi-bg.jpg' // Gambar latar untuk bagian destinasi wisata
+import mobilBg from '@/assets/mobil-bg.jpg'         // Gambar latar untuk bagian rental mobil
+import paketBg from '@/assets/paket-bg.jpg'         // Gambar latar untuk bagian paket wisata
 
 // --- State (Data Reaktif) ---
-const router = useRouter() // Mendapatkan instance router untuk digunakan di dalam script.
+const router = useRouter() 
+// Mendapatkan objek router untuk melakukan navigasi ke halaman lain lewat kode JavaScript (misal: router.push('/detail')).
 
-// Mendefinisikan state reaktif untuk menyimpan data pratinjau yang diambil dari API.
-const destinasi = ref([])
-const rental = ref([])
-const packages = ref([])
+const destinasi = ref([]) // Menyimpan data destinasi wisata dari API
+const rental = ref([])    // Menyimpan data rental mobil dari API
+const packages = ref([])  // Menyimpan data paket wisata dari API
 
 // --- Fungsi-Fungsi ---
 
@@ -39,29 +45,34 @@ const fetchData = async () => {
   }
 }
 
-// Fungsi navigasi ke halaman masing-masing
-const goToDestinationPage = () => router.push('/Destination')
-const goToRentalPage = () => router.push('/CarRent')
-const goToPackagePage = () => router.push('/Package')
+// --- Fungsi Navigasi ke Halaman Masing-Masing ---
+// Fungsi-fungsi ini menggunakan router Vue untuk berpindah halaman secara programatik ketika dipanggil (misalnya saat tombol diklik).
 
-// Saat komponen dimount
+const goToDestinationPage = () => router.push('/Destination') // Navigasi ke halaman destinasi wisata
+const goToRentalPage = () => router.push('/CarRent')          // Navigasi ke halaman rental mobil
+const goToPackagePage = () => router.push('/Package')         // Navigasi ke halaman paket liburan
+
+// --- Lifecycle: Saat Komponen Dimuat (Mounted) ---
 onMounted(() => {
-  fetchData()
+  fetchData() // Memanggil fungsi untuk mengambil data dari API saat halaman selesai dimuat
 
-  // Tambahkan efek animasi saat elemen masuk ke viewport
+  // --- IntersectionObserver untuk Efek Scroll ---
+  // Membuat efek animasi (misalnya fade-in) ketika elemen tertentu muncul di viewport (area yang terlihat oleh user)
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible')
-        observer.unobserve(entry.target)
+      if (entry.isIntersecting) { // Jika elemen terlihat di layar
+        entry.target.classList.add('is-visible') // Tambahkan kelas CSS untuk efek animasi
+        observer.unobserve(entry.target)         // Hentikan pengamatan agar animasi tidak berulang
       }
     })
-  }, { threshold: 0.1 })
+  }, { threshold: 0.1 }) // Elemen dianggap terlihat jika 10% dari tinggi elemen masuk viewport
 
+  // Terapkan observer ke semua elemen yang memiliki kelas 'reveal-on-scroll'
   document.querySelectorAll('.reveal-on-scroll').forEach(section => {
     observer.observe(section)
   })
 })
+
 </script>
 
 <template>
