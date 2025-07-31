@@ -1,15 +1,18 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue';
-import { useRouter } from 'vue-router';
-import api from '@/api'; // Pastikan ini adalah instance Axios yang sudah dikonfigurasi
-import Swal from 'sweetalert2'; // Impor SweetAlert2
+// --- Impor Modul ---
+import { ref, onMounted, watch } from 'vue'; // // Fungsi inti Vue untuk data reaktif, lifecycle, dan pengawasan.
+import { useRouter } from 'vue-router'; // // Untuk navigasi antar halaman.
+import api from '@/api'; // // Instance Axios untuk request ke API.
+import Swal from 'sweetalert2'; // // Untuk menampilkan notifikasi pop-up yang interaktif.
 
-const router = useRouter();
-const activeTab = ref('user');
-const dataList = ref([]);
-const pagination = ref({ current_page: 1, last_page: 1 });
-const assetUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+// --- State (Data Reaktif) ---
+const router = useRouter(); // // Mendapatkan instance router.
+const activeTab = ref('user'); // // Menyimpan nama tab yang sedang aktif. Defaultnya 'user'. INI KUNCI UTAMA.
+const dataList = ref([]); // // Menyimpan daftar data (user, mobil, dll) yang akan ditampilkan di tabel.
+const pagination = ref({ current_page: 1, last_page: 1 }); // // Menyimpan informasi paginasi dari API.
+const assetUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'; // // URL dasar untuk aset gambar.
 
+// // Objek untuk memetakan nama tab ke endpoint API-nya, agar kode lebih rapi dan dinamis.
 const endpoints = {
   user: '/api/users',
   mobil: '/api/mobils',
@@ -18,11 +21,14 @@ const endpoints = {
   faq: '/api/faqs'
 };
 
+// --- Fungsi-Fungsi ---
+// // Fungsi keamanan untuk memvalidasi apakah pengguna adalah admin dan sudah login.
 // Fungsi untuk melakukan validasi akses
 const validateAdminAccess = () => {
-  const token = localStorage.getItem('auth_token');
-  const role = localStorage.getItem('user_role');
+  const token = localStorage.getItem('auth_token'); // // Ambil role dari penyimpanan lokal.
+  const role = localStorage.getItem('user_role'); // // Ambil role dari penyimpanan lokal.
 
+  // // Jika tidak ada token, paksa pengguna kembali ke halaman login.
   if (!token) {
     // Jika tidak ada token, berarti belum login
     Swal.fire({
@@ -33,9 +39,10 @@ const validateAdminAccess = () => {
     }).then(() => {
       router.push('/Auth/Login'); // Arahkan ke halaman login
     });
-    return false;
+    return false; // // Hentikan eksekusi lebih lanjut.
   }
 
+  // // Jika role bukan 'admin', paksa pengguna kembali ke halaman utama.
   if (role !== 'admin') {
     // Jika ada token tapi role bukan admin
     Swal.fire({
@@ -46,12 +53,13 @@ const validateAdminAccess = () => {
     }).then(() => {
       router.push('/'); // Arahkan ke halaman utama atau halaman lain
     });
-    return false;
+    return false; // // Hentikan eksekusi lebih lanjut.
   }
 
   return true; // User adalah admin dan sudah login
 };
 
+// // Fungsi utama untuk mengambil data dari API berdasarkan tab yang aktif.
 const fetchData = async (type, page = 1) => {
   // Hanya ambil data jika user memiliki akses admin
   if (!validateAdminAccess()) {
@@ -132,15 +140,20 @@ const deleteItem = async (id) => {
   }
 };
 
+// // Fungsi untuk mengarahkan ke halaman edit.
 const handleEdit = (id) => {
-  if (!validateAdminAccess()) { // Pastikan akses admin sebelum edit
+  if (!validateAdminAccess()) { // // Cek akses sebelum edit.
     return;
   }
   router.push(`/Admin/${activeTab.value}/edit/${id}`);
 };
 
+// --- Pengawas dan Lifecycle ---
+// // Mengawasi perubahan pada 'activeTab'. Setiap kali 'activeTab' berubah (karena user klik tab lain),
+// // fungsi fetchData akan otomatis dipanggil dengan nama tab yang baru.
 watch(activeTab, (val) => fetchData(val));
 
+// // Dijalankan saat komponen pertama kali dimuat.
 onMounted(() => {
   if (validateAdminAccess()) { // Panggil validasi saat komponen dimuat
     fetchData(activeTab.value);
@@ -310,7 +323,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
-/* Animasi Fade (diletakkan di <style scoped> ini) */
+/* // Aturan untuk animasi fade saat elemen muncul/hilang. */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s ease;
