@@ -347,22 +347,21 @@ import api from '@/api'
 import Swal from 'sweetalert2'
 import QRCode from 'qrcode.vue'
 
-// NEW: State untuk menyimpan semua data paket
-const allTrips = ref([])
-// NEW: State untuk indikator loading
-const loading = ref(true)
-// NEW: State untuk paginasi frontend
-const currentPage = ref(1)
-const itemsPerPage = 6; // Sesuaikan jumlah item per halaman jika diperlukan
+// --- State (Data Reaktif) ---
+const allTrips = ref([]) // // Menyimpan SEMUA data paket dari API.
+const loading = ref(true) // // Status untuk menampilkan/menyembunyikan spinner loading.
+const currentPage = ref(1) // // Menyimpan nomor halaman yang sedang aktif.
+const itemsPerPage = 6; // // Menentukan berapa banyak paket yang ditampilkan per halaman.
 
-const searchQuery = ref('')
-const showModal = ref(false)
-const selectedPackage = ref(null)
+const searchQuery = ref('') // // Menyimpan teks dari input pencarian.
+const showModal = ref(false) // // Status untuk menampilkan/menyembunyikan modal.
+const selectedPackage = ref(null) // // Menyimpan data paket yang sedang dipilih.
 
+// // Objek untuk menampung semua data yang diisi pengguna di formulir pemesanan.
 const bookingData = ref({
   tipeHarga: '',
   tanggal: '',
-  jumlahOrang: 1, // Tambahan field jumlahOrang
+  jumlahOrang: 1, // // Menambahkan field jumlah orang.
   nama: '',
   whatsapp: '',
   catatan: ''
@@ -371,42 +370,43 @@ const bookingData = ref({
 // ===============================================================
 // Data untuk QR Pembayaran (QRIS dan BSI) - Sama seperti CarRent.vue
 // PENTING: Ganti nilai ini dengan string QRIS ASLI Anda.
-const qrPaymentText = ref('7213052386'); // GANTI DENGAN STRING QRIS ASLI ATAU INFO REKENING BSI ANDA
-
+const qrPaymentText = ref('7213052386'); // // Ganti dengan string QRIS asli atau info rekening Anda.
 const bsiBankDetails = {
   bankName: 'Bank Syariah Indonesia (BSI)',
-  accountNumber: '7213052386', // Ganti dengan nomor rekening BSI Anda
-  accountName: 'irzha fahrizaldy' // Ganti dengan nama rekening BSI Anda
+  accountNumber: '7213052386', // // Ganti dengan nomor rekening Anda.
+  accountName: 'irzha fahrizaldy' // // Ganti dengan nama pemilik rekening.
 }
 
 // Nomor WhatsApp untuk konfirmasi booking
 const whatsappContactNumber = '6281348680937';
 // ===============================================================
 
-// Computed property untuk menghitung total harga paket
+// --- Logika Utama (Computed Property) ---
+
+// // Computed property yang secara otomatis menghitung total harga estimasi.
 const calculatedPackagePrice = computed(() => {
-  if (!selectedPackage.value || !bookingData.value.tipeHarga) {
-    return 0;
-  }
+  // // Jika paket atau tipe harga belum dipilih, kembalikan 0.
+  if (!selectedPackage.value || !bookingData.value.tipeHarga) return 0;
+
+  // // Cari objek harga yang cocok di dalam array harga paket.
   const selectedPriceObject = selectedPackage.value.harga.find(
     price => price.tipe === bookingData.value.tipeHarga
   );
-  if (!selectedPriceObject || !selectedPriceObject.diskon) {
-    return 0;
-  }
-  // Menghilangkan karakter non-digit dan mengonversi ke float
-  // Ini mengasumsikan harga.diskon bisa berupa string "Rp 1.000.000"
+  if (!selectedPriceObject || !selectedPriceObject.diskon) return 0;
+
+  // // Ambil harga, bersihkan dari karakter non-numerik (spt "Rp", "."), lalu ubah menjadi angka.
   const price = parseFloat(String(selectedPriceObject.diskon).replace(/[^0-9,]+/g, "").replace(/,/g, ".")) || 0;
 
-  // Jika ada jumlah orang, kalikan
+  // // Hitung total harga: harga per orang dikalikan jumlah orang.
   const total = price * (bookingData.value.jumlahOrang || 1);
   return total;
 });
 
+// --- Fungsi-Fungsi ---
 
-// NEW: Fungsi untuk mengambil SEMUA paket
+// // Fungsi untuk mengambil SEMUA data paket dari API.
 const fetchAllTrips = async () => {
-  loading.value = true;
+  loading.value = true; // // Tampilkan loading spinner.
   try {
     // Panggil API dengan parameter `per_page=all` untuk mengambil semua data
     const res = await api.get('/api/pakets?per_page=all'); // URL disesuaikan dengan controller
@@ -421,15 +421,15 @@ const fetchAllTrips = async () => {
     });
     allTrips.value = [];
   } finally {
-    loading.value = false;
+    loading.value = false; // // Sembunyikan loading spinner setelah selesai.
   }
 }
 
-// NEW: Computed property untuk memfilter dan memaginasi paket
+// // Computed property untuk memfilter DAN memaginasi data di frontend.
 const filteredAndPaginatedTrips = computed(() => {
   const query = searchQuery.value.toLowerCase().trim();
 
-  // 1. Filter data berdasarkan query dari `allTrips`
+  // // 1. Filter: Saring semua data di `allTrips` berdasarkan `searchQuery`.
   const filtered = allTrips.value.filter(trip =>
     (trip.nama && trip.nama.toLowerCase().includes(query)) ||
     (trip.destinasi && Array.isArray(trip.destinasi) && trip.destinasi.join(' ').toLowerCase().includes(query)) ||
@@ -442,14 +442,15 @@ const filteredAndPaginatedTrips = computed(() => {
     (trip.tidak_termasuk && Array.isArray(trip.tidak_termasuk) && trip.tidak_termasuk.some(nt => nt.toLowerCase().includes(query)))
   );
 
-  // 2. Terapkan paginasi pada data yang sudah difilter
+  // // 2. Paginasi: Ambil sebagian data dari hasil filter sesuai halaman saat ini.
   const startIndex = (currentPage.value - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  return filtered.slice(startIndex, endIndex);
+  return filtered.slice(startIndex, endIndex); // // `slice` memotong array untuk paginasi.
 });
 
-// NEW: Computed property untuk informasi paginasi di frontend
+// // Computed property untuk menghitung informasi paginasi di frontend.
 const pagination = computed(() => {
+  // // Filter lagi untuk mendapatkan jumlah total item yang cocok dengan pencarian.
   const query = searchQuery.value.toLowerCase().trim();
   const filtered = allTrips.value.filter(trip =>
     (trip.nama && trip.nama.toLowerCase().includes(query)) ||
@@ -463,6 +464,7 @@ const pagination = computed(() => {
     (trip.tidak_termasuk && Array.isArray(trip.tidak_termasuk) && trip.tidak_termasuk.some(nt => nt.toLowerCase().includes(query)))
   );
   const totalItems = filtered.length;
+  // // Hitung total halaman berdasarkan jumlah item dan item per halaman.
   const lastPage = Math.ceil(totalItems / itemsPerPage);
 
   return {
@@ -472,16 +474,17 @@ const pagination = computed(() => {
   };
 });
 
-
+// // Fungsi untuk membuka modal dan mereset form ke nilai default.
 const showBookingModal = (trip) => {
   selectedPackage.value = trip
   showModal.value = true
 
+  // // Atur tanggal default di form ke hari esok.
   const tomorrow = new Date()
   tomorrow.setDate(tomorrow.getDate() + 1)
   bookingData.value.tanggal = tomorrow.toISOString().split('T')[0]
 
-  // Reset booking data for a new booking
+  // // Reset semua data di form untuk sesi booking yang baru.
   bookingData.value.tipeHarga = '';
   bookingData.value.jumlahOrang = 1;
   bookingData.value.nama = '';
@@ -494,16 +497,17 @@ const showBookingModal = (trip) => {
   } else {
     bookingData.value.tipeHarga = '';
   }
-
+  // // Cegah scroll halaman di latar belakang.
   document.body.classList.add('modal-open');
   document.body.style.overflow = 'hidden';
 }
 
+// // Fungsi untuk menutup modal dan membersihkan semua data.
 const closeModal = () => {
   showModal.value = false
-  selectedPackage.value = null // Reset selected package
+  selectedPackage.value = null // // Hapus data paket yang dipilih.
 
-  // Reset booking data when modal is closed
+  // // Reset kembali semua data form ke kondisi awal.
   bookingData.value = {
     tipeHarga: '',
     tanggal: '',
@@ -517,15 +521,16 @@ const closeModal = () => {
   document.body.style.overflow = '';
 }
 
-// NEW: Fungsi untuk mengubah halaman paginasi
+// // Fungsi untuk berpindah halaman (paginasi).
 const changePage = (page) => {
+  // // Cek apakah halaman yang dituju valid.
   if (page !== currentPage.value && page > 0 && page <= pagination.value.last_page) {
-    currentPage.value = page
+    currentPage.value = page; // // Cukup ubah nomor halaman, tidak perlu panggil API lagi.
     // Tidak perlu memanggil fetch lagi karena data sudah ada di `allTrips`
   }
 }
 
-
+// // Fungsi yang dieksekusi saat form booking di-submit.
 const submitBooking = () => {
   const selectedPriceObject = selectedPackage.value.harga.find(
     price => price.tipe === bookingData.value.tipeHarga
@@ -552,8 +557,10 @@ ${bookingData.value.catatan ? `✏️ Catatan Pribadi: ${bookingData.value.catat
 Saya sudah melakukan pembayaran melalui ${bsiBankDetails.bankName} (${bsiBankDetails.accountNumber} A.N. ${bsiBankDetails.accountName}) atau QRIS. Mohon konfirmasi pemesanan saya. Terima kasih.`;
 
   const encoded = encodeURIComponent(message)
+  // // Buka tab baru ke WhatsApp.
   window.open(`https://wa.me/${whatsappContactNumber}?text=${encoded}`, '_blank')
 
+  // // Tampilkan notifikasi bahwa pesanan berhasil dan user harus konfirmasi via WA.
   Swal.fire({
     title: 'Pemesanan Berhasil!',
     text: 'Mohon tunggu konfirmasi dari kami melalui WhatsApp.',
@@ -561,7 +568,7 @@ Saya sudah melakukan pembayaran melalui ${bsiBankDetails.bankName} (${bsiBankDet
     confirmButtonText: 'Oke',
     allowOutsideClick: false
   }).then(() => {
-    closeModal();
+    closeModal(); // // Tutup modal setelah user menekan 'Oke'.
   });
 }
 
@@ -583,7 +590,7 @@ watch(showModal, (newValue) => {
 </script>
 
 <style scoped>
-/* Animasi Fade */
+/* // Aturan untuk animasi fade saat elemen muncul/hilang. */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s ease;
@@ -594,7 +601,7 @@ watch(showModal, (newValue) => {
   opacity: 0;
 }
 
-/* Animasi List Item (untuk kartu paket) */
+/* // Aturan untuk animasi daftar kartu paket. */
 .list-enter-active,
 .list-leave-active {
   transition: all 0.5s ease;
@@ -603,10 +610,10 @@ watch(showModal, (newValue) => {
 .list-enter-from,
 .list-leave-to {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(30px); /* // Efek muncul dari bawah. */
 }
 
-/* Penting: Untuk TransitionGroup, pastikan elemen yang di-v-for memiliki posisi relatif */
+/* // Aturan khusus untuk item yang keluar dari daftar agar animasi mulus. */
 .list-leave-active {
   position: absolute;
 }
@@ -615,17 +622,17 @@ watch(showModal, (newValue) => {
   transition: transform 0.5s ease;
 }
 
-/* Kustomisasi Modal */
+/* // Aturan untuk mencegah body bisa di-scroll saat modal terbuka. */
 body.modal-open {
   overflow: hidden !important;
   padding-right: var(--bs-modal-padding) !important;
 }
 
-/* Penyesuaian gambar di dalam modal */
+/* // Mengatur gaya gambar di dalam modal. */
 .modal-image {
   width: 100%;
   height: 200px; /* Disesuaikan agar tidak terlalu besar di modal */
-  object-fit: contain;
+  object-fit: contain; /* // Gambar akan diskalakan agar pas tanpa terpotong atau gepeng. */
   background-color: #f0f0f0;
 }
 
@@ -640,7 +647,7 @@ body.modal-open {
   min-height: 3.8em; /* Sesuaikan dengan line-height * jumlah baris (misal 1.2em * 3 = 3.6em) */
   line-height: 1.2em; /* Sesuaikan line-height agar konsisten */
 }
-/* Hover effect for footer links */
+/* // Memberi efek hover pada link di footer. */
 .hover-success:hover {
   color: #198754 !important; /* Warna hijau success Bootstrap */
 }
