@@ -90,41 +90,49 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
-import axios from 'axios';
-import { useRouter } from 'vue-router';
-import Swal from 'sweetalert2';
+// --- Impor Modul ---
+import { ref, watch } from 'vue'; // // 'ref' untuk data reaktif, 'watch' untuk mengamati perubahan data.
+import axios from 'axios'; // // Library untuk melakukan request HTTP ke API.
+import { useRouter } from 'vue-router'; // // Untuk navigasi antar halaman.
+import Swal from 'sweetalert2'; // // Library untuk notifikasi pop-up yang interaktif.
 
-axios.defaults.withCredentials = true;
-axios.defaults.baseURL = "http://localhost:8000"; // PASTIKAN INI SESUAI DENGAN BASE_URL API LARAVEL KAMU
+// --- Konfigurasi Axios ---
+axios.defaults.withCredentials = true; // // Mengizinkan pengiriman cookie antar domain (penting untuk otentikasi).
+axios.defaults.baseURL = "http://localhost:8000"; // // URL dasar untuk semua request API.
 
-const router = useRouter();
+// --- State (Data Reaktif) ---
+const router = useRouter(); // // Mendapatkan instance router.
 
+// // Objek untuk menampung semua data yang diisi pengguna di formulir.
 const form = ref({
   name: '',
   email: '',
   phone: '',
   birthDate: '',
-  role: 'user', // Default role user (tidak ditampilkan di form)
+  role: 'user', // // Role default, tidak perlu diisi pengguna.
   sex: '',
   address: '',
   password: '',
-  confirmPassword: '',
+  confirmPassword: '', // // Hanya untuk validasi, tidak dikirim ke server.
   agreeTerms: false,
-  gambar: null,
-  gambarPreview: null 
+  gambar: null, // // Akan menyimpan File object dari input.
+  gambarPreview: null // // Akan menyimpan URL pratinjau gambar.
 });
-const errors = ref({}); // Untuk menyimpan error validasi dari backend
+const errors = ref({}); // // Objek untuk menyimpan error validasi dari backend.
 
+// --- Fungsi-Fungsi ---
+
+// // Fungsi yang dipanggil saat pengguna memilih file gambar.
 const handleFileChange = (event) => {
-  const file = event.target.files[0];
+  const file = event.target.files[0]; // // Ambil file pertama yang dipilih.
   if (file) {
-    form.value.gambar = file;
-    const reader = new FileReader();
+    form.value.gambar = file; // // Simpan File object untuk dikirim ke server.
+    const reader = new FileReader(); // // Buat FileReader untuk membaca file.
     reader.onload = (e) => {
+      // // Setelah file berhasil dibaca, simpan hasilnya (URL base64) ke 'gambarPreview'.
       form.value.gambarPreview = e.target.result;
     };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(file); // // Mulai proses pembacaan file.
   } else {
     form.value.gambar = null;
     form.value.gambarPreview = null;
@@ -136,17 +144,18 @@ const handleFileChange = (event) => {
   }
 };
 
+// // Fungsi utama yang dieksekusi saat formulir di-submit.
 const handleRegister = async () => {
   errors.value = {}; // Reset errors on each submit
 
-  // Validasi konfirmasi password di frontend
+  // // 1. Validasi Frontend: Cek dulu di sisi klien sebelum mengirim ke server.
   if (form.value.password !== form.value.confirmPassword) {
     Swal.fire({
       icon: 'error',
       title: 'Registrasi Gagal!',
       text: 'Password dan konfirmasi password tidak cocok.'
     });
-    return;
+    return; // // Hentikan eksekusi jika tidak cocok.
   }
 
   // Validasi persetujuan terms di frontend
@@ -157,11 +166,12 @@ const handleRegister = async () => {
       text: 'Anda harus menyetujui Syarat & Ketentuan.'
     });
     errors.value.agreeTerms = ['Anda harus menyetujui Syarat & Ketentuan.']; 
-    return;
+    return; // // Hentikan eksekusi jika belum setuju.
   }
 
-  // Membuat FormData untuk mengirim data, termasuk file
+ // // 2. Persiapan Data: Buat objek FormData karena ada file yang akan dikirim.
   const formData = new FormData();
+    // // Looping melalui setiap properti di object 'form' untuk ditambahkan ke 'formData'.
   for (const key in form.value) {
     // Lewati confirmPassword dan gambarPreview karena tidak perlu dikirim ke backend
     if (key === 'confirmPassword' || key === 'gambarPreview') {
@@ -276,6 +286,7 @@ watch(form.value, () => {
 </script>
 
 <style scoped>
+/* // Mengatur background dan layout utama halaman. */
 /* BACKGROUND DAN KARTU SAMA DENGAN LOGIN */
 .register-page {
   min-height: 100vh;
@@ -287,6 +298,7 @@ watch(form.value, () => {
   padding: 2rem;
 }
 
+/* // Memberi gaya pada kartu form, termasuk efek transparan (frosted glass). */
 .register-card {
   width: 100%;
   max-width: 700px; 
@@ -296,10 +308,11 @@ watch(form.value, () => {
   border: 1px solid rgba(255, 255, 255, 0.15);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
   padding: 2rem;
-  max-height: 90vh; /* Batasi tinggi kartu agar bisa discroll di layar kecil */
-  overflow-y: auto; /* Aktifkan scroll vertikal jika konten melebihi tinggi */
+  max-height: 90vh; /* // Batasi tinggi kartu agar bisa di-scroll di layar kecil. */
+  overflow-y: auto; /* // Aktifkan scroll vertikal jika konten melebihi tinggi. */
 }
 
+/* // Gaya kustom untuk input field agar transparan dengan garis bawah. */
 /* INPUT FIELD STYLES (SAMA DENGAN LOGIN) */
 .input-custom {
   background-color: transparent;
@@ -313,6 +326,7 @@ watch(form.value, () => {
   transition: border-color 0.3s ease;
 }
 
+/* // Efek saat input field aktif (di-klik/fokus). */
 .input-custom:focus {
   border-color: #ffc107;
   box-shadow: none;
@@ -347,9 +361,10 @@ watch(form.value, () => {
   transition: background 0.3s ease, transform 0.2s ease;
 }
 
+/* // Efek hover pada tombol. */
 .btn-gradient:hover {
   background: linear-gradient(to right, #ff8c00, #ff4e42);
-  transform: scale(1.02);
+  transform: scale(1.02); /* // Sedikit memperbesar tombol. */
 }
 
 /* LINK STYLES (SAMA DENGAN LOGIN) */
@@ -366,6 +381,7 @@ a.text-warning:hover {
   display: block; /* Penting agar pesan error selalu tampil di bawah input */
 }
 
+/* // Memberi border merah pada input yang tidak valid. */
 .is-invalid {
   border-color: #dc3545 !important;
 }
@@ -376,6 +392,7 @@ a.text-warning:hover {
   border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
+/* // Gaya kustom untuk checkbox. */
 .form-check-input:checked {
   background-color: #ffc107;
   border-color: #ffc107;
