@@ -187,8 +187,15 @@
 
 <script setup>
 // --- Impor Modul ---
-import { ref, onMounted, computed, watch } from 'vue' // Fungsi inti Vue untuk data reaktif, lifecycle, data turunan, dan pengawasan.
-import api from '@/api' // Konfigurasi Axios untuk request API.
+// Mengimpor ref, computed, onMounted, dan watch dari Vue Composition API
+// - ref: membuat variabel reaktif
+// - computed: membuat nilai reaktif yang bergantung pada variabel lain
+// - onMounted: menjalankan fungsi saat komponen selesai dirender
+// - watch: memantau perubahan variabel reaktif
+import { ref, onMounted, computed, watch } from 'vue'
+// Mengimpor instance API yang dikonfigurasi (biasanya Axios) dari folder @/api
+// Digunakan untuk komunikasi dengan backend (GET, POST, dll)
+import api from '@/api'
 
 // --- State (Data Reaktif) ---
 const allFaqs = ref([]) // Menyimpan SEMUA data FAQ dari API. Paginasi dan filter akan dilakukan di frontend.
@@ -223,39 +230,61 @@ const fetchAllFaqs = async () => {
 
 // Computed property untuk memfilter DAN memaginasi data di frontend.
 const filteredAndPaginatedFaqs = computed(() => {
+  // Ambil nilai pencarian yang telah diubah menjadi huruf kecil dan di-trim
   const query = searchQuery.value.toLowerCase().trim();
 
-  // 1. Filter: Saring semua data di `allFaqs` berdasarkan `searchQuery`.
+  // 1. FILTER: Saring semua data FAQ berdasarkan keyword pencarian
   const filtered = allFaqs.value.filter(faq =>
+    // Cek apakah `title` ada dan mengandung keyword
     (faq.title && faq.title.toLowerCase().includes(query)) ||
+
+    // Cek apakah `answer` ada dan mengandung keyword
     (faq.answer && faq.answer.toLowerCase().includes(query)) ||
-    // Pastikan `category` adalah array atau string
-    (Array.isArray(faq.category) ? faq.category.some(cat => cat.toLowerCase().includes(query)) : (faq.category?.toLowerCase().includes(query)))
+
+    // Cek apakah `category` mengandung keyword (bisa array atau string)
+    (
+      Array.isArray(faq.category)
+        ? faq.category.some(cat => cat.toLowerCase().includes(query)) // jika array, cek tiap elemen
+        : (faq.category?.toLowerCase().includes(query))               // jika string, langsung cek
+    )
   );
 
-  // 2. Paginasi: Ambil sebagian data dari hasil filter sesuai halaman saat ini.
+  // 2. PAGINASI: Tentukan indeks awal dan akhir dari item yang akan ditampilkan di halaman saat ini
   const startIndex = (currentPage.value - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  return filtered.slice(startIndex, endIndex); // `slice` memotong array untuk paginasi.
+
+  // Potong array hasil filter agar hanya menampilkan data yang sesuai halaman
+  return filtered.slice(startIndex, endIndex); // `slice()` mengambil subset array dari startIndex hingga endIndex (tidak termasuk endIndex)
 });
 
 // Computed property untuk menghitung informasi paginasi di frontend.
 const pagination = computed(() => {
+  // Ambil nilai pencarian dan ubah ke lowercase + trim untuk akurasi pencarian
   const query = searchQuery.value.toLowerCase().trim();
-  // Filter lagi untuk mendapatkan jumlah total item yang cocok dengan pencarian.
+
+  // Lakukan filter ulang ke semua data FAQ berdasarkan query pencarian
   const filtered = allFaqs.value.filter(faq =>
-    (faq.title && faq.title.toLowerCase().includes(query)) ||
-    (faq.answer && faq.answer.toLowerCase().includes(query)) ||
-    (Array.isArray(faq.category) ? faq.category.some(cat => cat.toLowerCase().includes(query)) : (faq.category?.toLowerCase().includes(query)))
+    (faq.title && faq.title.toLowerCase().includes(query)) || // Cek apakah judul mengandung kata kunci
+    (faq.answer && faq.answer.toLowerCase().includes(query)) || // Cek apakah isi jawaban mengandung kata kunci
+    (
+      // Cek apakah kategori mengandung kata kunci
+      Array.isArray(faq.category)
+        ? faq.category.some(cat => cat.toLowerCase().includes(query))
+        : (faq.category?.toLowerCase().includes(query))
+    )
   );
+
+  // Hitung total item hasil pencarian
   const totalItems = filtered.length;
-  // Hitung total halaman berdasarkan jumlah item dan item per halaman.
+
+  // Hitung total halaman yang dibutuhkan, dibulatkan ke atas
   const lastPage = Math.ceil(totalItems / itemsPerPage);
 
+  // Kembalikan objek informasi paginasi
   return {
-    current_page: currentPage.value,
-    last_page: lastPage,
-    total: totalItems
+    current_page: currentPage.value, // Halaman saat ini
+    last_page: lastPage,             // Total halaman berdasarkan filter
+    total: totalItems                // Total data hasil filter
   };
 });
 

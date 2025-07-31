@@ -240,9 +240,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, computed } from 'vue' // Fungsi inti Vue.
-import api from '@/api' // Konfigurasi Axios untuk request API.
+// --- Impor Modul ---
+import { ref, onMounted, watch, computed } from 'vue' // // Mengimpor fungsi-fungsi inti dari Vue.
+import api from '@/api' // // Mengimpor konfigurasi Axios untuk request API.
 
+// --- State (Data Reaktif) ---
 const allDestinations = ref([]) // Menyimpan SEMUA data destinasi dari API. Paginasi akan dilakukan di frontend.
 const loading = ref(true) // Status untuk menampilkan/menyembunyikan spinner loading.
 const currentPage = ref(1) // Menyimpan nomor halaman yang sedang aktif.
@@ -332,7 +334,7 @@ const showDetails = (d) => {
 }
 // Fungsi untuk menutup modal.
 const closeModal = () => {
-  showModal.value = false;
+  showModal.value = false; 
   document.body.classList.remove('modal-open');
   document.body.style.overflow = ''; // Reset body scroll
 }
