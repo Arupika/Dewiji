@@ -1,25 +1,36 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import api from '@/api'
+// --- Impor Modul ---
+import { ref, onMounted } from 'vue' // 'ref' untuk data reaktif, 'onMounted' untuk kode saat komponen dimuat.
+import { useRouter } from 'vue-router' // Untuk melakukan navigasi antar halaman secara programatik.
+import api from '@/api' // Konfigurasi Axios untuk request ke API.
 
+// Mengimpor gambar dari folder assets untuk digunakan sebagai background section.
 import destinasiBg from '@/assets/destinasi-bg.jpg'
 import mobilBg from '@/assets/mobil-bg.jpg'
 import paketBg from '@/assets/paket-bg.jpg'
 
-const router = useRouter()
+// --- State (Data Reaktif) ---
+const router = useRouter() // Mendapatkan instance router untuk digunakan di dalam script.
 
+// Mendefinisikan state reaktif untuk menyimpan data pratinjau yang diambil dari API.
 const destinasi = ref([])
 const rental = ref([])
 const packages = ref([])
 
+// --- Fungsi-Fungsi ---
+
+// Fungsi untuk mengambil data dari beberapa endpoint API sekaligus.
 const fetchData = async () => {
   try {
+    // 'Promise.all' menjalankan semua request API secara bersamaan (paralel),
+    // sehingga lebih cepat daripada menjalankannya satu per satu.
     const [resDestinasi, resRental, resPackage] = await Promise.all([
       api.get('/api/destinasis'),
       api.get('/api/mobils'),
       api.get('/api/pakets')
     ])
+    // Setelah semua data diterima, simpan 5 item pertama dari setiap response ke state.
+    // '.slice(0, 5)' digunakan untuk mengambil hanya 5 data pertama sebagai pratinjau di halaman utama.
     destinasi.value = resDestinasi.data.data.data.slice(0, 5)
     rental.value = resRental.data.data.data.slice(0, 5)
     packages.value = resPackage.data.data.data.slice(0, 5)
@@ -28,13 +39,16 @@ const fetchData = async () => {
   }
 }
 
+// Fungsi navigasi ke halaman masing-masing
 const goToDestinationPage = () => router.push('/Destination')
 const goToRentalPage = () => router.push('/CarRent')
 const goToPackagePage = () => router.push('/Package')
 
+// Saat komponen dimount
 onMounted(() => {
   fetchData()
 
+  // Tambahkan efek animasi saat elemen masuk ke viewport
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -51,6 +65,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <!-- Hero Section -->
   <header class="position-relative text-white d-flex align-items-center justify-content-center hero-section-animated"
     style="min-height: 100vh; background-image: url('/src/assets/merapi.png'); background-size: cover; background-position: center;">
     <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-50 overlay-animated"></div>
@@ -63,6 +78,7 @@ onMounted(() => {
     </div>
   </header>
 
+  <!-- Section Dinamis: Destinasi, Rental, Paket -->
   <section
     v-for="(section, index) in [
       { title: 'Destinasi Wisata', data: destinasi, action: goToDestinationPage, bgImage: destinasiBg },
@@ -106,7 +122,9 @@ onMounted(() => {
     <!-- Gradient separator antar section -->
     <div class="separator-gradient"></div>
   </section>
-    <footer class="bg-dark text-light pt-5 pb-4">
+
+   <!-- Footer -->
+  <footer class="bg-dark text-light pt-5 pb-4">
     <div class="container">
       <div class="row g-4">
         <!-- Tentang Kami -->
@@ -134,31 +152,30 @@ onMounted(() => {
           </ul>
         </div>
         
-        <!-- Navigasi -->
-<div class="col-lg-3 col-md-6">
-  <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Navigasi</h5>
-  <ul class="list-unstyled small">
-    <li class="mb-2">
-      <router-link to="/" class="text-light text-decoration-none hover-success">Home</router-link>
-    </li>
-    <li class="mb-2">
-      <router-link to="/Destination" class="text-light text-decoration-none hover-success">Destinasi</router-link>
-    </li>
-    <li class="mb-2">
-      <router-link to="/CarRent" class="text-light text-decoration-none hover-success">Rental Mobil</router-link>
-    </li>
-    <li class="mb-2">
-      <router-link to="/Package" class="text-light text-decoration-none hover-success">Paket Liburan</router-link>
-    </li>
-    <li class="mb-2">
-      <router-link to="/Comment" class="text-light text-decoration-none hover-success">FAQ</router-link>
-    </li>
-  </ul>
-</div>
+         <!-- Navigasi -->
+        <div class="col-lg-3 col-md-6">
+          <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Navigasi</h5>
+          <ul class="list-unstyled small">
+            <li class="mb-2">
+              <router-link to="/" class="text-light text-decoration-none hover-success">Home</router-link>
+            </li>
+            <li class="mb-2">
+              <router-link to="/Destination" class="text-light text-decoration-none hover-success">Destinasi</router-link>
+            </li>
+            <li class="mb-2">
+              <router-link to="/CarRent" class="text-light text-decoration-none hover-success">Rental Mobil</router-link>
+            </li>
+            <li class="mb-2">
+              <router-link to="/Package" class="text-light text-decoration-none hover-success">Paket Liburan</router-link>
+            </li>
+            <li class="mb-2">
+              <router-link to="/Comment" class="text-light text-decoration-none hover-success">FAQ</router-link>
+            </li>
+          </ul>
+        </div>
 
-        
         <!-- Sosial Media-->
-<div class="col-lg-3 col-md-6">
+        <div class="col-lg-3 col-md-6">
           <h5 class="fw-bold border-start border-success border-4 ps-3 mb-3">Sosial Media</h5>
           <p class="small">Ikuti kami di media sosial untuk mendapatkan penawaran terbaik!</p>
           <div class="d-flex gap-3">
@@ -176,11 +193,8 @@ onMounted(() => {
             </a>
           </div>
         </div>
-
       </div>
-      
       <hr class="my-4 bg-secondary">
-      
     </div>
   </footer>
 </template>
