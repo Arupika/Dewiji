@@ -373,13 +373,15 @@ const bsiBankDetails = {
 // --- Logika Utama (Computed Property) ---
 // // Computed property untuk menentukan satuan durasi (hari/minggu).
 const unitDuration = computed(() => {
+// // Jika paket sewa mingguan, tampilkan "minggu", selain itu tampilkan "hari".
   return bookingData.value.rentalPackage === 'Sewa Mingguan' ? 'minggu' : 'hari';
 });
 
-// Computed property untuk menghitung total harga secara otomatis.
+// // Computed property untuk menghitung total harga secara otomatis setiap kali ada perubahan pada form.
 const calculatedPrice = computed(() => {
   let total = 0;
 
+  // // Jika mobil belum dipilih, kembalikan 0.
   if (!selectedMobil.value || (!selectedMobil.value.harga && !selectedMobil.value.harga12jam)) {
     return 0;
   }
@@ -390,6 +392,7 @@ const calculatedPrice = computed(() => {
 
   const duration = bookingData.value.duration || 1;
 
+  // // Logika percabangan untuk menghitung total berdasarkan paket yang dipilih.
   switch (bookingData.value.rentalPackage) {
     case 'Sewa Harian (24 Jam)':
       total = duration * hargaPerHari;
@@ -408,6 +411,7 @@ const calculatedPrice = computed(() => {
   return Math.max(0, total);
 });
 
+// --- Fungsi-Fungsi ---
 
 // Fungsi untuk mereset durasi menjadi 1 saat paket sewa diganti.
 const resetDuration = () => {
@@ -491,7 +495,7 @@ const showDetails = (mobil) => {
   bookingData.value.whatsapp = '';
   bookingData.value.catatan = '';
 
-
+  // // Cegah scroll halaman di latar belakang.
   document.body.classList.add('modal-open');
   document.body.style.overflow = 'hidden';
 }
@@ -505,6 +509,7 @@ const closeModal = () => {
 
 // Fungsi untuk berpindah halaman (paginasi).
 const changePage = (page) => {
+  // // Cek apakah halaman yang dituju valid.
   if (page !== currentPage.value && page > 0 && page <= pagination.value.last_page) {
     currentPage.value = page // Cukup ubah nomor halaman saat ini, tidak perlu panggil API lagi.
   }
@@ -512,10 +517,11 @@ const changePage = (page) => {
 
 // Fungsi yang dijalankan saat form booking di-submit.
 const submitBooking = () => {
+  // // Membuat teks durasi yang dinamis untuk pesan WA.
   const durationText = bookingData.value.rentalPackage !== 'Sewa 12 Jam'
     ? `Durasi: ${bookingData.value.duration} ${unitDuration.value}\n`
     : '';
-
+  // // Susun template pesan WhatsApp yang detail dan terformat.
   const message = `Halo Dewiji Explore, saya telah melakukan pemesanan sewa mobil:
 
 🚗 Mobil: ${selectedMobil.value.nama}
@@ -535,6 +541,7 @@ Saya sudah melakukan pembayaran melalui ${bsiBankDetails.bankName} (${bsiBankDet
 `;
 
   const encoded = encodeURIComponent(message)
+  // // Buka tab baru ke WhatsApp dengan pesan yang sudah terisi.
   window.open(`https://wa.me/6281348680937?text=${encoded}`, '_blank')
 
   // Tampilkan notifikasi bahwa pesanan berhasil dan user harus konfirmasi via WA.
