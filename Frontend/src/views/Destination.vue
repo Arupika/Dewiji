@@ -240,30 +240,32 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, computed } from 'vue'
-import api from '@/api' // Pastikan ini mengarah ke instance Axios Anda
+import { ref, onMounted, watch, computed } from 'vue' // Fungsi inti Vue.
+import api from '@/api' // Konfigurasi Axios untuk request API.
 
-const allDestinations = ref([]) // Menyimpan semua data destinasi
-const loading = ref(true) // Menambahkan state loading untuk UX
-const currentPage = ref(1) // Halaman saat ini untuk paginasi frontend
-const itemsPerPage = 6; // Jumlah item per halaman untuk paginasi frontend
+const allDestinations = ref([]) // Menyimpan SEMUA data destinasi dari API. Paginasi akan dilakukan di frontend.
+const loading = ref(true) // Status untuk menampilkan/menyembunyikan spinner loading.
+const currentPage = ref(1) // Menyimpan nomor halaman yang sedang aktif.
+const itemsPerPage = 6; // Menentukan berapa banyak item yang ditampilkan per halaman.
 
-const showModal = ref(false)
-const selectedDestinasi = ref({})
-const searchQuery = ref('') // Untuk input pencarian
+const showModal = ref(false) // Status untuk menampilkan/menyembunyikan modal.
+const selectedDestinasi = ref({}) // Menyimpan data destinasi yang dipilih.
+const searchQuery = ref('') // Menyimpan teks dari input pencarian.
 
-// Fungsi untuk mengambil SEMUA destinasi dari API
+// --- Fungsi-Fungsi ---
+
+// Fungsi untuk mengambil SEMUA data destinasi dari API.
 const fetchAllDestinasi = async () => {
   loading.value = true; // Set loading true saat memulai fetch
   try {
-    // Panggil API dengan parameter `per_page=all` agar controller mengembalikan semua data
+    // Panggil API untuk mengambil semua data (contoh: dengan parameter `per_page=all`).
     const res = await api.get('/api/destinasis?per_page=all');
 
     // Asumsi: respons API mengembalikan array data di `res.data.data`
     // Sesuaikan ini jika struktur respons DestinasiResource Anda berbeda
     // Contoh: jika langsung array, pakai `res.data`
     // Contoh: jika ada objek { message, data: { data: [...] } }, pakai `res.data.data.data`
-    allDestinations.value = res.data.data;
+    allDestinations.value = res.data.data; // Simpan semua data ke state 'allDestinations'.
   } catch (err) {
     console.error('Fetch all destinations error:', err);
     // Tampilkan pesan error kepada pengguna jika fetch gagal
@@ -275,15 +277,18 @@ const fetchAllDestinasi = async () => {
     // });
     allDestinations.value = []; // Kosongkan data jika ada error
   } finally {
+    // Blok ini akan selalu berjalan, baik berhasil maupun gagal.
     loading.value = false; // Set loading false setelah fetch selesai (baik berhasil/gagal)
   }
 }
 
-// Computed property untuk memfilter dan kemudian memaginasi destinasi
+// --- Logika Utama (Computed Property) ---
+
+// Computed property untuk memfilter DAN memaginasi data di frontend.
 const filteredAndPaginatedDestinations = computed(() => {
   const query = searchQuery.value.toLowerCase().trim();
 
-  // 1. Filter data berdasarkan query dari `allDestinations`
+  // 1. Filter: Saring semua data di `allDestinations` berdasarkan `searchQuery`.
   const filtered = allDestinations.value.filter(destination =>
     destination.nama.toLowerCase().includes(query) ||
     (destination.location && destination.location.toLowerCase().includes(query)) ||
@@ -292,14 +297,15 @@ const filteredAndPaginatedDestinations = computed(() => {
     (destination.kategori && Array.isArray(destination.kategori) && destination.kategori.some(kategori => kategori.toLowerCase().includes(query)))
   );
 
-  // 2. Terapkan paginasi pada data yang sudah difilter
+  // 2. Paginasi: Ambil sebagian data dari hasil filter sesuai halaman saat ini.
   const startIndex = (currentPage.value - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  return filtered.slice(startIndex, endIndex);
+  return filtered.slice(startIndex, endIndex); // `slice` memotong array untuk paginasi.
 });
 
-// Computed property untuk informasi paginasi di frontend
+// Computed property untuk menghitung informasi paginasi di frontend.
 const pagination = computed(() => {
+  // Filter lagi untuk mendapatkan jumlah total item yang cocok dengan pencarian.
   const query = searchQuery.value.toLowerCase().trim();
   const filtered = allDestinations.value.filter(destination =>
     destination.nama.toLowerCase().includes(query) ||
@@ -308,6 +314,7 @@ const pagination = computed(() => {
     (destination.kategori && Array.isArray(destination.kategori) && destination.kategori.some(kategori => kategori.toLowerCase().includes(query)))
   );
   const totalItems = filtered.length;
+  // Hitung total halaman berdasarkan jumlah item dan item per halaman.
   const lastPage = Math.ceil(totalItems / itemsPerPage);
 
   return {
@@ -316,20 +323,20 @@ const pagination = computed(() => {
     total: totalItems
   };
 });
-
+// Fungsi untuk menampilkan detail destinasi di modal.
 const showDetails = (d) => {
-  selectedDestinasi.value = d
-  showModal.value = true
-  document.body.classList.add('modal-open'); // Bootstrap class to prevent body scroll
+  selectedDestinasi.value = d // Simpan data destinasi yang diklik.
+  showModal.value = true // Tampilkan modal.
+  document.body.classList.add('modal-open'); // Cegah scroll halaman di latar belakang.
   document.body.style.overflow = 'hidden'; // Fallback style
 }
-
+// Fungsi untuk menutup modal.
 const closeModal = () => {
   showModal.value = false;
   document.body.classList.remove('modal-open');
   document.body.style.overflow = ''; // Reset body scroll
 }
-
+// Fungsi untuk berpindah halaman (paginasi).
 const changePage = (page) => {
   // Hanya ubah halaman jika halaman baru valid dan berbeda dari halaman saat ini
   if (page !== currentPage.value && page > 0 && page <= pagination.value.last_page) {
@@ -337,6 +344,8 @@ const changePage = (page) => {
     // Tidak perlu memanggil fetch lagi karena data sudah ada di `allDestinations`
   }
 }
+
+// --- Lifecycle dan Watcher ---
 
 // Panggil fungsi untuk mengambil semua data saat komponen dimuat
 onMounted(() => {
@@ -359,7 +368,7 @@ watch(showModal, (newValue) => {
 </script>
 
 <style scoped>
-/* Animasi Fade */
+/* // Aturan untuk animasi fade saat elemen muncul/hilang. */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s ease;
@@ -370,7 +379,7 @@ watch(showModal, (newValue) => {
   opacity: 0;
 }
 
-/* Animasi List Item (untuk kartu destinasi) */
+/* // Aturan untuk animasi daftar kartu destinasi. */
 .list-enter-active,
 .list-leave-active {
   transition: all 0.5s ease;
@@ -382,7 +391,7 @@ watch(showModal, (newValue) => {
   transform: translateY(30px);
 }
 
-/* Penting: Untuk TransitionGroup, pastikan elemen yang di-v-for memiliki posisi relatif */
+/* // Aturan khusus untuk item yang keluar dari daftar agar animasi mulus. */
 .list-leave-active {
   position: absolute;
 }
@@ -406,7 +415,7 @@ body.modal-open {
   background-color: #f0f0f0; /* Opsional: latar belakang jika ada ruang kosong */
 }
 
-/* Hover effect for footer links */
+/* // Memberi efek hover pada link di footer. */
 .hover-success:hover {
   color: #198754 !important; /* Warna hijau success Bootstrap */
 }
