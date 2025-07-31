@@ -128,8 +128,13 @@
 </template>
 
 <script>
+// // Mengekspor objek konfigurasi komponen Vue.
 export default {
+  // // Fungsi setup() adalah bagian dari Composition API di Vue.
+  // // Semua yang di-'return' dari sini akan bisa diakses di dalam <template>.
   setup() {
+    // // Mendefinisikan data anggota tim secara langsung dalam sebuah array objek.
+    // // Data ini bersifat statis (hardcoded), tidak diambil dari database atau API.
     const teamMembers = [
       {
         nama: "Irzha Fahrizaldy",
@@ -169,10 +174,12 @@ export default {
       },
     ];
 
+    // // Variabel ini menghitung tahun saat ini, meskipun tidak digunakan di template saat ini.
     const currentYear = new Date().getFullYear();
 
+    // // Mengembalikan data agar bisa digunakan di dalam <template>.
     return {
-      teamMembers,
+      teamMembers, // // Array ini akan digunakan oleh v-for di template.
       currentYear,
     };
   },
@@ -180,38 +187,46 @@ export default {
 </script>
 
 <style scoped>
+/* // 'scoped' berarti gaya CSS ini hanya berlaku untuk komponen ini saja, tidak akan "bocor" ke komponen lain. */
+
+/* // Memberi efek transisi yang mulus pada kartu. */
 .card {
   transition: all 0.3s ease;
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
+/* // Efek saat kursor mouse berada di atas kartu. */
 .card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+  transform: translateY(-8px); /* // Mengangkat kartu sedikit ke atas. */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important; /* // Menambahkan bayangan yang lebih jelas. */
 }
 
+/* // Mengatur ukuran kontainer foto agar seragam. */
 .member-photo {
   height: 250px;
-  overflow: hidden;
+  overflow: hidden; /* // Menyembunyikan bagian gambar yang melebihi kontainer. */
 }
 
-/* Hover effect for social media icons */
+/* // Efek hover untuk ikon sosial media (jika ditambahkan di masa depan). */
 .social-icon:hover {
   background-color: var(--bs-success) !important;
   border-color: var(--bs-success) !important;
   color: #fff !important;
 }
 
+/* // CSS untuk elemen pembatas di bawah judul. */
 .divider {
   opacity: 0.7;
 }
 
+/* // Kustomisasi radius sudut. */
 .rounded-3 {
   border-radius: 0.7rem !important;
 }
 
+/* // Memastikan gambar mengisi area foto tanpa merusak rasio aspek (tidak gepeng atau terdistorsi). */
 .object-fit-cover {
-  object-fit: cover;
-  object-position: center;
+  object-fit: cover; /* // Gambar akan dipotong (jika perlu) agar pas mengisi kontainer. */
+  object-position: center; /* // Fokus pemotongan di tengah gambar. */
 }
 </style>
